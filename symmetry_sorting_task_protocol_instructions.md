@@ -6,6 +6,7 @@
 ## Pre-Session
 - Arrive 15 minutes prior to the study time.
 - Organize Consent (2 copies)
+- Determine order of the 5 stimuli groups
 
 
 ## Participant Arrival 
