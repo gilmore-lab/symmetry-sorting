@@ -6,7 +6,7 @@
 ## Pre-Session
 - Arrive 15 minutes prior to the study time.
 - Organize Consent (2 copies)
-- Determine order of the 5 stimuli groups - this order can be found in the Presentation Order column in [symm-session-log](https://docs.google.com/spreadsheets/d/1bo8HlpTJz51LNB63NErvJSvnRIjTctgF255Lg-5TPno/edit#gid=0)
+- Determine order of the 5 stimuli groups - this order can be found in google drive of the psubrainlab account in the Presentation Order column in [symm-session-log](https://docs.google.com/spreadsheets/d/1bo8HlpTJz51LNB63NErvJSvnRIjTctgF255Lg-5TPno/edit#gid=0) 
 
 
 ## Participant Arrival 
