@@ -33,7 +33,7 @@
 
 ## Enter Data
 - After the participant finishes sorting 20 images, make sure to use a post-it to keep the piles separated.
-- Open the file: **https://github.com/gilmore-lab/symmetry-sorting/Raw_Sorting_Data_150915.xlsx**
+- Download the file 'Raw_Sorting_Data_yymmdd.xlsx' from **https://github.com/gilmore-lab/symmetry-sorting**
 - File Architecture
   - There are 6 Tabs (Key, P1, P3M1, P31M, P6, and P6M).
   - Tabs 2-6 correspond to a wallpaper group that is being used for this study
@@ -49,6 +49,9 @@
       - Increase the Set number for each row of data
     - Enter a '1' in columns C-V if that image is in the pile. Otherwise enter a '0'
   - Complete this process of entering data for all 5 groups of data  
+  
+- Save file updating the date in the format of **yymmdd** to the filename.
+- Email to psubrainlab@gmail.com so that it can be uploaded onto Github by the Lab Manager
       
 
 
