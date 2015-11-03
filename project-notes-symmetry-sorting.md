@@ -6,6 +6,7 @@ This is the project notes file for the symmetry sorting project.
 - Total participants = 22
 - 21 Female, 1 Male
 - data file, Raw_Sorting_Data_151102.xlsx uploaded to git hub by ars17
+- participant data found on google drive psubrainlab@gmail.com > My Drive > participants > symm-session-log
 
 ## 2015-09-22-09:40
 
