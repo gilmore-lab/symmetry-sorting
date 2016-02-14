@@ -16,11 +16,49 @@ Gilmore, R.O., & Norcia, A.M. (2014). The Salience of Lower-Order, Localized Fea
 ```{r}
 require(ggplot2)
 require(dplyr)
+require(xlsx)
+
+path.2.this.analysis <- 'shade-etal-2016'
+path.2.xlsx <- '../xlsx'
+data.xlsx <- 'Raw_Sorting_Data_151102.xlsx'
+wallpaper.groups <- c('P1', 'P3M1', 'P31M', 'P6', 'P6M')
 ```
 
 ## Import raw data and calculate Jaccard indices
 
-Raw data were captured as Excel spreadsheets. These can be found in [symmetry-sorting/xlsx/](../../xlsx).
+Raw data were captured as Excel spreadsheets. These can be found in [symmetry-sorting/xlsx/](../xlsx).
+
+```{r import-clean-raw}
+
+P1.df <- read.xlsx(paste(path.2.xlsx, data.xlsx, sep="/"), sheetName = wallpaper.groups[1])
+P3M1.df <- read.xlsx(paste(path.2.xlsx, data.xlsx, sep="/"), sheetName = wallpaper.groups[2])
+P31M.df <- read.xlsx(paste(path.2.xlsx, data.xlsx, sep="/"), sheetName = wallpaper.groups[3])
+P6.df <- read.xlsx(paste(path.2.xlsx, data.xlsx, sep="/"), sheetName = wallpaper.groups[4])
+P6M.df <- read.xlsx(paste(path.2.xlsx, data.xlsx, sep="/"), sheetName = wallpaper.groups[5])
+
+# Calculate Jaccard indices, then merge
+source(paste(path.2.this.analysis, "jaccard.data.R", sep="/"))
+source(paste(path.2.this.analysis, "jaccard.R", sep="/"))
+
+P1.jaccard <- jaccard.data(P1.df)
+P3M1.jaccard <- jaccard.data(P3M1.df)
+P31M.jaccard <- jaccard.data(P31M.df)
+P6.jaccard <- jaccard.data(P6.df)
+P6M.jaccard <- jaccard.data(P6M.df)
+
+jaccard.nodups <- rbind(P1.jaccard, P3M1.jaccard, P31M.jaccard, P6.jaccard, P6M.jaccard)
+
+jaccard.df <- data_frame(Exemplar.Row = jaccard.nodups[,1], 
+                                Exemplar.Col = jaccard.nodups[,2], 
+                                Jaccard = jaccard.nodups[,3])
+
+jaccard.df$Group <- c(rep('P1', dim(P1.jaccard)[1]), 
+                             rep('P3M1', dim(P3M1.jaccard)[1]),
+                             rep('P31M', dim(P31M.jaccard)[1]),
+                             rep('P6', dim(P6.jaccard)[1]),
+                             rep('P6M', dim(P6M.jaccard)[1])
+                            )
+```
 
 ## Jaccard indices across exemplars, participants
 
