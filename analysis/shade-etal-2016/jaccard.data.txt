@@ -1,0 +1,13 @@
+jaccard.data <- function(df){
+	start <- 2
+	out <- array(dim=c(400,3))
+	for (i in 1:20){
+		for (j in 1:20){
+			# cat( c(i, j, jaccard(df[,i+start],df[,j+start])) )
+			out[j+(i-1)*20,1] <- i
+			out[j+(i-1)*20,2] <- j
+			out[j+(i-1)*20,3] <- jaccard(df[,i+start],df[,j+start])
+		}
+	}
+	out
+}
