@@ -12,7 +12,7 @@ require(png)
 
 analysis.dir <- 'analysis/'
 csv.dir <- paste(analysis.dir, 'data/', sep="")
-db.wallpapers <- 'wallpapers-on-databrary.csv'
+db.fn <- paste(csv.dir, 'wallpapers-on-databrary.csv', sep='')
 
 source(paste(analysis.dir, "load.wp.R", sep=""))
 ```
@@ -22,7 +22,7 @@ source(paste(analysis.dir, "load.wp.R", sep=""))
 ### P1, 101001
 
 ```{r images-from-Databrary-P1}
-pp <- load.wp("P1", 1, fn.df=paste(csv.dir, db.wallpapers, sep='/'))
+pp <- load.wp(1, "P1", db.fn)
 plot.new()
 plot.window(xlim=c(0,1), ylim=c(0,1), asp=1) # square aspect ratio
 rasterImage(pp, 0, 0, 1, 1)
@@ -31,7 +31,7 @@ rasterImage(pp, 0, 0, 1, 1)
 ### P3M1, exemplar 1
 
 ```{r images-from-Databrary-P3M1}
-pp <- load.wp("P3M1", 1, fn.df=paste(csv.dir, db.wallpapers, sep='/'))
+pp <- load.wp(1, "P3M1", db.fn)
 plot.new()
 plot.window(xlim=c(0,1), ylim=c(0,1), asp=1) # square aspect ratio
 rasterImage(pp, 0, 0, 1, 1)
@@ -40,8 +40,37 @@ rasterImage(pp, 0, 0, 1, 1)
 ### P6M, exemplar 1
 
 ```{r images-from-Databrary-P6M}
-pp <- load.wp("P6M", 1, fn.df=paste(csv.dir, db.wallpapers, sep='/'))
+pp <- load.wp(1, "P6M", db.fn)
 plot.new()
 plot.window(xlim=c(0,1), ylim=c(0,1), asp=1) # square aspect ratio
 rasterImage(pp, 0, 0, 1, 1)
+```
+
+## P1
+
+row 1: 1-5; row 2: 6-10, etc.
+
+```{r list-retrieve}
+plot.all.wp('P1')
+```
+
+## P31M
+```{r list-retrieve}
+plot.all.wp('P31M')
+```
+
+## P3M1
+```{r list-retrieve}
+plot.all.wp('P3M1')
+```
+
+## P6
+```{r list-retrieve}
+plot.all.wp('P6')
+```
+
+
+## P6M
+```{r list-retrieve}
+plot.all.wp('P6M')
 ```
