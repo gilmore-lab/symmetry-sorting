@@ -1,1 +1,0 @@
-# symmetry-vedak-sorting

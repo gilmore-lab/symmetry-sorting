@@ -1,15 +1,18 @@
 # symmetry-sorting
 
-Behavioral studies associated with symmetry project. The repo contains:
+Behavioral studies associated with the symmetry sorting project. The repo contains:
 
-- [imgs/](imgs),
+- [prepare-data.Rmd](prepare-data.Rmd), Rmarkdown format file for loading Excel data and computing Jaccard indices.
+- [show-wallpapers.Rmd](show-wallpapers.Rmd), Rmarkdown format file for downloading and displaying wallpaper patterns used in the study. Image files are downloaded from Databrary, Gilmore, R.O., & Norcia, A.M. (2014). The Salience of Lower-Order, Localized Features in Highly Self-Similar Wallpaper Groups. Databrary. Retrieved May 18, 2015 from <http://databrary.org/volume/77>.
+- [imgs/](imgs), Image files produced in analysis.
 - [notes/](notes), text/Markdown formatted project notes.
-- [old-data-files/](old-data-files)
 - [pubs/](pubs), publications associated with the project
-- [R/](R), R code used to test analyses
-- [shade-etal-2016/](shade-etal-2016)
+- [analysis/](analysis/), R code and data
+    - [analysis/data/](analysis/data/)
+        - [analysis/data/xlsx], Excel format spreadsheets used to record data
+        - *.csv, comma-delimited text files used for analysis in R
+    - *.R, R functions
 - [vedak-etal-2015/](vedak-etal-2015)
-- [xlsx/](xlsx), Excel-formatted data files
 
 ## Sorting task description
 

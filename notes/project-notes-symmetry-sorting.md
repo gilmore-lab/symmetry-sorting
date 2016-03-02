@@ -2,6 +2,10 @@
 
 This is the project notes file for the symmetry sorting project.
 
+## 2016-03-02-12:34
+
+- rog refactored project directory.
+
 ## 2016-02-08-15:00
 
 - Rick and Michelle Shade met to discuss data analysis.

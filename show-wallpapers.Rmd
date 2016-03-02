@@ -1,0 +1,47 @@
+---
+title: "show-wallpapers"
+author: "Rick Gilmore"
+date: "`r Sys.time()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+require(png)
+
+analysis.dir <- 'analysis/'
+csv.dir <- paste(analysis.dir, 'data/', sep="")
+db.wallpapers <- 'wallpapers-on-databrary.csv'
+
+source(paste(analysis.dir, "load.wp.R", sep=""))
+```
+
+## Illustrative image exemplars
+
+### P1, 101001
+
+```{r images-from-Databrary-P1}
+pp <- load.wp("P1", 1, fn.df=paste(csv.dir, db.wallpapers, sep='/'))
+plot.new()
+plot.window(xlim=c(0,1), ylim=c(0,1), asp=1) # square aspect ratio
+rasterImage(pp, 0, 0, 1, 1)
+```
+
+### P3M1, exemplar 1
+
+```{r images-from-Databrary-P3M1}
+pp <- load.wp("P3M1", 1, fn.df=paste(csv.dir, db.wallpapers, sep='/'))
+plot.new()
+plot.window(xlim=c(0,1), ylim=c(0,1), asp=1) # square aspect ratio
+rasterImage(pp, 0, 0, 1, 1)
+```
+
+### P6M, exemplar 1
+
+```{r images-from-Databrary-P6M}
+pp <- load.wp("P6M", 1, fn.df=paste(csv.dir, db.wallpapers, sep='/'))
+plot.new()
+plot.window(xlim=c(0,1), ylim=c(0,1), asp=1) # square aspect ratio
+rasterImage(pp, 0, 0, 1, 1)
+```
