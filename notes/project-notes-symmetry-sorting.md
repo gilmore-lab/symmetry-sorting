@@ -2,6 +2,14 @@
 
 This is the project notes file for the symmetry sorting project.
 
+## 2016-03-05-14:21
+- rog created new [analysis-planning.Rmd](../analysis-planning.Rmd) file in preparation for meeting with AMN and AC later this week.
+
+## 2016-03-04-1740
+
+- rog modified load.wp.R to write images from Databrary to img/ by default.
+- Tested show-wallpapers.Rmd, but it hangs.
+
 ## 2016-03-02-12:34
 
 - rog refactored project directory.

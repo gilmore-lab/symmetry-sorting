@@ -1,5 +1,6 @@
 plot.all.wp <- function(wp.group="P1", fn="analysis/data/wallpapers-on-databrary.csv"){
   source('analysis/load.wp.R')
+  source('analysis/plot.wp.R')
   
   # Make wallpaper list from load.wp()
   cat('Downloading wallpapers from Databrary')

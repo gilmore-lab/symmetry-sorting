@@ -6,12 +6,11 @@ Rick Gilmore
 
 Behavioral studies associated with the symmetry sorting project. 
 
-Last updated 2016-03-02 13:20:13.
+Last updated 2016-03-05 14:26:12.
 
 ## Contents
 
-- [prepare-data.Rmd](prepare-data.Rmd), Rmarkdown format file for loading Excel data and computing Jaccard indices.
-- [show-wallpapers.Rmd](show-wallpapers.Rmd), Rmarkdown format file for downloading and displaying wallpaper patterns used in the study. Image files are downloaded from Databrary, Gilmore, R.O., & Norcia, A.M. (2014). The Salience of Lower-Order, Localized Features in Highly Self-Similar Wallpaper Groups. Databrary. Retrieved May 18, 2015 from <http://databrary.org/volume/77>.
+- [analysis-planning.Rmd](analysis-planning.Rmd), ioslides presentation for meeting with AMN and AC. [HTML](https://rawgit.com/gilmore-lab/symmetry-sorting/master/analysis-planning.html)
 - [imgs/](imgs), Image files produced in analysis.
 - [notes/](notes), text/Markdown formatted project notes.
 - [pubs/](pubs), publications associated with the project
@@ -20,7 +19,7 @@ Last updated 2016-03-02 13:20:13.
         - [analysis/data/xlsx/](analysis/data/xlsx/), Excel format spreadsheets used to record data
         - *.csv, comma-delimited text files used for analysis in R
     - *.R, R functions
-- [vedak-etal-2015/](vedak-etal-2015)
+- [vedak-etal-2015/](vedak-etal-2015), files from earlier VSS analysis and presentation.
 
 ## R Session Info
 
