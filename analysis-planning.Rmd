@@ -122,20 +122,19 @@ next.group.i <- 1
 max.jaccard.merged.df$Jaccard[next.group.i]`
 
 <div class="centered">
-```{r show-1-pair, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
 source('analysis/display.exemplar.pairs.R')
 display.exemplar.pairs(max.jaccard.merged.df$Exemplar.Row[next.group.i], max.jaccard.merged.df$Exemplar.Col[next.group.i], max.jaccard.merged.df$Group[next.group.i])
-next.group.i <- 2
 ```
 </div>
 
-## J(`r max.jaccard.merged.df$Exemplar.Row[next.group.i]`, `r max.jaccard.merged.df$Exemplar.Col[next.group.i]`; `r max.jaccard.merged.df$Group[next.group.i]`)=`r 
-max.jaccard.merged.df$Jaccard[next.group.i]`
-
+## Group `r max.jaccard.merged.df$Group[next.group.i]`
 <div class="centered">
-```{r show-2-pair, echo=FALSE, warning=FALSE, message=FALSE}
-source('analysis/display.exemplar.pairs.R')
-display.exemplar.pairs(max.jaccard.merged.df$Exemplar.Row[next.group.i], max.jaccard.merged.df$Exemplar.Col[next.group.i], max.jaccard.merged.df$Group[next.group.i])
+```{r, echo=FALSE, echo=FALSE, warning=FALSE, message=FALSE}
+source('analysis/make.distance.matrix.R')
+d <- make.distance.matrix(group=as.character(max.jaccard.merged.df$Group[next.group.i]))
+fit <- hclust(d)
+plot(fit)
 next.group.i <- next.group.i + 1
 ```
 </div>
@@ -144,9 +143,17 @@ next.group.i <- next.group.i + 1
 max.jaccard.merged.df$Jaccard[next.group.i]`
 
 <div class="centered">
-```{r show-3-pair, echo=FALSE, warning=FALSE, message=FALSE}
-source('analysis/display.exemplar.pairs.R')
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
 display.exemplar.pairs(max.jaccard.merged.df$Exemplar.Row[next.group.i], max.jaccard.merged.df$Exemplar.Col[next.group.i], max.jaccard.merged.df$Group[next.group.i])
+```
+</div>
+
+## Group `r max.jaccard.merged.df$Group[next.group.i]`
+<div class="centered">
+```{r, echo=FALSE, echo=FALSE, warning=FALSE, message=FALSE}
+d <- make.distance.matrix(group=as.character(max.jaccard.merged.df$Group[next.group.i]))
+fit <- hclust(d)
+plot(fit)
 next.group.i <- next.group.i + 1
 ```
 </div>
@@ -155,20 +162,60 @@ next.group.i <- next.group.i + 1
 max.jaccard.merged.df$Jaccard[next.group.i]`
 
 <div class="centered">
-```{r show-4-pair, echo=FALSE, warning=FALSE, message=FALSE}
-source('analysis/display.exemplar.pairs.R')
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
 display.exemplar.pairs(max.jaccard.merged.df$Exemplar.Row[next.group.i], max.jaccard.merged.df$Exemplar.Col[next.group.i], max.jaccard.merged.df$Group[next.group.i])
+```
+</div>
+
+## Group `r max.jaccard.merged.df$Group[next.group.i]`
+<div class="centered">
+```{r, echo=FALSE, echo=FALSE, warning=FALSE, message=FALSE}
+d <- make.distance.matrix(group=as.character(max.jaccard.merged.df$Group[next.group.i]))
+fit <- hclust(d)
+plot(fit)
 next.group.i <- next.group.i + 1
 ```
 </div>
+
 
 ## J(`r max.jaccard.merged.df$Exemplar.Row[next.group.i]`, `r max.jaccard.merged.df$Exemplar.Col[next.group.i]`; `r max.jaccard.merged.df$Group[next.group.i]`)=`r 
 max.jaccard.merged.df$Jaccard[next.group.i]`
 
 <div class="centered">
-```{r show-5-pair, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
 source('analysis/display.exemplar.pairs.R')
 display.exemplar.pairs(max.jaccard.merged.df$Exemplar.Row[next.group.i], max.jaccard.merged.df$Exemplar.Col[next.group.i], max.jaccard.merged.df$Group[next.group.i])
+```
+</div>
+
+## Group `r max.jaccard.merged.df$Group[next.group.i]`
+<div class="centered">
+```{r, echo=FALSE, echo=FALSE, warning=FALSE, message=FALSE}
+d <- make.distance.matrix(group=as.character(max.jaccard.merged.df$Group[next.group.i]))
+fit <- hclust(d)
+plot(fit)
 next.group.i <- next.group.i + 1
 ```
 </div>
+
+
+## J(`r max.jaccard.merged.df$Exemplar.Row[next.group.i]`, `r max.jaccard.merged.df$Exemplar.Col[next.group.i]`; `r max.jaccard.merged.df$Group[next.group.i]`)=`r 
+max.jaccard.merged.df$Jaccard[next.group.i]`
+
+<div class="centered">
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+source('analysis/display.exemplar.pairs.R')
+display.exemplar.pairs(max.jaccard.merged.df$Exemplar.Row[next.group.i], max.jaccard.merged.df$Exemplar.Col[next.group.i], max.jaccard.merged.df$Group[next.group.i])
+```
+</div>
+
+## Group `r max.jaccard.merged.df$Group[next.group.i]`
+<div class="centered">
+```{r, echo=FALSE, echo=FALSE, warning=FALSE, message=FALSE}
+d <- make.distance.matrix(group=as.character(max.jaccard.merged.df$Group[next.group.i]))
+fit <- hclust(d)
+plot(fit)
+next.group.i <- next.group.i + 1
+```
+</div>
+

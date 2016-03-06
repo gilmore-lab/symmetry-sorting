@@ -2,6 +2,9 @@
 
 This is the project notes file for the symmetry sorting project.
 
+## 2016-03-06
+- rog added hclust-based hierarchical clustering plots to analysis-planning.Rmd.
+
 ## 2016-03-05-14:21
 - rog created new [analysis-planning.Rmd](../analysis-planning.Rmd) file in preparation for meeting with AMN and AC later this week.
 
