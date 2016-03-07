@@ -1,6 +1,6 @@
 jaccard.data <- function(df, duplicates=FALSE, frame=TRUE){
   # Calculates Jaccard index for sorting exemplars
-  # Returns tidy data frame if frame=TRUE, else matrix
+  # Returns tidy data frame if frame=TRUE, else square matrix
   # Returns tidy data frame without duplicate entires if duplicates=FALSE
   
   source('analysis/jaccard.R')
@@ -17,7 +17,11 @@ jaccard.data <- function(df, duplicates=FALSE, frame=TRUE){
           out[row.index, 3] <- jaccard(df[,i+start],df[,j+start])
           row.index <- row.index + 1
         }
-      } 
+      }
+      out <- data.frame(out)
+      names(out) <- c('Exemplar.Row', 'Exemplar.Col', 'Jaccard')
+      group <- unique(data.frame(df)$Group)
+      out$Group <- rep(group, 400)
     } else {
       out <- array(dim=c(20,20))
       for (i in 1:20){
@@ -36,6 +40,10 @@ jaccard.data <- function(df, duplicates=FALSE, frame=TRUE){
         row.index <- row.index + 1
       }
     }
+    out <- data.frame(out)
+    names(out) <- c('Exemplar.Row', 'Exemplar.Col', 'Jaccard')
+    group <- unique(data.frame(df)$Group)
+    out$Group <- rep(group, 190)
   }
   out
 }

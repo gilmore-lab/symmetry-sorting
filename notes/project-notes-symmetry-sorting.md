@@ -1,11 +1,14 @@
 # project-notes-symmetry-sorting
 
-This is the project notes file for the symmetry sorting project.
+This is the project notes file for the symmetry sorting project. Notes are in reverse chronological order.
 
 ## 2016-03-06
+
 - rog added hclust-based hierarchical clustering plots to analysis-planning.Rmd.
+- "list-fied" several functions (make.nsets.df, make.jaccard.df) for readability.
 
 ## 2016-03-05-14:21
+
 - rog created new [analysis-planning.Rmd](../analysis-planning.Rmd) file in preparation for meeting with AMN and AC later this week.
 
 ## 2016-03-04-1740
