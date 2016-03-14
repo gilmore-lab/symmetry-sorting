@@ -6,6 +6,7 @@ This is the project notes file for the symmetry sorting project. Notes are in re
 
 - ROG conducted preliminary analysis of SSIM values on wallpaper groups. See [ssim-analyis.Rmd](../ssim-analysis.Rmd) or [HTML](https://rawgit.com/gilmore-lab/symmetry-sorting/master/ssim-analysis.html).
 - ROG created separate file with Jaccard index analyses, [jaccard-analysis.Rmd](../jaccard-analysis.Rmd) or [HTML](https://rawgit.com/gilmore-lab/symmetry-sorting/master/jaccard-analysis.html)
+- ROG also created multidimensional scaling analysis of SSIM values in [mds-analysis.Rmd](../md-analysis.Rmd) or [HTML](https://rawgit.com/gilmore-lab/symmetry-sorting/master/mds-analysis.html)
 
 ## 2016-03-14-16:02
 
