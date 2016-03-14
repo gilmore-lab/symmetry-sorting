@@ -2,13 +2,25 @@
 
 This is the project notes file for the symmetry sorting project. Notes are in reverse chronological order.
 
-## 2016-03-11
+## 2016-03-14-17:19
 
-- Skype conference with Tony Norcia, Alasdair Cooke, Michelle Shade, and Rick Gilmore.
+- ROG conducted preliminary analysis of SSIM values on wallpaper groups. See [ssim-analyis.Rmd](../ssim-analysis.Rmd) or [HTML](https://rawgit.com/gilmore-lab/symmetry-sorting/master/ssim-analysis.html).
+
+## 2016-03-14-16:02
+
+- Rick Gilmore and Michelle Shade met.
+- Wrote [ssim.R](analysis/ssim.R) function to compute structural similarity measure for two image matrices.
+- Discussed plan for reading [Dong et al.](http://doi.org/10.1145/2578726.2578762) and [Yamins et al](http://doi.org/10.1038/nn.4244) papers for next Monday 3/21.
+- ROG will work on computing SSIM values for all stimulus pairs in preparation for cluster analysis.
+- ROG will investigate multidimensional scaling options.
+
+## 2016-03-11-1130
+
+- Skype conference with Tony Norcia, Alasdair Cooke, Michelle Shade, and Rick Gilmore. Presented [this report](https://rawgit.com/gilmore-lab/symmetry-sorting/master/analysis-planning.html)
 - Sort plot of individual participants by the mean or median set size to show who is a lumper and who is a splitter.
 - ROG will investigate [PSNR](https://en.wikipedia.org/wiki/Peak_signal-to-noise_ratio), [SSIM](https://en.wikipedia.org/wiki/Structural_similarity), and other image similarity measures. Goal is to compute these and compare them to behavioral/sorting data.
 - Alasdair sent reference to paper by [Dong et al.](http://doi.org/10.1145/2578726.2578762) that compares various metrics. He will send other references.
-- Agreed to explore conversation with Dan Yamins -- see [Yamins & DiCarlo 2016 ](http://doi.org/10.1038/nn.4244) -- about how convolutional network layers similiarity matrices compare to human performance.
+- Agreed to explore conversation with Dan Yamins -- see [Yamins & DiCarlo 2016 ](http://doi.org/10.1038/nn.4244) -- about how convolutional network layers similiarity matrices compare to human performance. 
 - Also investigate Kriegeskorte work on representational similarity matrices.
 - ROG and Alasdair will talk separately to follow up.
 - Special issue of "Symmetry in Vision" has 2016-08-31 submssion deadline. [Details](http://www.mdpi.com/journal/symmetry/special_issues/symmetry_vision).

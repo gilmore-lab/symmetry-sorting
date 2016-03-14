@@ -2,7 +2,9 @@
 title: "analysis-planning"
 author: "Rick Gilmore"
 date: "`r Sys.time()`"
-output: ioslides_presentation
+output: 
+  ioslides_presentation:
+    widescreen: true
 ---
 
 ```{r setup, include=FALSE}
@@ -15,14 +17,15 @@ require(dplyr)
 
 - **N**=33 participants
 - Sorted 20 exemplars of grayscale wallpapers
-- P1, P3M1, P31M, P6M, P6M
+- P1, P3M1, P31M, P6, P6M
 
 ## Questions
 
-1. Are some wallpaper groups more similar to one another?
+1. Are some wallpaper groups more self-similar than others?
     - Fewer sets
     - Higher 'similarity' ratings among exemplar pairs
 2. Are some exemplars more representative than others?
+3. Does human sorting behavior correspond to image-level metrics?
 
 ## Exemplars per set?
 
@@ -44,17 +47,30 @@ p +
 ```
 </div>
 
-## Individual differences exemplars per set
+## Individual differences in exemplars per set
 
 <div class="centered">
 ```{r n.sets-by-participant}
-qplot(x=Participant, y=Nsets,
-      data=n.sets.df,
-      geom=c("point"),
-      facets = Group ~ ., fill=Group, color=Group ) +
-  labs( x="Participant", y="N observations") +
-  theme( axis.text.x = element_blank() )+
+# Calculate median Nsets so can sort for plotting
+n.sets.summ.df <- n.sets.df %>%
+  group_by(Participant, Group) %>%
+  summarize(n.sets.sd = sd(Nsets))
+
+n.sets.summ.df <- merge(n.sets.df, n.sets.summ.df, all = TRUE)
+
+# Participants can differ in relative position within sample of median(Nsets) by symmetry group, so must plot each wallpaper group separately. NOT YET IMPLEMENTED.
+# Looks like I need a numeric value for Participant, rather than a discrete factor
+
+p <- n.sets.summ.df %>%
+  filter(Group=="P1") %>%
+  arrange(desc(n.sets.sd), Participant) %>%
+  ggplot(mapping = aes(x=Participant, y=Nsets)) +
+  geom_jitter(width=.4, height=0, alpha=.5) +
+  # facet_grid(facets = Group ~ .) +
+  labs( x="Participant", y="Exemplars/category") +
+  theme(axis.text.x = element_blank()) +
   guides( fill=FALSE )
+p
 ```
 </div>
 
