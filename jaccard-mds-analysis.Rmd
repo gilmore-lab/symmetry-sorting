@@ -1,0 +1,74 @@
+---
+title: "jaccard-mds-analysis"
+author: "Rick Gilmore"
+date: "`r Sys.time()`"
+output: 
+  ioslides_presentation:
+    widescreen: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+require(ggplot2)
+require(dplyr)
+require(png)
+
+source('analysis/make.distance.matrix.R')
+source('analysis/fit.plot.mds.R')
+```
+
+## Jaccard index as a metric of similarity/dissimilarity
+
+- <https://en.wikipedia.org/wiki/Jaccard_index>
+- $J(A,B)=\frac{A \cap B}{A \cup B}$
+- $0 <= J(A,B) <= 1$
+
+```{r}
+jaccard.all.df <- read.csv(file='analysis/data/jaccard.csv', header=TRUE)
+next.group.i <- 1
+```
+
+## Hierarchical Cluster of Jaccard indices on `r levels(jaccard.all.df$Group)[next.group.i]`
+<div class="centered">
+```{r, echo=FALSE, echo=FALSE, warning=FALSE, message=FALSE}
+d <- make.distance.matrix(levels(jaccard.all.df$Group)[next.group.i])
+fit.plot.mds(group=group, d)
+next.group.i <- next.group.i + 1
+```
+</div>
+
+## Hierarchical Cluster of Jaccard indices on `r levels(jaccard.all.df$Group)[next.group.i]`
+<div class="centered">
+```{r, echo=FALSE, echo=FALSE, warning=FALSE, message=FALSE}
+d <- make.distance.matrix(levels(jaccard.all.df$Group)[next.group.i])
+fit.plot.mds(group=group, d)
+next.group.i <- next.group.i + 1
+```
+</div>
+
+## Hierarchical Cluster of Jaccard indices on `r levels(jaccard.all.df$Group)[next.group.i]`
+<div class="centered">
+```{r, echo=FALSE, echo=FALSE, warning=FALSE, message=FALSE}
+d <- make.distance.matrix(levels(jaccard.all.df$Group)[next.group.i])
+fit.plot.mds(group=group, d)
+next.group.i <- next.group.i + 1
+```
+</div>
+
+## Hierarchical Cluster of Jaccard indices on `r levels(jaccard.all.df$Group)[next.group.i]`
+<div class="centered">
+```{r, echo=FALSE, echo=FALSE, warning=FALSE, message=FALSE}
+d <- make.distance.matrix(levels(jaccard.all.df$Group)[next.group.i])
+fit.plot.mds(group=group, d)
+next.group.i <- next.group.i + 1
+```
+</div>
+
+## Hierarchical Cluster of Jaccard indices on `r levels(jaccard.all.df$Group)[next.group.i]`
+<div class="centered">
+```{r, echo=FALSE, echo=FALSE, warning=FALSE, message=FALSE}
+d <- make.distance.matrix(levels(jaccard.all.df$Group)[next.group.i])
+fit.plot.mds(group=group, d)
+next.group.i <- next.group.i + 1
+```
+</div>

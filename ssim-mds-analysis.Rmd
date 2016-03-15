@@ -1,5 +1,5 @@
 ---
-title: "mds-analysis"
+title: "ssim-mds-analysis"
 author: "Rick Gilmore"
 date: "`r Sys.time()`"
 output: 

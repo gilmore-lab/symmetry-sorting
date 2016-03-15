@@ -2,11 +2,15 @@
 
 This is the project notes file for the symmetry sorting project. Notes are in reverse chronological order.
 
+## 2016-03-15-08:09
+
+- ROG added MDS analysis to Jaccard indices: [jaccard-mds-analysis.Rmd](../jaccard-mds-analysis.Rmd), [HTML](https://rawgit.com/gilmore-lab/symmetry-sorting/master/jaccard-mds-analysis.html)
+
 ## 2016-03-14-17:19
 
 - ROG conducted preliminary analysis of SSIM values on wallpaper groups. See [ssim-analyis.Rmd](../ssim-analysis.Rmd) or [HTML](https://rawgit.com/gilmore-lab/symmetry-sorting/master/ssim-analysis.html).
 - ROG created separate file with Jaccard index analyses, [jaccard-analysis.Rmd](../jaccard-analysis.Rmd) or [HTML](https://rawgit.com/gilmore-lab/symmetry-sorting/master/jaccard-analysis.html)
-- ROG also created multidimensional scaling analysis of SSIM values in [mds-analysis.Rmd](../md-analysis.Rmd) or [HTML](https://rawgit.com/gilmore-lab/symmetry-sorting/master/mds-analysis.html)
+- ROG also created multidimensional scaling analysis of SSIM values in [mds-analysis.Rmd](../ssim-mds-analysis.Rmd) or [HTML](https://rawgit.com/gilmore-lab/symmetry-sorting/master/ssim-mds-analysis.html)
 
 ## 2016-03-14-16:02
 
