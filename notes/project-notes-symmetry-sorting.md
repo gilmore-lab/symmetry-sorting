@@ -2,6 +2,13 @@
 
 This is the project notes file for the symmetry sorting project. Notes are in reverse chronological order.
 
+## 2016-03-21-18:19
+
+- ROG wrote new function to subsample wallpapers, [sub.sample.wp.R](../analysis/sub.sample.R)
+- ROG made [compute.image.metric.R](../analysis/compute.image.R) more generic. It now takes both an image summary function (e.g. ssim, image.dot.prod) and a scale factor (for sub-sampling) as parameters.
+- Sub-sampling central region of wallpapers should be a better measure of similarity. This won't be inflated by the large grayscale surrounds.
+- Ran out of time to run and test these.
+
 ## 2016-03-21-15:32
 
 - Project meeting with ROG and MS.
