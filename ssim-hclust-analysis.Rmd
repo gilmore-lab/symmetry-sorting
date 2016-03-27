@@ -1,5 +1,5 @@
 ---
-title: "ssim-analysis"
+title: "ssim-hclust-analysis"
 author: "Rick Gilmore"
 date: "`r Sys.time()`"
 output: 

@@ -2,6 +2,14 @@
 
 This is the project notes file for the symmetry sorting project. Notes are in reverse chronological order.
 
+## 2016-03-27-12:24
+
+- ROG decided to try the image-wise dot product on the wallpapers.
+- Hierarchical clustering on the full-scale wallpapers using the image-wise dot product is in [HTML](https://rawgit.com/gilmore-lab/symmetry-sorting/master/dotprod-hclust-analysis.html) and [Rmd](../dotprod-hclust-analsis.Rmd).
+- 2d MDS on the full-scale wallpapers using the image-wise dot product is in [HTML]https://rawgit.com/gilmore-lab/symmetry-sorting/master/dotprod-mds-analysis.html) and [Rmd](../dotprod-mds-analsis.Rmd).
+- ROG sees the virtue in writing a function that takes as parameters the image evaluation function, the spatial scaling factor, the cluster algorithm, and the wallpaper group.
+- ROG created template .Rmd file, [wallpaper-image-metrics-analysis.Rmd](../wallpaper-image-metrics-analysis.Rmd) and new function, [fit.plot.cluster.R](../analysis/fit.plot.cluster.R) that parameterizes the cluster analysis and plotting. The functions can be extended and tweaked, but the basic functionality is there.
+
 ## 2016-03-21-18:19
 
 - ROG wrote new function to subsample wallpapers, [sub.sample.wp.R](../analysis/sub.sample.R)

@@ -16,7 +16,8 @@ compute.image.metric <- function(group = 'P1', sf = 1, duplicates=FALSE, frame=T
           i2 <- sub.sample.wp(load.wp(e = j, g = group), sf=sf)
           out[row.index, 1] <- i
           out[row.index, 2] <- j
-          out[row.index, 3] <- FUN(i1, i2)
+          #out[row.index, 3] <- FUN(i1, i2)
+          out[row.index, 3] <- do.call(FUN, list(i1, i2))
           row.index <- row.index + 1
         }
       }
@@ -29,7 +30,8 @@ compute.image.metric <- function(group = 'P1', sf = 1, duplicates=FALSE, frame=T
         i1 <- sub.sample.wp(load.wp(e = i, g = group), sf=sf)
         for (j in 1:20){
           i2 <- sub.sample.wp(load.wp(e = j, g = group), sf=sf)
-          out[i, j] <- FUN(i1, i2)
+          #out[i, j] <- FUN(i1, i2)
+          out[i, j] <- do.call(FUN, list(i1, i2))
         }
       }
     }
@@ -41,7 +43,8 @@ compute.image.metric <- function(group = 'P1', sf = 1, duplicates=FALSE, frame=T
         i2 <- sub.sample.wp(load.wp(e = j, g = group), sf=sf)
         out[row.index, 1] <- i
         out[row.index, 2] <- j
-        out[row.index, 3] <- FUN(i1, i2)
+        #out[row.index, 3] <- FUN(i1, i2)
+        out[row.index, 3] <- do.call(FUN, list(i1, i2))
         row.index <- row.index + 1
       }
     }

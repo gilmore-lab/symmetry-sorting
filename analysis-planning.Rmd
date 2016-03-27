@@ -43,7 +43,8 @@ theme.symm <- theme( axis.title.x = element_text(size=18),
 p <- ggplot(data = n.sets.df)
 p + 
   aes(x=Group, y = Nsets, color=Group) + 
-  geom_violin() + geom_jitter(width = .5, height=0, alpha=.3)
+  geom_violin() + 
+  geom_jitter(width = .5, height=0, alpha=.3)
 ```
 </div>
 
@@ -74,7 +75,7 @@ p
 ```
 </div>
 
-## Jaccard index as a metric of similarity/dissimilarity
+## Jaccard index as a metric of similarity
 
 - <https://en.wikipedia.org/wiki/Jaccard_index>
 - $J(A,B)=\frac{A \cap B}{A \cup B}$
