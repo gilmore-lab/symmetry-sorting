@@ -22,3 +22,5 @@ Analysis
 The results of each subgroup created by the participant were logged by assigning a value of one (1) to each exemplar that was included in a subgroup or a value of zero (0) if it was not.
 
 Creation of Jaccard Index
+
+The Jaccard similarity coefficient was used to determine the degree of similarity of exemplars. The Jaccard coefficient is calculated as follows: J(A,B) = C / (A + B - C), where A is the number of subgroups containing exemplar a, B is the number of subgroups containing exemplar b and C is number of exemplars reported by both A and B.
