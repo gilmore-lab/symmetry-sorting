@@ -2,9 +2,10 @@
 
 This is the project notes file for the symmetry sorting project. Notes are in reverse chronological order.  
 
-## 2016-06-01
+## 2016-06-21-03:03
 
-- ars started methods section of paper located at: [
+- ars started methods section of paper located at: [symm-manuscript2016.md](https://github.com/gilmore-lab/symmetry-sorting/blob/master/pubs/symm-manuscript2016.md)  
+
 ## 2016-03-27-12:24
 
 - ROG decided to try the image-wise dot product on the wallpapers.
