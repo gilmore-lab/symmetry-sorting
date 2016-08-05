@@ -1,7 +1,10 @@
 # project-notes-symmetry-sorting
 
-This is the project notes file for the symmetry sorting project. Notes are in reverse chronological order.
+This is the project notes file for the symmetry sorting project. Notes are in reverse chronological order.  
 
+## 2016-06-01
+
+- ars started methods section of paper located at: [
 ## 2016-03-27-12:24
 
 - ROG decided to try the image-wise dot product on the wallpapers.
