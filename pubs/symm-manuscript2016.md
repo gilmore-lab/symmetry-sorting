@@ -7,28 +7,31 @@ Participants
 33 participants (9 Male, 24 Female), ranging in age between 18 and 35 completed this study. All participants had self reported 20/20 or corrected to 20/20 vision. We obtained written consent to participate from all participants under procedures approved by the Institutional Review Board of The Pennsylvania State University (#38536). The research was conducted according to the principles expressed in the Declaration of Helsinki.
 
 Generation of Wallpaper Patterns  
+
 ---------------------
 --------- Copied from paper 'Representation of maximally regular textures in human visual cortex'   
 --------- reduce explanation and cite appropriately  
 
 Wallpaper patterns are repetitive 2D patterns that tile the plane. There are 17 unique wallpaper patterns, corresponding to the set of planar symmetry groups (Fedorov, 1891; Polya, 1924; Liu et al., 2010). Each of the 17 wallpaper groups is built on one of five types of “unit lattices” that are used for tiling the plane without gaps. The “fundamental region” is the smallest repeating region in the wallpaper patterns. Within the unit lattice, multiple rigid transformations are applied to the fundamental region, which give rise to symmetries within the wallpaper group. As mentioned earlier, each wallpaper group contains a distinct combination of the following four fundamental symmetries: translations, rotations, reflections, and glide reflections.  
 
-In the experiments presented here, we measured neural responses to a subset of four of the 17 wallpaper groups: P2, P3, P4, and P6. These four groups all contain rotation symmetries, as well as translation symmetries given by the tiling of the unit lattice, but no other symmetries. Rotation symmetry around a particular point can be defined in terms of its order n, which means that the fundamental region can be rotated by an angle 360°/n without changing. The four wallpaper groups used in the present experiments are illustrated schematically in Figure 1, using a comma-shaped symbol as the fundamental region. Each group contains rotation symmetry around several points that vary in order. For P2, the maximum order of rotation symmetry is 2; for P3, it is 3; for P4, it is 4; and for P6, it is 6.  
-
+In the experiments presented here, we measured neural responses to a subset of four of the 17 wallpaper groups: P2, P3, P4, and P6. These four groups all contain rotation symmetries, as well as translation symmetries given by the tiling of the unit lattice, but no other symmetries. Rotation symmetry around a particular point can be defined in terms of its order n, which means that the fundamental region can be rotated by an angle 360°/n without changing. The four wallpaper groups used in the present experiments are illustrated schematically in Figure 1, using a comma-shaped symbol as the fundamental region. Each group contains rotation symmetry around several points that vary in order. For P2, the maximum order of rotation symmetry is 2; for P3, it is 3; for P4, it is 4; and for P6, it is 6.    
 Figure 1.
 View larger version:
 In this page In a new window
 Download as PowerPoint Slide
 Figure 1.  
+
 Tutorial examples of the four distinct wallpaper patterns used in the experiment, containing no reflection or glide symmetries. The maximum order of rotation symmetry for each wallpaper group is indicated next to each image. In these examples, the fundamental region is a comma-like symbol (illustration adapted from Wade, 1993).  
 
 We generated exemplars from the four wallpaper groups by using random noise textures as the fundamental regions based on a modification of the stimuli developed by Clarke et al. (2011b). In Figure 2, we show an exemplar from each of the four wallpaper groups, and indicate the fundamental region, rotation symmetry centers, and unit lattice on a magnified region of each texture. Although all four exemplars are generated from a fundamental region containing random noise, the resulting wallpapers are quite visually appealing, and very different from one another. Importantly, using random noise in the fundamental region means that for each wallpaper group an almost infinite number of distinct exemplars can be easily generated (a range of exemplars from group P6 are shown in Fig. 4).  
+
 
 Figure 2.
 View larger version:
 In this page In a new window
 Download as PowerPoint Slide
-Figure 2.
+Figure 2.  
+
 The stimuli used in the experiments reported here. Bottom, An exemplar from each of the four wallpaper groups. Top, Part of each exemplar, magnified so that the details of the pattern are easier to see. The fundamental regions are indicated with colored shading. The rotation symmetries in each pattern are indicated as follows: rotation of order 2 (rhombus), rotation of order 3 (triangle), rotation of order 4 (square), and rotation of order 6 (hexagon). The unit lattice is indicated with a yellow outline. Note how the fundamental region is rotated and repeated within the unit lattice, which is then used to tile the plane in each of the four exemplars. In the case of P3, the fundamental region is cut in half, and each half is rotated and repeated separately.  
 
 Generating wallpaper patterns by directly tiling the unit lattice is algorithmically challenging because unit lattices can have non-right angles, making them difficult to concatenate on a raster graphics display. We circumvented this issue by generating the smallest rectangular tile that contains the unit lattice and that can be easily replicated, here referred to as the “repeating tile.” The generation of a repeating tile starts with the fundamental region, which is cut from a larger “base texture.” The base texture is generated by convolving spatial white noise with a Gaussian-like filter constrained by the dimensions (width and height) of the base texture.  
@@ -39,7 +42,8 @@ Figure 3.
 View larger version:
 In this page In a new window
 Download as PowerPoint Slide
-Figure 3.
+Figure 3.  
+
 Diagram of stimulus generation steps for wallpaper group P6, as follows: 1, the fundamental region is selected from the filtered random-noise base texture; 2a, the fundamental region is rotated 120° and 240°, and combined with itself into an equilateral triangle; 2b, building the triangle “liner.” The fundamental region is rotated 180°; the top half is stacked at the bottom, and the bottom half goes to the top. This set is now combined with 300° and 60° rotated versions of the fundamental region. 3, Triangle and triangle liner are joined together to produce half of the repeating tile; 4, half of the repeating tile is rotated 180° and combined with itself to produce a rectangular repeating tile; 5, the finished repeating tile; 6, the repeating tile is used to tile the plane, repeated eight times down and five times across; and 7, the finished stimulus after postprocessing (power spectrum replacement, low-pass filtering, histogram equalization, and application of a circular aperture mask).  
 
 The dimensions of the fundamental region define the area of the repeating tile, which in turn defines the spatial scale of the exemplar. A key issue when designing the wallpapers was to parameterize the dimensions of the fundamental region such that spatial scale was uniform across different groups. Because of forced relationships among the area of the unit lattice, the area of the fundamental region, and the dimensions of the repeating tile, it is not possible to equate all parameters across all groups. For our stimuli, we decided to equalize the area of the repeating tile across groups to 100 × 100 image pixels. This meant that the unit lattices had an area of 1002 pixels for the P2 and P4 groups, and 2/3 × 1002 for the P3 and P6 groups (Fig. 2). The initial horizontal and vertical dimensions of the base texture were set to the square root of the tile area for all groups to ensure that the granularity within the textures was consistent. We calculated the area of the repeating tile as a function of the dimensions of the fundamental region for each group and cropped the base texture so that the repeating tile would have the desired area. For the wallpaper groups containing rotations of order 3 and 6 (P3 and P6 groups), an additional upscaling operation was performed: after cropping, the base texture was scaled up multiple times (usually 9–10 times), allowing us to concatenate the results of rotation with high precision (within 3 pixels). The finished repeating tile was then scaled back down so that the area of the repeating tile was matched across all groups.  
