@@ -7,13 +7,16 @@ jaccard.data <- function(df, duplicates=FALSE, frame=TRUE){
   
   start <- 2
   row.index <- 1
+  
+  exemplar_names <- names(df)[3:22]
+  exemplar_names <- stringr::str_remove_all(exemplar_names, 'X')
   if (duplicates) {
     if (frame){
       out <- array(dim=c(20*20,3))
       for (i in 1:20){
         for (j in 1:20){
-          out[row.index, 1] <- i
-          out[row.index, 2] <- j
+          out[row.index, 1] <- exemplar_names[i]
+          out[row.index, 2] <- exemplar_names[j]
           out[row.index, 3] <- jaccard(df[,i+start],df[,j+start])
           row.index <- row.index + 1
         }
@@ -34,8 +37,8 @@ jaccard.data <- function(df, duplicates=FALSE, frame=TRUE){
     out <- array(dim=c(190,3))
     for (i in 1:19){
       for (j in i+1:(20-i)){
-        out[row.index, 1] <- i
-        out[row.index, 2] <- j
+        out[row.index, 1] <- exemplar_names[i]
+        out[row.index, 2] <- exemplar_names[j]
         out[row.index, 3] <- jaccard(df[,i+start],df[,j+start])
         row.index <- row.index + 1
       }
