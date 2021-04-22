@@ -1,4 +1,6 @@
-compute.image.metric <- function(group = 'P1', sf = 1, duplicates=FALSE, frame=TRUE, FUN=ssim, analysis.dir = 'analysis/'){
+compute.image.metric <- function(group = 'P1', sf = 1, 
+                                 duplicates=FALSE, frame=TRUE, 
+                                 FUN=ssim, analysis.dir = 'analysis/'){
   
   require(tidyverse)
   
