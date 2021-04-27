@@ -1,4 +1,5 @@
-load.wp <- function(e, g, fn.df='analysis/data/wallpapers-on-databrary.csv', save=TRUE, img.dir='img/'){
+load.wp <- function(e, g, fn.df='analysis/data/wallpapers-on-databrary.csv', 
+                    save=TRUE, img.dir='img/'){
   # Loads selected wallpaper image from Databrary
   require(dplyr)
   require(png)

@@ -23,7 +23,6 @@ This file includes any demographic information available about the participant(s
 knitr::opts_chunk$set(echo = TRUE)
 
 library(tidyverse)
-library(lme4)
 
 source("analysis/jaccard.data.R")
 source("analysis/compute.image.metric.R")
@@ -189,7 +188,7 @@ We'll reimport the CSVs because of the type conflicts invoked by using data.fram
 
 ```{r reimport-merge-ssid-with-jaccard}
 ssid <- readr::read_csv("analysis/data/ssid.csv")
-jaccard <- read_csv("analysis/data/jaccard-no-duplicates.csv")
+jaccard <- readr::read_csv("analysis/data/jaccard-no-duplicates.csv")
 
 wp_merge <- dplyr::left_join(jaccard, ssid, by = c('Exemplar.Row', 'Exemplar.Col', 'Group'))
 ```
