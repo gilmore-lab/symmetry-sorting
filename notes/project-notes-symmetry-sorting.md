@@ -2,6 +2,18 @@
 
 This is the project notes file for the symmetry sorting project. Notes are in reverse chronological order.  
 
+## 2021-05-14-11:30
+
+- ROG and PK met.
+- ROG will focus on answering these questions (see [analysis-planning.html](analysis.planning.html):
+  - 1. Are some wallpaper groups more self-similar than others?
+    - Fewer sets
+    - Higher 'similarity' ratings among exemplar pairs
+  - 2. Are some exemplars more representative than others?
+    - Consider rank-ordering Jaccard indices of exemplars within participant and wallpaper group.
+    - Do mean rankings differ by exemplar.
+- ROG will create MS Word doc and share on GitHub for manuscript.
+
 ## 2021-03-03-11:30
 
 - ROG opened the project for the first time in 5 years.
