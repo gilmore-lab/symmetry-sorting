@@ -4,3 +4,16 @@
 .Rproj.user
 .DS_Store
 symmetry-sorting.Rproj
+
+*.aux
+*.bbl
+*.blg
+*.out
+*.fls
+*.fdb_latexmk
+*.log
+*.gz
+*.RData
+*.rdb
+*.rdx
+~*

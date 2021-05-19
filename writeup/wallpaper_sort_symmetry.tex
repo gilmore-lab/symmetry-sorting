@@ -1,0 +1,74 @@
+\documentclass[11pt, twoside]{article}
+\usepackage{boisik}
+\usepackage[OT1]{fontenc}
+\usepackage[affil-it]{authblk}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{multicol}
+\usepackage{natbib}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{lineno}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\hypersetup{
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+
+\linenumbers
+ \geometry{a4paper, total={170mm,257mm}, left=20mm, top=20mm}
+
+\renewcommand{\baselinestretch}{1.3}
+
+\title{\huge Perceptual Similarities Among Wallpaper Group Exemplars}
+\author[1,2]{Peter J. Kohler}
+\author[3]{Shivam Vedak}
+\author[3]{Rick O. Gilmore}
+
+\affil[1]{\small York University, Department of Psychology, Toronto, ON M3J 1P3, Canada}
+\affil[2]{\small Centre for Vision Research, York University, Toronto, ON, M3J 1P3, Canada}
+\affil[3]{\small Department of Psychology, Penn State University, Pennsylvania, USA}
+
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+There exists an abundance of visual symmetry within our environment. Yet research on human perception has almost exclusively been limited to studies of a single type of symmetry— two-fold reflection—leaving uncertainty about human perceptual sensitivity to the other types of symmetry as derived from the mathematics of Group Theory. Clarke et al. (2011) found that five of the seventeen wallpaper groups—P1, P3M1, P31M, P6, and P6M—have a high degree of self-similarity, as determined by the frequency with which participants grouped random-dot noise representations of the same wallpaper group together. The current study attempts to replicate Clarke et al. (2011) in a limited form. Here, we sought to understand the salience of lower-order features within each of five wallpaper groups, and concordantly, their impact on symmetry detection. Adult participants were presented with twenty exemplars of each of the five aforementioned wallpaper groups and instructed to sort them into as many subsets as they wished based on any criteria they saw appropriate. Participants were then surveyed on the methods they used to classify these images. Analysis suggest several factors—including contrast and presence of salient secondary structures—influence the detection of symmetry in wallpaper groups.
+\end{abstract}
+
+\section*{Results}
+
+\subsection*{Participants}
+33 participants (9 Male, 24 Female), ranging in age between 18 and 35 completed this study. All participants had self reported 20/20 or corrected to 20/20 vision. We obtained written consent to participate from all participants under procedures approved by the Institutional Review Board of The Pennsylvania State University (\#38536). The research was conducted according to the principles expressed in the Declaration of Helsinki.
+
+\subsection*{Stimulus Generation}
+Exemplars from the different wallpaper groups were generated using a modified version of the methodology developed by Clarke and colleagues\citep{RN172} that we have described in detail elsewhere\citep{RN1725}. Briefly, exemplar patterns for each group were generated from random-noise textures, which were then repeated and transformed to cover the plane, according to the symmetry axes and geometric lattice specific to each group. The use of noise textures as the starting point for stimulus generation allowed the creation of an almost infinite number of distinct exemplars of each wallpaper group. To make individual exemplars as similar as possible we replaced the power spectrum of each exemplar with the median across exemplars within a group. We then generated control exemplars that had the same power spectrum as the exemplar images by randomizing the phase of each exemplar image. The phase scrambling eliminates rotation, reflection and glide-reflection symmetries within each exemplar, but the phase-scrambled images inherent the spectral periodicity arising from the periodic tiling. This means that all control exemplars, regardless of which wallpaper group they are derived from, are transformed into another symmetry group, namely \textit{P1}. \textit{P1} is the simplest of the wallpaper groups and contains only translations of a region whose shape derives from the lattice. Because the different wallpaper groups have different lattices, \textit{P1} controls matched to different groups have different power spectra. Our experimental design takes these differences into account by comparing the neural responses evoked by each wallpaper group to responses evoked by the matched control exemplars.
+
+\subsection*{Stimulus Presentation}
+
+% \begin{figure}[hptb]
+%\centering
+%\includegraphics[width=0.75\linewidth]{../figures/figure1.pdf}
+%\caption{\textcolor{ForestGreen}{Subgroup relationships with indices 2 (solid lines) and 3 (dashed line) are shown in (A). All other relationships can be inferred by identifying the shortest path through the hierarchy, and multiplying the subgroup indices. For example, \textit{P1} is related to \textit{P6} through \textit{P6}\textrightarrow\textit{P3} (index 2) and \textit{P3}\textrightarrow\textit{P1} (index 3) so \textit{P1} is also a subgroup of \textit{P6} with index $3 \times 2 = 6$. We also show enlarged versions of some of the subgroup relationships involving \textit{P6} (B, shown in red) and \textit{PMM} (C, shown in blue) and highlight the symmetries within the subgroups to emphasize how the supergroup can be generated by adding additional transformations to the subgroup.}}
+%\label{fig:subgroups}
+%\end{figure}
+
+\section*{Results}
+
+\section*{Discussion}
+
+% Bibliography
+\begin{multicols}{2}
+\small
+\bibliographystyle{apalike} 
+\bibliography{literature}
+\end{multicols}
+
+\end{document}
