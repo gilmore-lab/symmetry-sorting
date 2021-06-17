@@ -133,6 +133,60 @@ jaccard_plot_2 <- jaccard %>%
 jaccard_plot_2
 ```
 
+### Jaccard outliers
+
+It may be useful to examine those exemplar pirs that have especially large Jaccard indices.
+
+```{r}
+jaccard_plot_4 <- jaccard %>%
+  filter(., Jaccard > .35) %>%
+  ggplot(.) +
+  aes(x = Jaccard, fill = Group) +
+  geom_boxplot()
+jaccard_plot_4
+```
+
+So, P6 and P31M have a few highly similar exemplar pairs:
+
+```{r}
+jaccard %>%
+  filter(., Jaccard > .35) %>%
+  arrange(., Group, Exemplar.Row)
+```
+For P31M, Exemplars 2, 14, 19, and 20 were rated highly self-similar.
+
+```{r, fig.show="hold", out.height="20%", out.width="20%", fig.align='default'}
+knitr::include_graphics("img/P31M-2.png")
+knitr::include_graphics("img/P31M-7.png")
+knitr::include_graphics("img/P31M-14.png")
+knitr::include_graphics("img/P31M-20.png")
+```
+
+```{r, fig.show="hold", out.height="20%", out.width="20%", fig.align='default'}
+knitr::include_graphics("img/P31M-14.png")
+knitr::include_graphics("img/P31M-20.png")
+```
+
+```{r, fig.show="hold", out.height="20%", out.width="20%", fig.align='default'}
+knitr::include_graphics("img/P31M-19.png")
+knitr::include_graphics("img/P31M-20.png")
+```
+
+For P6, 2, 6, 9, 13, and 19 were rated highly self-similar.
+
+```{r, fig.show="hold", out.height="20%", out.width="20%", fig.align='default'}
+knitr::include_graphics("img/P6-6.png")
+knitr::include_graphics("img/P6-13.png")
+knitr::include_graphics("img/P6-19.png")
+```
+
+
+```{r, fig.show="hold", out.height="20%", out.width="20%", fig.align='default'}
+knitr::include_graphics("img/P6-9.png")
+knitr::include_graphics("img/P6-7.png")
+knitr::include_graphics("img/P6-8.png")
+```
+
 ## Analyses
 
 ```{r}
@@ -143,7 +197,6 @@ anova(jaccard_mod1)
 Average Jaccard similarity scores differ across wallpaper groups, with mean scores for P1 the largest.
 
 Nevertheless, there appear to be a number of exemplar pairs in other wallpaper groups that have especially high Jaccard scores. Let's sort Jaccard indices across the wallpaper groups.
-
 
 ```{r}
 jaccard_plot_2 <- jaccard %>%
@@ -174,5 +227,5 @@ jaccard_mod2 <- aov(overall_rank ~ Group, jaccard_sort)
 summary(jaccard_mod2)
 anova(jaccard_mod2)
 ```
-
 P1 still has the lowest mean rank.
+
