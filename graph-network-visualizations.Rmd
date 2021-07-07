@@ -30,24 +30,24 @@ library(ggraph)
 The Jaccard index data are found in `analysis/data/jaccard.csv`.
 
 ```{r}
-jaccard <- readr::read_csv("analysis/data/jaccard.csv")
+jaccard_raw <- readr::read_csv("analysis/data/jaccard.csv")
 ```
 
 ```{r}
-str(jaccard)
+str(jaccard_raw)
 ```
 
 It's probably wise to reorder the data frame by wallpaper group, Jaccard index, and exemplar index.
 
 ```{r}
-jaccard <- jaccard %>%
+jaccard <- jaccard_raw %>%
   dplyr::arrange(., Group, Exemplar.Row, desc(Jaccard))
 ```
 
 Let's add a Jaccard mean and median by `Exemplar.Row`.
 
 ```{r}
-jaccard <- jaccard %>%
+jaccard_aug <- jaccard %>%
   dplyr::group_by(., Group, Exemplar.Row) %>%
   dplyr::mutate(.,
     j_mean = mean(Jaccard),
@@ -190,16 +190,20 @@ ggraph(p1_selected, layout = "linear") +
 ```
 
 ```{r}
-p1 %>% dplyr::arrange(., j_mean)
+jaccard_aug %>% 
+  dplyr::filter(., Group == "P1") %>%
+  dplyr::arrange(., desc(j_mean))
 ```
 
-It looks like exemplars 18 and 11 are are among the lowest.
+It looks like exemplars 19 and 16 are are among the highest.
 
 ```{r}
-p1 %>% dplyr::arrange(., desc(j_mean))
+jaccard_aug %>% 
+  dplyr::filter(., Group == "P1") %>%
+  dplyr::arrange(., j_mean)
 ```
 
-19 and 16 among the highest.
+18 and 11 among the lowest
 
 ```{r}
 p1_selected <- p1_tidy %>%
@@ -228,3 +232,172 @@ g <- ggraph(p1_selected, layout = "linear") +
 
 g
 ```
+
+
+```{r}
+p1_selected <- p1_tidy %>%
+  activate(edges) %>%
+  dplyr::filter(., from == 19 | to == 19)
+
+p1_selected <- p1_selected %>%
+  dplyr::mutate(weight = cut(weight, c(0, .1, .2, .3, .4, .5, .6)))
+
+g <- ggraph(p1_selected, layout = "linear", circular = TRUE) + 
+  geom_edge_arc(aes(color = factor(weight))) + 
+  geom_node_text(aes(label = id)) +
+  labs(edge_width = "Jaccard") +
+  theme_graph()
+
+g
+```
+
+```{r}
+plot_jaccard_vals <- function(df, exemplar_id, group, mean_j = NA) {
+  df <- df %>%
+    activate(edges) %>%
+    dplyr::filter(., from == exemplar_id | to == exemplar_id) %>%
+    dplyr::mutate(weight = cut(weight, c(0, .1, .2, .3, .4, .5, .6), labels = c("<.1", ".1-.2", ".2-.3", ".3-.4", ".4-.5", ".5-.6")))
+  
+  ggraph(df, layout = "linear", circular = TRUE) +
+    geom_edge_arc(aes(color = weight)) +
+    geom_node_text(aes(label = id)) +
+    ggtitle(paste0(group, " | Exemplar ", exemplar_id, " | mean Jaccard ", mean_j)) +
+    theme_graph()
+}
+
+plot_jaccard_vals(p1_tidy, 11, "P1")
+```
+
+## P1
+
+### Highest mean Jaccard
+
+```{r}
+plot_jaccard_vals(p1_tidy, 19, "P1")
+```
+
+```{r}
+plot_jaccard_vals(p1_tidy, 16, "P1")
+```
+
+### Lowest mean Jaccard
+
+```{r}
+plot_jaccard_vals(p1_tidy, 18, "P1")
+```
+
+```{r}
+plot_jaccard_vals(p1_tidy, 11, "P1")
+```
+
+## Define functions to select wallpaper group
+
+```{r}
+wp_graph <- function(df, group) {
+  out_df <- df %>%
+    dplyr::filter(., Group == group)
+
+  df_edges <- tibble(from = out_df$Exemplar.Row,
+                     to = out_df$Exemplar.Col,
+                     weight = out_df$Jaccard)
+  
+  df_nodes <- tibble(id = 1:20)
+ 
+  tidygraph::tbl_graph(nodes = df_nodes, 
+                       edges = df_edges,
+                       directed = FALSE)
+}
+```
+
+```{r}
+jaccard_stats <- function(jaccard) {
+  jaccard %>%
+  dplyr::group_by(., Group, Exemplar.Row) %>%
+    dplyr::mutate(.,
+      j_mean = mean(Jaccard),
+      j_med = median(Jaccard),
+      j_max = max(Jaccard),
+      j_min = min(Jaccard)
+    ) %>%
+    dplyr::summarise(.,
+                     Jaccard_mean = mean(j_mean),
+                     Jaccard_med = mean(j_med),
+                     Jaccard_max = mean(j_max),
+                     Jaccard_min = mean(j_min) )
+}
+```
+
+```{r}
+graph <- wp_graph(jaccard, "P31M")
+j_stats <- jaccard_stats(jaccard_raw)
+plot_jaccard_vals(graph, 18, "P31M")
+```
+
+```{r}
+pick_extreme_mean_exemplars <- function(j_stats, group, hi_lo = "hi", n_exemplars = 1) {
+  this_group <- j_stats %>%
+    dplyr::filter(., Group == group)
+  
+  if (hi_lo == "hi") {
+    this_group <- this_group %>%
+      dplyr::arrange(., desc(Jaccard_mean))
+  } else {
+    this_group <- this_group %>%
+      dplyr::arrange(., Jaccard_mean)
+  }
+  
+  this_group$Exemplar.Row[1:n_exemplars]
+}
+
+pick_extreme_max_exemplars <- function(j_stats, group, hi_lo = "hi", n_exemplars = 1) {
+  this_group <- j_stats %>%
+    dplyr::filter(., Group == group)
+  
+  if (hi_lo == "hi") {
+    this_group <- this_group %>%
+      dplyr::arrange(., desc(Jaccard_max))
+  } else {
+    this_group <- this_group %>%
+      dplyr::arrange(., Jaccard_max)
+  }
+  
+  this_group$Exemplar.Row[1:n_exemplars]
+}
+
+pick_extreme_min_exemplars <- function(j_stats, group, hi_lo = "hi", n_exemplars = 1) {
+  this_group <- j_stats %>%
+    dplyr::filter(., Group == group)
+  
+  if (hi_lo == "hi") {
+    this_group <- this_group %>%
+      dplyr::arrange(., desc(Jaccard_min))
+  } else {
+    this_group <- this_group %>%
+      dplyr::arrange(., Jaccard_min)
+  }
+  
+  this_group$Exemplar.Row[1:n_exemplars]
+}
+```
+
+## Test functions
+
+```{r}
+jaccard <- jaccard_raw %>%
+  dplyr::arrange(., Group, Exemplar.Row, desc(Jaccard))
+
+j_stats <- jaccard_stats(jaccard_raw)
+
+this_group = "P31M"
+graph <- wp_graph(jaccard, this_group)
+
+hi_1_max <- pick_extreme_max_exemplars(j_stats, this_group, hi_lo = "hi")
+lo_1_max <- pick_extreme_max_exemplars(j_stats, this_group, hi_lo = "lo")
+
+(hi_max_j <- j_stats$Jaccard_mean[hi_1_max])
+(lo_max_j <- j_stats$Jaccard_mean[lo_1_max])
+
+plot_jaccard_vals(graph, hi_1_max, this_group, hi_max_j)
+plot_jaccard_vals(graph, lo_1_max, this_group, lo_max_j)
+```
+
