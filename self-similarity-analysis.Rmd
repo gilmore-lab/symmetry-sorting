@@ -6,7 +6,7 @@ output:
   html_document:
     toc: yes
     toc_depth: 3
-    toc_float: yes
+    toc_float: no
 ---
 
 
@@ -28,6 +28,8 @@ library(tidyverse)
 
 2. Were there differences in mean *Jaccard indices* by wallpaper group?
 
+3. Are there wallpaper groups with exemplar pairs that have especially high Jaccard indices?
+
 # Import data
 
 ## N sets
@@ -44,8 +46,6 @@ There are $n=$ `r length(unique(nsets$Participant))` individual participants.
 
 The Jaccard index data are found in `analysis/data/jaccard.csv`.
 
-There are 
-
 ```{r}
 jaccard <- readr::read_csv("analysis/data/jaccard.csv")
 ```
@@ -55,7 +55,7 @@ jaccard <- readr::read_csv("analysis/data/jaccard.csv")
 
 ### N exemplars per set
 
-Let's view the number of exemplars per set.
+Let's view the number of exemplars per set per participant. That is, each dot in the plot below is one set contributed by one participant.
 
 ```{r}
 exemplars_per_set_plot <- nsets %>%
@@ -133,13 +133,17 @@ jaccard_plot_2 <- jaccard %>%
 jaccard_plot_2
 ```
 
+The mean Jaccard similarity indices across the exemplars was higher for P1; however, note the outliers.
+
 ### Jaccard outliers
 
-It may be useful to examine those exemplar pirs that have especially large Jaccard indices.
+It may be useful to examine those exemplar pairs that have especially large Jaccard indices.
+
+As a starting point for exploration, we examine those exemplars with Jaccard indices > some threshold. Here, we choose `r (j_thresh=.35)`.
 
 ```{r}
 jaccard_plot_4 <- jaccard %>%
-  filter(., Jaccard > .35) %>%
+  filter(., Jaccard > j_thresh) %>%
   ggplot(.) +
   aes(x = Jaccard, fill = Group) +
   geom_boxplot()
@@ -153,12 +157,23 @@ jaccard %>%
   filter(., Jaccard > .35) %>%
   arrange(., Group, Exemplar.Row)
 ```
+
+#### P31M
+
 For P31M, Exemplars 2, 14, 19, and 20 were rated highly self-similar.
 
 ```{r, fig.show="hold", out.height="20%", out.width="20%", fig.align='default'}
 knitr::include_graphics("img/P31M-2.png")
 knitr::include_graphics("img/P31M-7.png")
+```
+
+```{r, fig.show="hold", out.height="20%", out.width="20%", fig.align='default'}
+knitr::include_graphics("img/P31M-2.png")
 knitr::include_graphics("img/P31M-14.png")
+```
+
+```{r, fig.show="hold", out.height="20%", out.width="20%", fig.align='default'}
+knitr::include_graphics("img/P31M-2.png")
 knitr::include_graphics("img/P31M-20.png")
 ```
 
@@ -172,18 +187,27 @@ knitr::include_graphics("img/P31M-19.png")
 knitr::include_graphics("img/P31M-20.png")
 ```
 
+#### P6
+
 For P6, 2, 6, 9, 13, and 19 were rated highly self-similar.
 
 ```{r, fig.show="hold", out.height="20%", out.width="20%", fig.align='default'}
 knitr::include_graphics("img/P6-6.png")
 knitr::include_graphics("img/P6-13.png")
-knitr::include_graphics("img/P6-19.png")
 ```
 
+```{r, fig.show="hold", out.height="20%", out.width="20%", fig.align='default'}
+knitr::include_graphics("img/P6-6.png")
+knitr::include_graphics("img/P6-19.png")
+```
 
 ```{r, fig.show="hold", out.height="20%", out.width="20%", fig.align='default'}
 knitr::include_graphics("img/P6-9.png")
 knitr::include_graphics("img/P6-7.png")
+```
+
+```{r, fig.show="hold", out.height="20%", out.width="20%", fig.align='default'}
+knitr::include_graphics("img/P6-9.png")
 knitr::include_graphics("img/P6-8.png")
 ```
 

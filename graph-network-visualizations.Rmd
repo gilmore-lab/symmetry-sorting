@@ -1,0 +1,230 @@
+---
+title: "similarity-graphs"
+author: "Rick Gilmore"
+date: "`r Sys.time()`"
+output: 
+  html_document:
+    toc: yes
+    toc_depth: 3
+    toc_float: no
+---
+
+# Purpose
+
+This document summarizes Rick Gilmore's analysis of participant sorting data using graph and network analysis tools.
+
+# Set-up
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(tidygraph)
+library(ggraph)
+```
+
+# Import data
+
+## Jaccard indices
+
+The Jaccard index data are found in `analysis/data/jaccard.csv`.
+
+```{r}
+jaccard <- readr::read_csv("analysis/data/jaccard.csv")
+```
+
+```{r}
+str(jaccard)
+```
+
+It's probably wise to reorder the data frame by wallpaper group, Jaccard index, and exemplar index.
+
+```{r}
+jaccard <- jaccard %>%
+  dplyr::arrange(., Group, Exemplar.Row, desc(Jaccard))
+```
+
+Let's add a Jaccard mean and median by `Exemplar.Row`.
+
+```{r}
+jaccard <- jaccard %>%
+  dplyr::group_by(., Group, Exemplar.Row) %>%
+  dplyr::mutate(.,
+    j_mean = mean(Jaccard),
+    j_med = median(Jaccard),
+    j_max = max(Jaccard),
+    j_min = min(Jaccard)
+  )
+```
+
+### Make edge, node tibbles
+
+```{r}
+p1 <- jaccard %>%
+  dplyr::filter(., Group == "P1")
+
+p1_edges <- tibble(from = p1$Exemplar.Row,
+                   to = p1$Exemplar.Col,
+                   weight = p1$Jaccard)
+p1_nodes <- tibble(id = 1:20)
+```
+
+### Make network
+
+```{r}
+p1_network <- network::network(p1_edges, vertex.attr = p1_nodes, 
+                      matrix.type = "edgelist", ignore.eval = FALSE,
+                      directed = FALSE)
+```
+
+# Plotting
+
+```{r}
+plot(p1_network, vertex.cex = 3, mode='circle')
+```
+
+Let's pick the top ten strongest connections.
+
+```{r}
+p1_tidy <- tidygraph::tbl_graph(nodes = p1_nodes, edges = p1_edges,
+                                directed = FALSE)
+
+ggraph::ggraph(p1_tidy) + geom_edge_link() + geom_node_point() + theme_graph()
+```
+
+```{r}
+ggraph(p1_tidy, layout = "graphopt") + 
+  geom_node_point() +
+  geom_edge_link(aes(width = weight), alpha = 0.8) + 
+  scale_edge_width(range = c(0.2, 2)) +
+  geom_node_text(aes(label = id), repel = TRUE) +
+  labs(edge_width = "Jaccard") +
+  theme_graph()
+```
+```{r}
+ggraph(p1_tidy, layout = "linear") + 
+  geom_edge_arc(aes(width = weight), alpha = 0.8) + 
+  scale_edge_width(range = c(0.2, 2)) +
+  geom_node_text(aes(label = id)) +
+  labs(edge_width = "Jaccard") +
+  theme_graph()
+```
+
+Let's pick the top two exemplars to plot.
+
+```{r}
+p1_e8 <- p1_tidy %>%
+  activate(edges) %>%
+  dplyr::filter(., from == 8)
+
+ggraph(p1_e8, layout = "linear") + 
+  geom_edge_arc(aes(width = weight), alpha = 0.8) + 
+  scale_edge_width(range = c(0.2, 2)) +
+  geom_node_text(aes(label = id)) +
+  labs(edge_width = "Jaccard") +
+  theme_graph()
+```
+
+```{r}
+p1_e10 <- p1_tidy %>%
+  activate(edges) %>%
+  dplyr::filter(., from == 10 | to == 10)
+
+ggraph(p1_e10, layout = "linear") + 
+  geom_edge_arc(aes(width = weight, color = weight), alpha = 0.8) + 
+  scale_edge_width(range = c(0.2, 2)) +
+  geom_node_text(aes(label = id)) +
+  labs(edge_width = "Jaccard") +
+  theme_graph()
+```
+
+```{r}
+p1_e10 <- p1_tidy %>%
+  activate(edges) %>%
+  dplyr::filter(., from == 10 | to == 10)
+
+ggraph(p1_e10, layout = "graphopt") + 
+  geom_edge_link(aes(width = weight, color = weight), alpha = 0.8) + 
+  scale_edge_width(range = c(0.2, 2)) +
+  geom_node_text(aes(label = id)) +
+  labs(edge_width = "Jaccard") +
+  theme_graph()
+```
+
+```{r}
+p1_selected <- p1_tidy %>%
+  activate(edges) %>%
+  dplyr::filter(., from == 8 | to == 8)
+
+ggraph(p1_selected, layout = "graphopt") + 
+  geom_edge_link(aes(width = weight, color = weight), alpha = 0.8) + 
+  scale_edge_width(range = c(0.2, 2)) +
+  geom_node_text(aes(label = id)) +
+  labs(edge_width = "Jaccard") +
+  theme_graph()
+```
+```{r}
+p1_selected <- p1_tidy %>%
+  activate(edges) %>%
+  dplyr::filter(., from == 8 | to == 8)
+
+ggraph(p1_selected, layout = "linear") + 
+  geom_edge_arc(aes(width = weight, color = weight), alpha = 0.8) + 
+  scale_edge_width(range = c(0.2, 2)) +
+  geom_node_text(aes(label = id)) +
+  labs(edge_width = "Jaccard") +
+  theme_graph()
+```
+
+```{r}
+p1_selected <- p1_tidy %>%
+  activate(edges) %>%
+  dplyr::filter(., from == 10 | to == 10)
+
+ggraph(p1_selected, layout = "linear") + 
+  geom_edge_arc(aes(width = weight, color = weight), alpha = 0.8) + 
+  scale_edge_width(range = c(0.2, 2)) +
+  geom_node_text(aes(label = id)) +
+  labs(edge_width = "Jaccard") +
+  theme_graph()
+```
+
+```{r}
+p1 %>% dplyr::arrange(., j_mean)
+```
+
+It looks like exemplars 18 and 11 are are among the lowest.
+
+```{r}
+p1 %>% dplyr::arrange(., desc(j_mean))
+```
+
+19 and 16 among the highest.
+
+```{r}
+p1_selected <- p1_tidy %>%
+  activate(edges) %>%
+  dplyr::filter(., from == 18 | to == 18)
+
+ggraph(p1_selected, layout = "linear") + 
+  geom_edge_arc(aes(width = weight, color = weight), alpha = 0.8) + 
+  scale_edge_width(range = c(0.2, 2)) +
+  geom_node_text(aes(label = id)) +
+  labs(edge_width = "Jaccard") +
+  theme_graph()
+```
+
+```{r}
+p1_selected <- p1_tidy %>%
+  activate(edges) %>%
+  dplyr::filter(., from == 19 | to == 19)
+
+g <- ggraph(p1_selected, layout = "linear") + 
+  geom_edge_arc(aes(width = weight, color = weight), alpha = 0.8) + 
+  scale_edge_width(range = c(0.1, 4), limits = c(0, .6)) +
+  geom_node_text(aes(label = id)) +
+  labs(edge_width = "Jaccard") +
+  theme_graph()
+
+g
+```
