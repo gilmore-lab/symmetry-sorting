@@ -18,7 +18,13 @@ This document creates plots of the network of Jaccard similarity indices for som
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE,
-                      fig.path = "img/")
+                      fig.path = "img/",
+                      dev = "png",
+                      dpi = 300,
+                      fig.align = "center",
+                      fig.width = 7,  # in
+                      fig.height = 7
+                      )
 
 library(tidyverse)
 library(tidygraph)
@@ -89,13 +95,22 @@ exemplars_max_jaccard
 
 ## Heatmaps
 
+Let's create a simplified color scale.
+
+```{r}
+value_breaks <- c(0, .2, .4, .6, .8)
+value_colors <-
+    colorRampPalette(RColorBrewer::brewer.pal(4, "Oranges"))(4)
+legend_text <- c("<.2", ".2-.4", ".4-.6", ">.6")
+```
+
+
 Create helper function to generate heatmaps.
 
 ```{r}
 plot_heatmap <- function(wp_group = "P1",
                          df = jaccard,
-                         show_legend = TRUE,
-                         save_to_file = TRUE) {
+                         show_legend = FALSE) {
   # Select wp_group
   this_df <- df %>%
     dplyr::filter(., Group == wp_group)
@@ -119,10 +134,9 @@ plot_heatmap <- function(wp_group = "P1",
     )
   )
   
-  value_breaks <- c(0, .2, .4, .6, .8)
-  value_colors <-
-    colorRampPalette(RColorBrewer::brewer.pal(4, "Oranges"))(4)
-  
+  # value_breaks <- c(0, .2, .4, .6, .8)
+  # value_colors <-
+  #   colorRampPalette(RColorBrewer::brewer.pal(4, "Oranges"))(4)
   
   heatmap(
     j_matrix,
@@ -137,45 +151,57 @@ plot_heatmap <- function(wp_group = "P1",
   if (show_legend) {
     legend(
       x = "bottomright",
-      legend = c("<.2", ".2-.4", ".4-.6", ">.6"),
-      fill = colorRampPalette(RColorBrewer::brewer.pal(4, "Oranges"))(4)
+      legend = legend_text,
+      fill = value_colors
     )
   }
   
-  if (save_to_file) {
-    png(paste0("img/", wp_group, "-", "jaccard-heatmap.png"))
-    heatmap(
-      j_matrix,
-      Rowv = NA,
-      Colv = NA,
-      main = title_txt,
-      symm = TRUE,
-      col = value_colors,
-      breaks = value_breaks
-    )
-    
-    if (show_legend) {
-      legend(
-        x = "bottomright",
-        legend = c("<.2", ".2-.4", ".4-.6", ">.6"),
-        fill = colorRampPalette(RColorBrewer::brewer.pal(4, "Oranges"))(4)
-      )
-    }
-    dev.off()
-  }
+  # if (save_to_file) {
+  #   png(paste0("img/", wp_group, "-", "jaccard-heatmap.png"))
+  #   heatmap(
+  #     j_matrix,
+  #     Rowv = NA,
+  #     Colv = NA,
+  #     main = title_txt,
+  #     symm = TRUE,
+  #     col = value_colors,
+  #     breaks = value_breaks
+  #   )
+  #   
+  #   if (show_legend) {
+  #     legend(
+  #       x = "bottomright",
+  #       legend = c("<.2", ".2-.4", ".4-.6", ">.6"),
+  #       fill = colorRampPalette(RColorBrewer::brewer.pal(4, "Oranges"))(4)
+  #     )
+  #   }
+  #   dev.off()
+  #}
 }
 ```
 
 Test the function with default values.
 
-```{r}
-plot_heatmap()
+```{r, p1-heatmap}
+plot_heatmap("P1")
 ```
 
 Now, let's plot the same for all wallpaper groups.
 
-```{r}
-purrr::map(wp_groups, plot_heatmap)
+```{r, p31m-heatmap}
+plot_heatmap("P31M")
+```
+
+```{r, p3m1-heatmap}
+plot_heatmap("P3M1")
+```
+
+```{r, p6-heatmap}
+plot_heatmap("P6")
+```
+
+```{r, p6m-heatmap}
+plot_heatmap("P6M")
 ```
 
 These are saved in `img/`.
@@ -213,95 +239,154 @@ Test with default parameters.
 (p1_df <- make_jaccard_network())
 ```
 
+Select a specific exemplar and categorize the Jaccard index values.
 
 ```{r}
-plot_jaccard_vals <- function(network_df = p1_df, exemplar_id = 8, wp_group = "P1", 
-                              save_to_file = TRUE) {
-  
+select_exemplar <- function(network_df =  make_jaccard_network(), exemplar_id = 8) {
   df <- network_df %>%
     activate(edges) %>%
     dplyr::filter(., from == exemplar_id | to == exemplar_id) %>%
     dplyr::mutate(weight = cut(weight, c(0, .2, .4, .6, .8), 
                                labels = c("<.2", ".2-.4", ".4-.6", ">.6")))
-  
-  ggraph(df, layout = "linear", circular = TRUE) +
-    geom_edge_arc(aes(color = weight)) +
-    geom_node_text(aes(label = id)) +
-    theme_graph() +
-    coord_fixed() +
-    # NOTE: the drop = FALSE ensures that the full range of scales is used!
-    scale_edge_color_manual(name = "Jaccard",
-                            values = RColorBrewer::brewer.pal(4, "Oranges"), drop = FALSE)
-  
-  if (save_to_file) {
-    fn <- paste0(wp_group, "-exemplar-", exemplar_id, "-network.png")
-    ggsave(filename = paste0(fn),
-           device = "png",
-           path = "img")
-    message(paste0("Saving : ", fn))
-  }
+  df
 }
+
+select_exemplar()
+```
+
+Now, plot the edge values.
+
+```{r, test-ggraph}
+ggraph(select_exemplar(), layout = "linear", circular = TRUE) +
+  geom_edge_arc(aes(color = weight)) +
+  geom_node_text(aes(label = id), size = 6) +
+  theme_graph() +
+  coord_fixed() +
+  # NOTE: the drop = FALSE ensures that the full range of scales is used!
+  scale_edge_color_manual(name = "Jaccard",
+                          values = value_colors,
+                          drop = FALSE) +
+  theme(legend.text = element_text(size = 14)) +
+  theme(legend.title = element_text(size = 16))
+```
+
+
+```{r}
+plot_jaccard_vals <-
+  function(network_df = make_jaccard_network(),
+           exemplar_id = 8,
+           wp_group = "P1") {
+
+    df <- select_exemplar(network_df, exemplar_id)
+    
+    ggraph(df, layout = "linear", circular = TRUE) +
+      geom_edge_arc(aes(color = weight)) +
+      geom_node_text(aes(label = id), size = 6) +
+      theme_graph() +
+      coord_fixed() +
+      # NOTE: the drop = FALSE ensures that the full range of scales is used!
+      scale_edge_color_manual(name = "Jaccard",
+                              values = value_colors,
+                              drop = FALSE) +
+      theme(legend.text = element_text(size = 14)) +
+      theme(legend.title = element_text(size = 16))
+  }
 ```
 
 Test with default parameters.
 
-```{r}
+### P1 #8
+
+```{r, p1-exemplar-8-network}
 plot_jaccard_vals()
 ```
 
+### P1 #9
+
 And its companion.
 
-```{r}
+```{r, p1-exemplar-9-network}
 plot_jaccard_vals(exemplar_id = 9)
 ```
 
-Now, let's put the pieces together.
+### P31M #2
 
-```{r}
+```{r, p31m-exemplar-2-network}
+plot_jaccard_vals(make_jaccard_network(wp_group = "P31M", df = jaccard), exemplar_id = 2, wp_group = "P31M")
+```
+
+### P31M #7
+
+```{r, p31m-exemplar-7-network}
+plot_jaccard_vals(make_jaccard_network(wp_group = "P31M", df = jaccard), exemplar_id = 7, wp_group = "P31M")
+```
+
+### P3M1 #19
+
+```{r, p3m1-exemplar-19-network}
+plot_jaccard_vals(make_jaccard_network(wp_group = "P3M1", df = jaccard), exemplar_id = 19, wp_group = "P3M1")
+```
+
+### P3M1 #20
+
+```{r, p3m1-exemplar-20-network}
+plot_jaccard_vals(make_jaccard_network(wp_group = "P3M1", df = jaccard), exemplar_id = 20, wp_group = "P3M1")
+```
+
+### P6 #6
+
+```{r, p6-exemplar-6-network}
+plot_jaccard_vals(make_jaccard_network(wp_group = "P6", df = jaccard), exemplar_id = 6, wp_group = "P6")
+```
+
+### P6 #13
+
+```{r, p6-exemplar-13-network}
+plot_jaccard_vals(make_jaccard_network(wp_group = "P6", df = jaccard), exemplar_id = 13, wp_group = "P6")
+```
+
+### P6M #10
+
+```{r, p6m-exemplar-10-network}
+plot_jaccard_vals(make_jaccard_network(wp_group = "P6M", df = jaccard), exemplar_id = 10, wp_group = "P6M")
+```
+
+### P6M #20
+
+```{r, p6m-exemplar-20-network}
+plot_jaccard_vals(make_jaccard_network(wp_group = "P6M", df = jaccard), exemplar_id = 20, wp_group = "P6M")
+```
+
+Now, let's put the pieces together. *Not used at this time*
+
+```{r, graph-network-for-max-pairs-function, eval=FALSE}
 graph_network_for_max_pairs <- function(wp_group = "P1", df = jaccard,
-                                        save_to_file = TRUE) {
+                                        save_to_file = FALSE) {
+  
   this_network <- make_jaccard_network(wp_group, df)
   
   this_pair <- pick_n_pairs_max_jaccard(wp_group, df)
   
-  p1 <- plot_jaccard_vals(network_df = this_network,
-                    exemplar_id = this_pair$Exemplar.Row,
+  p1 <- plot_jaccard_vals(this_network,
+                    this_pair$Exemplar.Row,
                     wp_group
                     )
   
-  p2 <- plot_jaccard_vals(network_df = this_network,
-                    exemplar_id = this_pair$Exemplar.Col,
+  p2 <- plot_jaccard_vals(this_network,
+                    this_pair$Exemplar.Col,
                     wp_group
                     ) 
-  
-  p_both <- ggpubr::ggarrange(p1, p2, ncol = 2, nrow = 1,
+
+  ggpubr::ggarrange(p1, p2, ncol = 2, nrow = 1,
                     labels = c(paste0(wp_group, " #", this_pair$Exemplar.Row), paste0(wp_group, " #", this_pair$Exemplar.Col)),
                     common.legend = TRUE,
                     legend = "bottom")
-  
-  p_both
-  
-  if (save_to_file) {
-    fn <- paste0(wp_group, "-max-exemplar-pair-networks.png")
-    ggsave(filename = paste0(wp_group, "-max-exemplar-pair-networks.png"),
-           device = "png",
-           path = "img",
-           width = 11,
-           height = 8.5,
-           units = "in")
-    message(paste0("Saving : ", fn))
-  }
 }
 ```
 
 Test with default values
 
-```{r}
+```{r, eval= FALSE}
 graph_network_for_max_pairs()
 ```
 
-Now, let's generate for all wallpaper groups.
-
-```{r}
-purrr::map(wp_groups, graph_network_for_max_pairs)
-```
