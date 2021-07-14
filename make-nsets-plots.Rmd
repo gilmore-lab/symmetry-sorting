@@ -1,0 +1,102 @@
+---
+title: "Analyzing differences in n-sets"
+author: "Rick Gilmore"
+date: "`r Sys.time()`"
+output: 
+  html_document:
+    code_folding: hide
+    toc: yes
+    toc_depth: 3
+    toc_float: no
+---
+
+# Purpose
+
+This document summarizes analyses and visualizations of differences in the number of sets participants sorted exemplars from the different wallpaper groups.
+
+# Set-up
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  fig.path = "img/",
+  dev = "png",
+  dpi = 300,
+  fig.align = "center",
+  fig.width = 7,
+  fig.height = 5
+)
+
+library(tidyverse)
+library(lmerTest)
+```
+
+# Analysis plan
+
+1. Did the wallpaper groups differ in terms of the *number of sets* into which exemplars were sorted? For example, Vedak et al., 2015 suggested that P1 exemplars were sorted into fewer sets.
+
+# Import data
+
+The N sets data are found in `analysis/data/nsets.csv`.
+
+```{r}
+nsets <- readr::read_csv("analysis/data/nsets.csv")
+```
+
+There are $n=$ `r length(unique(nsets$Participant))` individual participants.
+
+# Visualizations
+
+We calculate the number of sets per participant and wallpaper group.
+
+```{r}
+nsets_participant_df <- nsets %>%
+  dplyr::group_by(., Participant, Group) %>%
+  dplyr::summarise(., nsets_per = n())
+```
+```{r}
+nsets_participant_plot <- nsets_participant_df %>%
+  ggplot(.) +
+  aes(x = nsets_per, fill = Group) +
+  geom_dotplot(method="histodot",
+               binwidth = 1.5,
+               show.legend = FALSE) +
+  facet_grid(. ~ Group) +
+  xlab("N sets") +
+  scale_y_continuous(NULL, breaks = NULL)
+nsets_participant_plot
+```
+
+# Analyses
+
+## N sets
+
+Are there differences among the wallpaper groups in terms of the average sizes of the sets?
+
+### Using `afex::aov_car`
+
+```{r}
+n_sets_afex <- afex::aov_car(nsets_per ~ Group + Error(Participant/Group), data = nsets_participant_df)
+summary(n_sets_afex)
+```
+
+P1 exemplars were sorted into larger sets than other wallpaper groups.
+
+```{r, nsets-by-sub-plot-aov}
+afex::afex_plot(n_sets_afex, x = "Group", y = "nsets_per")
+```
+
+Participants sorted P1 exemplars into a smaller number of categories than the other wallpaper groups.
+
+
+### Using `lmer`
+
+```{r}
+n_sets_lme <- lmer(nsets_per ~ Group + (1 | Participant), data = nsets_participant_df)
+summary(n_sets_lme)
+```
+
+```{r}
+(aov_vals <- anova(n_sets_lme))
+```
+

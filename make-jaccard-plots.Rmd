@@ -1,0 +1,80 @@
+---
+title: "Analyzing differences in Jaccard indices"
+author: "Rick Gilmore"
+date: "`r Sys.time()`"
+output: 
+  html_document:
+    toc: yes
+    toc_depth: 3
+    toc_float: no
+---
+
+
+# Purpose
+
+This document summarizes Rick Gilmore's analysis of participant sorting data.
+
+# Set-up
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  fig.path = "img/",
+  dev = "png",
+  dpi = 300,
+  fig.align = "center",
+  fig.width = 7,
+  fig.height = 5
+)
+
+library(tidyverse)
+library(lmerTest)
+```
+
+# Analysis plan
+
+1. Were there differences in mean *Jaccard indices* by wallpaper group?
+
+# Import data
+
+The Jaccard index data are found in `analysis/data/jaccard.csv`.
+
+```{r}
+jaccard_df <- readr::read_csv("analysis/data/jaccard.csv")
+```
+
+# Visualizations
+
+```{r, jaccard-histogram}
+jaccard_plot_1 <- jaccard_df %>%
+  ggplot(.) +
+  aes(x = Jaccard, fill = Group) +
+  geom_histogram() +
+  facet_grid(. ~ Group)
+jaccard_plot_1
+```
+
+```{r, jaccard-boxplot}
+jaccard_plot_2 <- jaccard_df %>%
+  ggplot(.) +
+  aes(x = Jaccard, fill = Group) +
+  geom_boxplot() +
+  facet_grid(Group ~ .) +
+  scale_y_continuous(NULL, breaks = NULL)
+jaccard_plot_2
+```
+
+# Analyses
+
+## Using `lm`
+
+There are no random effects in this model.
+
+```{r}
+jaccard_lm <- lm(Jaccard ~ Group, data = jaccard_df)
+summary(jaccard_lm)
+anova(jaccard_lm)
+```
+
+The mean Jaccard similarity indices across the exemplars was higher for P1; however, note the outliers.
+
