@@ -20,7 +20,7 @@ This document summarizes analyses and visualizations of differences in the numbe
 knitr::opts_chunk$set(
   echo = TRUE,
   fig.path = "img/",
-  dev = "png",
+  dev = "pdf",
   dpi = 300,
   fig.align = "center",
   fig.width = 7,
@@ -54,7 +54,7 @@ nsets_participant_df <- nsets %>%
   dplyr::group_by(., Participant, Group) %>%
   dplyr::summarise(., nsets_per = n())
 ```
-```{r}
+```{r, nsets-dotplot}
 nsets_participant_plot <- nsets_participant_df %>%
   ggplot(.) +
   aes(x = nsets_per, fill = Group) +
@@ -62,6 +62,17 @@ nsets_participant_plot <- nsets_participant_df %>%
                binwidth = 1.5,
                show.legend = FALSE) +
   facet_grid(. ~ Group) +
+  xlab("N sets") +
+  scale_y_continuous(NULL, breaks = NULL)
+nsets_participant_plot
+```
+
+```{r, nsets-boxplot}
+nsets_participant_plot <- nsets_participant_df %>%
+  ggplot(.) +
+  aes(x = nsets_per, fill = Group) +
+  geom_boxplot() +
+  facet_grid(Group ~ .) +
   xlab("N sets") +
   scale_y_continuous(NULL, breaks = NULL)
 nsets_participant_plot

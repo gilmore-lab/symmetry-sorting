@@ -20,7 +20,7 @@ This document summarizes Rick Gilmore's analysis of participant sorting data.
 knitr::opts_chunk$set(
   echo = TRUE,
   fig.path = "img/",
-  dev = "png",
+  dev = "pdf",
   dpi = 300,
   fig.align = "center",
   fig.width = 7,
