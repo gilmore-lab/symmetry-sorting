@@ -111,3 +111,9 @@ summary(n_sets_lme)
 (aov_vals <- anova(n_sets_lme))
 ```
 
+Compare individual means.
+
+```{r}
+emmeans::emmeans(n_sets_lme, "Group")
+```
+The 95% CIs for all of the group means overlap.

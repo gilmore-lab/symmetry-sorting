@@ -78,3 +78,154 @@ anova(jaccard_lm)
 
 The mean Jaccard similarity indices across the exemplars was higher for P1; however, note the outliers.
 
+```{r}
+emmeans::emmeans(jaccard_lm, "Group")
+```
+So P1 > P31M, P3M1, P6, and P6M, but no other means differ.
+
+## Try mixed model
+
+We would need to create a new factor that is unique for each wp-group by exemplar identifier and include this as a random (intercept) factor.
+
+```{r}
+jaccard_df <- jaccard_df %>%
+  dplyr::mutate(., exemplar_id = paste0(Group, "-", Exemplar.Row))
+```
+
+Then, we fit a random intercept using this factor.
+
+```{r}
+jaccard_lmer<- lmer(Jaccard ~ Group + 1|exemplar_id, data = jaccard_df)
+summary(jaccard_lmer)
+```
+
+The model fails to converge to to the estimate of very small (near zero) components of the variance/co-variance matrix. As a result, we choose to use the results from the simpler model without including the random effect of exemplar_id.
+
+## Select similar and dissimilar 
+
+Let's choose exemplar pairs that are maximally similar to one another.
+
+First, we define two helper functions.
+
+```{r}
+compute_jaccard_stats <- function(jaccard) {
+  jaccard %>%
+    dplyr::mutate(., exemplar_pair = paste0(Exemplar.Row, "-", Exemplar.Col)) %>%
+    dplyr::group_by(., Group) %>%
+    dplyr::summarise(
+      .,
+      Jaccard_mean = mean(Jaccard),
+      Jaccard_med = median(Jaccard),
+      Jaccard_max = max(Jaccard),
+      Jaccard_min = min(Jaccard),
+      Exemplar.Row = Exemplar.Row,
+      Jaccard = Jaccard,
+      exemplar_pair = exemplar_pair
+    )
+}
+
+pick_extreme_max_exemplars <- function(j_stats, group, hi_lo = "hi", n_exemplars = 1) {
+  this_group <- j_stats %>%
+    dplyr::filter(., Group == group)
+  
+  if (hi_lo == "hi") {
+    this_group <- this_group %>%
+      dplyr::arrange(., desc(Jaccard_max))
+  } else {
+    this_group <- this_group %>%
+      dplyr::arrange(., Jaccard_max)
+  }
+  
+  this_group$Exemplar.Row[1:n_exemplars]
+}
+```
+
+Now test the functions.
+
+```{r}
+j_stats <- compute_jaccard_stats(jaccard_df)
+
+max_exemplars <- j_stats %>%
+  dplyr::group_by(., Group) %>%
+  dplyr::filter(., Jaccard_max == Jaccard) %>%
+  dplyr::select(., Group, Jaccard, exemplar_pair)
+
+max_exemplars
+```
+
+Let's also pick the minimum exemplar pair within each wallpaper group.
+
+```{r}
+min_exemplars <- j_stats %>%
+  dplyr::group_by(., Group) %>%
+  dplyr::filter(., Jaccard_min == Jaccard) %>%
+  dplyr::select(., Group, Jaccard, exemplar_pair)
+
+min_exemplars
+```
+
+For P1, none of the pairs with minimum Jaccard values have exemplars 8 or 9.
+
+For P31M, **Exemplar 7** is in the maximum pair (2-7) and one of the two minimum pairs (7-11).
+
+For P3M1, **Exemplar 19** is both in the maximum pair (19-20) and the minimum pair (14-19).
+
+For P6, neither 6 nor 13 are in the minimum pair (16-20).
+
+For P6M, **Exemplar 20** is in the maximum pair (10-20) and the minimum (12-20).
+
+Let's look at the Jaccard values for P1 Exemplars 8 and 9.
+
+First Exemplar 8.
+
+```{r}
+j_stats %>%
+  dplyr::filter(., Group == "P1",
+                Exemplar.Row == 8) %>%
+  dplyr::arrange(., Jaccard) %>%
+  dplyr::select(., exemplar_pair, Jaccard)
+```
+
+Then, Exemplar 9. 
+
+```{r}
+j_stats %>%
+  dplyr::filter(., Group == "P1",
+                Exemplar.Row == 9) %>%
+  dplyr::arrange(., Jaccard) %>%
+  dplyr::select(., exemplar_pair, Jaccard)
+```
+
+So, for P1, Exemplars 8 and 9 are highly similar (0.435), while Exemplar 20 is highly dissimilar to both (8-20 = 0.1; 9-20 = 0.119).
+
+Let's look at P6, starting with the highly similar pairing of 6-13 (.5581395)
+
+```{r}
+j_stats %>%
+  dplyr::filter(., Group == "P6",
+                Exemplar.Row == 6) %>%
+  dplyr::arrange(., Jaccard) %>%
+  dplyr::select(., exemplar_pair, Jaccard)
+```
+
+```{r}
+j_stats %>%
+  dplyr::filter(., Group == "P6",
+                Exemplar.Row == 13) %>%
+  dplyr::arrange(., Jaccard) %>%
+  dplyr::select(., exemplar_pair, Jaccard)
+```
+
+Here, exemplar 14 is highly dissimilar to Exemplar 6 (0.08196721) and Exemplar 13 (0.08064516).
+
+So, to summarize.
+
+**P1**: Similar exemplars are 8 and 9; dissimilar exemplar is 20.
+
+**P31M**: Similar exemplars are 2 and 7; dissimilar exemplar is 11.
+
+**P3M1**: Similar exemplars are 19 and 20; dissimilar exemplar is 14.
+
+**P6M**: Similar exemplars are 10 and 20; dissimilar exemplar is 12.
+
+**P6**: Similar exemplars are 6 and 13; dissimilar exemplar is 14.
