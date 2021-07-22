@@ -117,3 +117,25 @@ Compare individual means.
 emmeans::emmeans(n_sets_lme, "Group")
 ```
 The 95% CIs for all of the group means overlap.
+
+### Fitting effect sizes
+
+We use the `esci` package to estimate differences in means among the wallpaper groups and to estimate effect sizes.
+
+First, we must convert `Group` to a factor.
+
+```{r}
+nsets_participant_df$Group.factor <- as.factor(nsets_participant_df$Group)
+```
+
+
+```{r}
+es_nsets <- esci::estimateMeanDifference.default(nsets_participant_df,
+                                     Group.factor,
+                                     nsets_per,
+                                     paired = FALSE,
+                                     var.equal = TRUE,
+                                     conf.level = .95)
+
+es_nsets
+```
