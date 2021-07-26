@@ -79,9 +79,10 @@ anova(jaccard_lm)
 The mean Jaccard similarity indices across the exemplars was higher for P1; however, note the outliers.
 
 ```{r}
-emmeans::emmeans(jaccard_lm, "Group")
+(em_jaccard <- emmeans::emmeans(jaccard_lm, "Group"))
+summary(pairs(em_jaccard, simple = "Group", adjust = "none"))
 ```
-So P1 > P31M, P3M1, P6, and P6M, but no other means differ.
+So P1 > \{P31M, P3M1, P6, P6M\} and P31M > P6, but no other mean Jaccard indices differ.
 
 ## Try mixed model
 

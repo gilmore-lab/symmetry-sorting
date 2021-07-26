@@ -114,9 +114,10 @@ summary(n_sets_lme)
 Compare individual means.
 
 ```{r}
-emmeans::emmeans(n_sets_lme, "Group")
+(em_n_sets <- emmeans::emmeans(n_sets_lme, "Group"))
+summary(pairs(em_n_sets, simple = "Group", adjust = "none"))
 ```
-The 95% CIs for all of the group means overlap.
+The 95% CIs for all of the group means overlap; pairwise tests show that P1 < \{P31M, P3M1, P6, P6M\}, but no other means differ.
 
 ### Fitting effect sizes
 
