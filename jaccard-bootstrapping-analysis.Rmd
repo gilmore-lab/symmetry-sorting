@@ -51,7 +51,7 @@ Let's build and test a permutation function for the raw sorting data.
 
 Now, let's generate multiple permuted CSVs.
 
-```{r}
+```{r generate_n_sorting_permutations}
 generate_n_sorting_permutations <-
   function(wp_group = "P1",
            n_permutations = 5) {
@@ -103,7 +103,7 @@ generate_n_sorting_permutations()
 
 Now, let's confirm that we can calculate Jaccard indices from these data.
 
-```{r}
+```{r make_jaccard_csvs}
 make_jaccard_csvs <- function(wallpaper_group = "P1",
                             duplicates = FALSE, 
                             input_dir='analysis/data/permutation_analysis/sorting_csv/',
@@ -131,7 +131,7 @@ calculate_save_jaccard_df <- function(this_csv, wallpaper_group) {
 }
 ```
 
-```{r}
+```{r, eval=FALSE}
 make_jaccard_csvs()
 ```
 
@@ -139,87 +139,95 @@ make_jaccard_csvs()
 
 ## P1
 
-```{r}
+```{r, eval=FALSE}
 generate_n_sorting_permutations("P1", n_permutations = 999)
 ```
 
-```{r}
+```{r, eval=FALSE}
 make_jaccard_csvs("P1")
 ```
 
 ## P31M
 
-```{r}
+```{r, eval=FALSE}
 generate_n_sorting_permutations("P31M", n_permutations = 999)
 ```
 
-```{r}
+```{r, eval=FALSE}
 make_jaccard_csvs("P31M")
 ```
 
 ## P3M1
 
-```{r}
+```{r, eval=FALSE}
 generate_n_sorting_permutations("P3M1", n_permutations = 999)
 ```
 
-```{r}
+```{r, eval=FALSE}
 make_jaccard_csvs("P3M1")
 ```
 
 ## P6
 
-```{r}
+```{r, eval=FALSE}
 generate_n_sorting_permutations("P6", n_permutations = 999)
 ```
 
-```{r}
+```{r, eval=FALSE}
 make_jaccard_csvs("P6")
 ```
 
 ## P6M
 
-```{r}
+```{r, eval=FALSE}
 generate_n_sorting_permutations("P6M", n_permutations = 999)
 ```
 
-```{r}
+```{r, eval=FALSE}
 make_jaccard_csvs("P6M")
 ```
 
 # Analyze simulated results
 
-## Empirical distributions of Jaccard indices by group and exemplar-pair
-
 ## Create some helper functions
 
-```{r}
+```{r make_perm_jaccard_df}
 make_perm_jaccard_df <- function(this_csv) {
   this_fn <- basename(this_csv)
   this_perm_number <- stringr::str_extract(this_fn, "[0-9]{3}")
   this_df <- readr::read_csv(this_csv)
-
+  
   this_df <- this_df %>%
-    dplyr::mutate(., exemplar_pair = paste0(Exemplar.Row, "-", Exemplar.Col),
-                  perm = this_perm_number)
+    dplyr::mutate(
+      .,
+      exemplar_pair = paste0(
+        stringr::str_extract(Exemplar.Row, "[0-9]{3}$"),
+        "-",
+        stringr::str_extract(Exemplar.Col, "[0-9]{3}$")
+        ),
+        perm = this_perm_number
+    )
   
   this_df
 }
 ```
 
-```{r}
+```{r make_aggregate_perm_jaccard_df}
 make_aggregate_perm_jaccard_df <- function(wp_group = "P1",
                                            input_dir = "analysis/data/permutation_analysis/jaccards") {
-  these_csvs <- list.files(input_dir, paste0("^", wp_group), full.names = TRUE)
+  these_csvs <-
+    list.files(input_dir, paste0("^", wp_group), full.names = TRUE)
   purrr::map_df(these_csvs, make_perm_jaccard_df)
 }
 ```
 
-## P1
+## Empirical distributions of Jaccard indices by group and exemplar-pair
+
+### P1
 
 Import the data.
 
-```{r}
+```{r make-P1-perm}
 P1_perm_df <- make_aggregate_perm_jaccard_df("P1")
 ```
 
@@ -232,11 +240,20 @@ P1_perm_df %>%
   ggplot2::geom_histogram(bins = 50)
 ```
 
-## P31M
+Generate summary stats by exemplar pair.
+
+```{r}
+P1_perm_stats_df <- P1_perm_df %>%
+  dplyr::group_by(., Group, exemplar_pair) %>%
+  dplyr::summarize(., jaccard_mean = mean(Jaccard),
+                   jaccard_sd = sd(Jaccard))
+```
+
+### P31M
 
 Import the data.
 
-```{r}
+```{r make-P31M-perm}
 P31M_perm_df <- make_aggregate_perm_jaccard_df("P31M")
 ```
 
@@ -249,11 +266,20 @@ P31M_perm_df %>%
   ggplot2::geom_histogram(bins = 50)
 ```
 
-## P3M1
+Generate summary stats by exemplar pair.
+
+```{r}
+P31M_perm_stats_df <- P31M_perm_df %>%
+  dplyr::group_by(., Group, exemplar_pair) %>%
+  dplyr::summarize(., jaccard_mean = mean(Jaccard),
+                   jaccard_sd = sd(Jaccard))
+```
+
+### P3M1
 
 Import the data.
 
-```{r}
+```{r make-P3M1-perm}
 P3M1_perm_df <- make_aggregate_perm_jaccard_df("P3M1")
 ```
 
@@ -266,11 +292,20 @@ P3M1_perm_df %>%
   ggplot2::geom_histogram(bins = 50)
 ```
 
-## P6
+Generate summary stats by exemplar pair.
+
+```{r}
+P3M1_perm_stats_df <- P3M1_perm_df %>%
+  dplyr::group_by(., Group, exemplar_pair) %>%
+  dplyr::summarize(., jaccard_mean = mean(Jaccard),
+                   jaccard_sd = sd(Jaccard))
+```
+
+### P6
 
 Import the data.
 
-```{r}
+```{r make-P6-perm}
 P6_perm_df <- make_aggregate_perm_jaccard_df("P6")
 ```
 
@@ -283,11 +318,20 @@ P6_perm_df %>%
   ggplot2::geom_histogram(bins = 50)
 ```
 
-## P6M
+Generate summary stats by exemplar pair.
+
+```{r}
+P6_perm_stats_df <- P6_perm_df %>%
+  dplyr::group_by(., Group, exemplar_pair) %>%
+  dplyr::summarize(., jaccard_mean = mean(Jaccard),
+                   jaccard_sd = sd(Jaccard))
+```
+
+### P6M
 
 Import the data.
 
-```{r}
+```{r make-P6M-perm}
 P6M_perm_df <- make_aggregate_perm_jaccard_df("P6M")
 ```
 
@@ -300,7 +344,16 @@ P6M_perm_df %>%
   ggplot2::geom_histogram(bins = 50)
 ```
 
-## Aggregate
+Generate summary stats by exemplar pair.
+
+```{r}
+P6M_perm_stats_df <- P6M_perm_df %>%
+  dplyr::group_by(., Group, exemplar_pair) %>%
+  dplyr::summarize(., jaccard_mean = mean(Jaccard),
+                   jaccard_sd = sd(Jaccard))
+```
+
+### Aggregate
 
 ```{r}
 jaccard_perm_df <- rbind(P1_perm_df, P31M_perm_df, P3M1_perm_df, P6_perm_df, P6M_perm_df)
@@ -325,14 +378,26 @@ jaccard_perm_df %>%
 
 These plots show that the mean differences in Jaccard indices are reflected in the participants' data are shown in the permuted data, too. This makes sense since the participants detected regularities and sorted the exemplars into different numbers of sets. In permuting the exemplar identifiers within participants, we keep some of this structure.
 
-## P1 exemplar pairs
+Let's try aggregating the by-exemplar statistics.
 
 ```{r}
-P1_perm_df %>%
-  ggplot(.) +
-  aes(x = Jaccard) +
-  geom_histogram() +
-  facet_wrap(~ exemplar_pair, ncol = 10)
+jaccard_perm_stats_df <- rbind(P1_perm_stats_df, P31M_perm_stats_df, P3M1_perm_stats_df, P6_perm_stats_df, P6M_perm_stats_df)
 ```
 
-I'll need to reformat the exemplar pair identifiers for this plot to work.
+```{r}
+jaccard_perm_stats_df %>%
+  ggplot(.) +
+  aes(x = jaccard_mean, fill = Group) +
+  geom_histogram() +
+  facet_grid(Group ~ .) + 
+  ggtitle("Permuted mean Jaccard indices across exemplar pairs")
+```
+
+```{r}
+jaccard_perm_stats_df %>%
+  ggplot(.) +
+  aes(x = jaccard_sd, fill = Group) +
+  geom_histogram() +
+  facet_grid(Group ~ .) +
+  ggtitle("Permuted standard deviation of Jaccard indices across exemplar pairs")
+```
