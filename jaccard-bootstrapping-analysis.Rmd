@@ -1,0 +1,338 @@
+---
+title: "Jaccard bootstrapping analysis"
+author: "Rick Gilmore"
+date: "`r Sys.time()`"
+output: 
+  html_document:
+    toc: yes
+    toc_depth: 3
+    toc_float: no
+---
+
+
+# Purpose
+
+This document summarizes Rick Gilmore's analysis of the Jaccard index data.
+
+The goal is to explore ways to generate an empirical "null" distribution of the Jaccard index data to compare it to the observed data.
+
+# Set-up
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  fig.path = "img/",
+  dev = "pdf",
+  dpi = 300,
+  fig.align = "center",
+  fig.width = 7,
+  fig.height = 5,
+  warning = FALSE,
+  message = FALSE
+)
+
+library(tidyverse)
+library(lmerTest)
+```
+
+# Analysis plan
+
+1. Start with each participant's raw sorting data within each wallpaper group.
+2. Permute the *exemplars* each participant sorted into similar piles by randomizing the mapping between the actual exemplar and the permuted exemplar id.
+  - For example, start with data in `/analysis/data/{P1,P31M,P3M1,P6,P6M}-sorting.csv` and create new CSVs with the permuted values.
+  - As a practical matter, this can simply involve permuting the column data in these CSVs.
+3. Recalculate the Jaccard indices using the `analysis/make.jaccard.df.R` function.
+4. Do 1-3 `n` times, where `n` is large, probably 1,000.
+5. Compare the mean Jaccard indices (by wallpaper group) from the permuted set to the values we observed empirically.
+
+# Preliminary work
+
+Let's build and test a permutation function for the raw sorting data.
+
+Now, let's generate multiple permuted CSVs.
+
+```{r}
+generate_n_sorting_permutations <-
+  function(wp_group = "P1",
+           n_permutations = 5) {
+    csv_in <- paste0("analysis/data/", wp_group, "-sorting.csv")
+    if (!file.exists(csv_in)) {
+      stop(paste0("`csv_in` not found: ", csv_in))
+    }
+    
+    df_in <- readr::read_csv(csv_in)
+    
+    df_exemplars <- df_in[, -c(1, 2, 23, 24)]
+    out_m <- as.matrix(df_exemplars)
+    for (p in 1:n_permutations) {
+      csv_out <-
+        paste0(
+          "analysis/data/permutation_analysis/sorting_csv/",
+          wp_group,
+          "-sorting-perm-",
+          stringr::str_pad(p, 3, pad = 0), ".csv"
+        )
+      
+      for (r in 1:dim(out_m)[1]) {
+        new_i <- sample(1:20)
+        out_m[r, 1:20] <- out_m[r, new_i]
+      }
+      
+      array_out <-
+        as.data.frame(cbind(df_in$Participant, df_in$Set, out_m, df_in$Set_size, df_in$Group))
+      
+      # Rename!
+      names(array_out) <-
+        c("Participant",
+          "Set",
+          names(df_exemplars),
+          "Set_size",
+          "Group")
+      array_out
+    
+      readr::write_csv(array_out, csv_out)
+    }
+  }
+```
+
+Then we test it.
+
+```{r}
+generate_n_sorting_permutations()
+```
+
+Now, let's confirm that we can calculate Jaccard indices from these data.
+
+```{r}
+make_jaccard_csvs <- function(wallpaper_group = "P1",
+                            duplicates = FALSE, 
+                            input_dir='analysis/data/permutation_analysis/sorting_csv/',
+                            output_dir='analysis/data/permutation_analysis/jaccards/'){
+  
+  # Makes a data.frame from the raw sorting data
+  
+  # Load externals
+  source("analysis/jaccard.data.R")
+  source("analysis/jaccard.R")
+
+  these_csvs <- list.files(input_dir, paste0("^", wallpaper_group), full.names = TRUE)
+  purrr::map(these_csvs, calculate_save_jaccard_df, wallpaper_group)
+}
+
+calculate_save_jaccard_df <- function(this_csv, wallpaper_group) {
+  this_fn <- basename(this_csv)
+  this_perm_number <- stringr::str_extract(this_fn, "[0-9]{3}")
+  out_fn <- paste0("analysis/data/permutation_analysis/jaccards/", wallpaper_group, "-jaccard-", this_perm_number, ".csv")
+  
+  this_df <- readr::read_csv(this_csv)
+  
+  jaccard_df <- jaccard.data(this_df)
+  readr::write_csv(jaccard_df, out_fn)
+}
+```
+
+```{r}
+make_jaccard_csvs()
+```
+
+# Generate data
+
+## P1
+
+```{r}
+generate_n_sorting_permutations("P1", n_permutations = 999)
+```
+
+```{r}
+make_jaccard_csvs("P1")
+```
+
+## P31M
+
+```{r}
+generate_n_sorting_permutations("P31M", n_permutations = 999)
+```
+
+```{r}
+make_jaccard_csvs("P31M")
+```
+
+## P3M1
+
+```{r}
+generate_n_sorting_permutations("P3M1", n_permutations = 999)
+```
+
+```{r}
+make_jaccard_csvs("P3M1")
+```
+
+## P6
+
+```{r}
+generate_n_sorting_permutations("P6", n_permutations = 999)
+```
+
+```{r}
+make_jaccard_csvs("P6")
+```
+
+## P6M
+
+```{r}
+generate_n_sorting_permutations("P6M", n_permutations = 999)
+```
+
+```{r}
+make_jaccard_csvs("P6M")
+```
+
+# Analyze simulated results
+
+## Empirical distributions of Jaccard indices by group and exemplar-pair
+
+## Create some helper functions
+
+```{r}
+make_perm_jaccard_df <- function(this_csv) {
+  this_fn <- basename(this_csv)
+  this_perm_number <- stringr::str_extract(this_fn, "[0-9]{3}")
+  this_df <- readr::read_csv(this_csv)
+
+  this_df <- this_df %>%
+    dplyr::mutate(., exemplar_pair = paste0(Exemplar.Row, "-", Exemplar.Col),
+                  perm = this_perm_number)
+  
+  this_df
+}
+```
+
+```{r}
+make_aggregate_perm_jaccard_df <- function(wp_group = "P1",
+                                           input_dir = "analysis/data/permutation_analysis/jaccards") {
+  these_csvs <- list.files(input_dir, paste0("^", wp_group), full.names = TRUE)
+  purrr::map_df(these_csvs, make_perm_jaccard_df)
+}
+```
+
+## P1
+
+Import the data.
+
+```{r}
+P1_perm_df <- make_aggregate_perm_jaccard_df("P1")
+```
+
+Visualize.
+
+```{r}
+P1_perm_df %>%
+  ggplot2::ggplot(.) +
+  ggplot2::aes(x = Jaccard) +
+  ggplot2::geom_histogram(bins = 50)
+```
+
+## P31M
+
+Import the data.
+
+```{r}
+P31M_perm_df <- make_aggregate_perm_jaccard_df("P31M")
+```
+
+Visualize.
+
+```{r}
+P31M_perm_df %>%
+  ggplot2::ggplot(.) +
+  ggplot2::aes(x = Jaccard) +
+  ggplot2::geom_histogram(bins = 50)
+```
+
+## P3M1
+
+Import the data.
+
+```{r}
+P3M1_perm_df <- make_aggregate_perm_jaccard_df("P3M1")
+```
+
+Visualize.
+
+```{r}
+P3M1_perm_df %>%
+  ggplot2::ggplot(.) +
+  ggplot2::aes(x = Jaccard) +
+  ggplot2::geom_histogram(bins = 50)
+```
+
+## P6
+
+Import the data.
+
+```{r}
+P6_perm_df <- make_aggregate_perm_jaccard_df("P6")
+```
+
+Visualize.
+
+```{r}
+P6_perm_df %>%
+  ggplot2::ggplot(.) +
+  ggplot2::aes(x = Jaccard) +
+  ggplot2::geom_histogram(bins = 50)
+```
+
+## P6M
+
+Import the data.
+
+```{r}
+P6M_perm_df <- make_aggregate_perm_jaccard_df("P6M")
+```
+
+Visualize.
+
+```{r}
+P6M_perm_df %>%
+  ggplot2::ggplot(.) +
+  ggplot2::aes(x = Jaccard) +
+  ggplot2::geom_histogram(bins = 50)
+```
+
+## Aggregate
+
+```{r}
+jaccard_perm_df <- rbind(P1_perm_df, P31M_perm_df, P3M1_perm_df, P6_perm_df, P6M_perm_df)
+```
+
+Visualization.
+
+```{r}
+jaccard_perm_df %>%
+  ggplot(.) +
+  aes(Jaccard, color = Group) +
+  facet_grid(Group ~ .) +
+  geom_boxplot(bins = 50)
+```
+
+```{r}
+jaccard_perm_df %>%
+  ggplot(.) +
+  aes(x = Group, y = Jaccard) +
+  geom_violin()
+```
+
+These plots show that the mean differences in Jaccard indices are reflected in the participants' data are shown in the permuted data, too. This makes sense since the participants detected regularities and sorted the exemplars into different numbers of sets. In permuting the exemplar identifiers within participants, we keep some of this structure.
+
+## P1 exemplar pairs
+
+```{r}
+P1_perm_df %>%
+  ggplot(.) +
+  aes(x = Jaccard) +
+  geom_histogram() +
+  facet_wrap(~ exemplar_pair, ncol = 10)
+```
+
+I'll need to reformat the exemplar pair identifiers for this plot to work.
