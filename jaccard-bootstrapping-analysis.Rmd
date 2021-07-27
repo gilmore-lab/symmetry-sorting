@@ -22,7 +22,7 @@ The goal is to explore ways to generate an empirical "null" distribution of the 
 knitr::opts_chunk$set(
   echo = TRUE,
   fig.path = "img/",
-  dev = "pdf",
+  dev = "png",
   dpi = 300,
   fig.align = "center",
   fig.width = 7,
@@ -32,8 +32,9 @@ knitr::opts_chunk$set(
 )
 
 library(tidyverse)
-library(lmerTest)
 ```
+
+**Note**: I have set `eval=FALSE` for a series of chunks below that generate the permuted sorting and Jaccard index data. These take many minutes to run.
 
 # Analysis plan
 
@@ -105,29 +106,50 @@ Now, let's confirm that we can calculate Jaccard indices from these data.
 
 ```{r make_jaccard_csvs}
 make_jaccard_csvs <- function(wallpaper_group = "P1",
-                            duplicates = FALSE, 
-                            input_dir='analysis/data/permutation_analysis/sorting_csv/',
-                            output_dir='analysis/data/permutation_analysis/jaccards/'){
-  
+                              duplicates = FALSE,
+                              input_dir = 'analysis/data/permutation_analysis/sorting_csv/',
+                              output_dir = 'analysis/data/permutation_analysis/jaccards/') {
   # Makes a data.frame from the raw sorting data
   
   # Load externals
   source("analysis/jaccard.data.R")
   source("analysis/jaccard.R")
-
-  these_csvs <- list.files(input_dir, paste0("^", wallpaper_group), full.names = TRUE)
-  purrr::map(these_csvs, calculate_save_jaccard_df, wallpaper_group)
+  
+  these_csvs <-
+    list.files(input_dir, paste0("^", wallpaper_group, "\\-"), full.names = TRUE)
+  purrr::map(these_csvs,
+             calculate_save_jaccard_df,
+             wallpaper_group,
+             jaccard_dir = output_dir)
 }
 
-calculate_save_jaccard_df <- function(this_csv, wallpaper_group) {
+# Load a sorting permutation file, calculate the Jaccard indices, and (conditionally) save it to file.
+calculate_save_jaccard_df <- function(this_csv,
+                                      wallpaper_group,
+                                      save_output = TRUE,
+                                      jaccard_dir = "analysis/data/permutation_analysis/jaccards/",
+                                      vb = FALSE) {
+  
   this_fn <- basename(this_csv)
   this_perm_number <- stringr::str_extract(this_fn, "[0-9]{3}")
-  out_fn <- paste0("analysis/data/permutation_analysis/jaccards/", wallpaper_group, "-jaccard-", this_perm_number, ".csv")
+  out_fn <-
+    paste0(jaccard_dir,
+           wallpaper_group,
+           "-jaccard-",
+           this_perm_number,
+           ".csv")
   
   this_df <- readr::read_csv(this_csv)
   
+  # Calculate Jaccard
   jaccard_df <- jaccard.data(this_df)
-  readr::write_csv(jaccard_df, out_fn)
+  
+  if (save_output) {
+    if (vb) message(paste0('Saving ', out_fn))
+    readr::write_csv(jaccard_df, out_fn)
+  } else {
+    jaccard_df
+  }
 }
 ```
 
@@ -189,7 +211,7 @@ make_jaccard_csvs("P6M")
 
 # Analyze simulated results
 
-## Create some helper functions
+## Create helper functions
 
 ```{r make_perm_jaccard_df}
 make_perm_jaccard_df <- function(this_csv) {
@@ -214,10 +236,21 @@ make_perm_jaccard_df <- function(this_csv) {
 
 ```{r make_aggregate_perm_jaccard_df}
 make_aggregate_perm_jaccard_df <- function(wp_group = "P1",
-                                           input_dir = "analysis/data/permutation_analysis/jaccards") {
+                                           input_dir = "analysis/data/permutation_analysis/jaccards",
+                                           save_csv = TRUE,
+                                           output_dir = "analysis/data/permutation_analysis/aggregates",
+                                           vb = TRUE) {
   these_csvs <-
-    list.files(input_dir, paste0("^", wp_group), full.names = TRUE)
-  purrr::map_df(these_csvs, make_perm_jaccard_df)
+    list.files(input_dir, paste0("^", wp_group, "\\-"), full.names = TRUE)
+  df <- purrr::map_df(these_csvs, make_perm_jaccard_df)
+  
+  if (save_csv) {
+    out_fn <- file.path(output_dir, paste0(wp_group, "-aggregate-perm-jaccard.csv"))
+    if (vb) message(paste0("Saving ", out_fn))
+    readr::write_csv(df, out_fn)
+  } else {
+    df
+  }
 }
 ```
 
@@ -227,13 +260,17 @@ make_aggregate_perm_jaccard_df <- function(wp_group = "P1",
 
 Import the data.
 
-```{r make-P1-perm}
+```{r make-P1-perm, eval=FALSE}
 P1_perm_df <- make_aggregate_perm_jaccard_df("P1")
+```
+
+```{r open-P1-perm}
+P1_perm_df <- readr::read_csv("analysis/data/permutation_analysis/aggregates/P1-aggregate-perm-jaccard.csv")
 ```
 
 Visualize.
 
-```{r}
+```{r p1-perm-jaccard-hist}
 P1_perm_df %>%
   ggplot2::ggplot(.) +
   ggplot2::aes(x = Jaccard) +
@@ -253,13 +290,17 @@ P1_perm_stats_df <- P1_perm_df %>%
 
 Import the data.
 
-```{r make-P31M-perm}
+```{r make-P31M-perm, eval=FALSE}
 P31M_perm_df <- make_aggregate_perm_jaccard_df("P31M")
+```
+
+```{r open-P31M-perm}
+P31M_perm_df <- readr::read_csv("analysis/data/permutation_analysis/aggregates/P31M-aggregate-perm-jaccard.csv")
 ```
 
 Visualize.
 
-```{r}
+```{r p31m-perm-jaccard-hist}
 P31M_perm_df %>%
   ggplot2::ggplot(.) +
   ggplot2::aes(x = Jaccard) +
@@ -279,13 +320,17 @@ P31M_perm_stats_df <- P31M_perm_df %>%
 
 Import the data.
 
-```{r make-P3M1-perm}
+```{r make-P3M1-perm, eval=FALSE}
 P3M1_perm_df <- make_aggregate_perm_jaccard_df("P3M1")
+```
+
+```{r open-P3M1-perm}
+P3M1_perm_df <- readr::read_csv("analysis/data/permutation_analysis/aggregates/P3M1-aggregate-perm-jaccard.csv")
 ```
 
 Visualize.
 
-```{r}
+```{r p3m1-perm-jaccard-hist}
 P3M1_perm_df %>%
   ggplot2::ggplot(.) +
   ggplot2::aes(x = Jaccard) +
@@ -305,13 +350,17 @@ P3M1_perm_stats_df <- P3M1_perm_df %>%
 
 Import the data.
 
-```{r make-P6-perm}
+```{r make-P6-perm, eval=FALSE}
 P6_perm_df <- make_aggregate_perm_jaccard_df("P6")
+```
+
+```{r open-P6-perm}
+P6_perm_df <- readr::read_csv("analysis/data/permutation_analysis/aggregates/P6-aggregate-perm-jaccard.csv")
 ```
 
 Visualize.
 
-```{r}
+```{r p6-perm-jaccard-hist}
 P6_perm_df %>%
   ggplot2::ggplot(.) +
   ggplot2::aes(x = Jaccard) +
@@ -331,13 +380,17 @@ P6_perm_stats_df <- P6_perm_df %>%
 
 Import the data.
 
-```{r make-P6M-perm}
+```{r make-P6M-perm, eval=FALSE}
 P6M_perm_df <- make_aggregate_perm_jaccard_df("P6M")
+```
+
+```{r open-P6M-perm}
+P6M_perm_df <- readr::read_csv("analysis/data/permutation_analysis/aggregates/P6M-aggregate-perm-jaccard.csv")
 ```
 
 Visualize.
 
-```{r}
+```{r p6m-perm-jaccard-hist}
 P6M_perm_df %>%
   ggplot2::ggplot(.) +
   ggplot2::aes(x = Jaccard) +
@@ -353,7 +406,7 @@ P6M_perm_stats_df <- P6M_perm_df %>%
                    jaccard_sd = sd(Jaccard))
 ```
 
-### Aggregate
+### Aggregating across groups
 
 ```{r}
 jaccard_perm_df <- rbind(P1_perm_df, P31M_perm_df, P3M1_perm_df, P6_perm_df, P6M_perm_df)
@@ -361,7 +414,7 @@ jaccard_perm_df <- rbind(P1_perm_df, P31M_perm_df, P3M1_perm_df, P6_perm_df, P6M
 
 Visualization.
 
-```{r}
+```{r agg-perm-jaccard-histogram}
 jaccard_perm_df %>%
   ggplot(.) +
   aes(Jaccard, color = Group) +
@@ -369,7 +422,15 @@ jaccard_perm_df %>%
   geom_boxplot(bins = 50)
 ```
 
-```{r}
+```{r agg-perm-jaccard-boxplot}
+jaccard_perm_df %>%
+  ggplot(.) +
+  aes(Jaccard, color = Group) +
+  facet_grid(Group ~ .) +
+  geom_boxplot(bins = 50)
+```
+
+```{r agg-perm-jaccard-violin}
 jaccard_perm_df %>%
   ggplot(.) +
   aes(x = Group, y = Jaccard) +
@@ -382,22 +443,93 @@ Let's try aggregating the by-exemplar statistics.
 
 ```{r}
 jaccard_perm_stats_df <- rbind(P1_perm_stats_df, P31M_perm_stats_df, P3M1_perm_stats_df, P6_perm_stats_df, P6M_perm_stats_df)
+
+# Sort by group, exemplar_pair
+jaccard_perm_stats_df <- jaccard_perm_stats_df %>%
+  dplyr::arrange(Group, exemplar_pair)
 ```
 
-```{r}
+```{r agg-mean-jaccard-hist}
 jaccard_perm_stats_df %>%
   ggplot(.) +
   aes(x = jaccard_mean, fill = Group) +
   geom_histogram() +
   facet_grid(Group ~ .) + 
-  ggtitle("Permuted mean Jaccard indices across exemplar pairs")
+  ggtitle("Mean exemplar-pair Jaccard indices for permuted data")
 ```
 
-```{r}
+```{r agg-sd-jaccard-hist}
 jaccard_perm_stats_df %>%
   ggplot(.) +
   aes(x = jaccard_sd, fill = Group) +
   geom_histogram() +
   facet_grid(Group ~ .) +
-  ggtitle("Permuted standard deviation of Jaccard indices across exemplar pairs")
+  ggtitle("Standard deviation of exemplar-pair Jaccard indices for permuted data")
 ```
+
+## Compare observed Jaccard to empirical distribution
+
+Load the observed data and clean it.
+
+```{r}
+jaccard_observed_df <-
+  readr::read_csv("analysis/data/jaccard-no-duplicates.csv")
+
+jaccard_observed_df <- jaccard_observed_df %>%
+  dplyr::mutate(.,
+                exemplar_pair = paste0(
+                  stringr::str_extract(Exemplar.Row, "[0-9]{3}$"),
+                  "-",
+                  stringr::str_extract(Exemplar.Col, "[0-9]{3}$")
+                )) %>%
+  dplyr::arrange(., Group, exemplar_pair)
+```
+
+Now, merge the permuted data with the observed data.
+
+```{r}
+jaccard_merged_df <- dplyr::left_join(jaccard_perm_stats_df,
+                                      jaccard_observed_df,
+                                      by = c("Group", "exemplar_pair"))
+
+# Rearrange columns for convenience
+jaccard_merged_df <- jaccard_merged_df %>%
+  dplyr::select(., Group, exemplar_pair, Jaccard, jaccard_mean, jaccard_sd, Exemplar.Row, Exemplar.Col)
+
+# Rename variables for clarity
+jaccard_merged_df <- jaccard_merged_df %>%
+  dplyr::rename(., group = Group, jaccard_obs = Jaccard, 
+                jaccard_emp_mean = jaccard_mean,
+                jaccard_emp_sd = jaccard_sd,
+                exemplar_row = Exemplar.Row,
+                exemplar_col = Exemplar.Col)
+```
+
+Calculate empirical z as $z_{emp}=J_{obs}-\mu_{J}$ for each exemplar pair.
+
+```{r}
+jaccard_merged_df <- jaccard_merged_df %>%
+  dplyr::mutate(., z_emp = (jaccard_obs-jaccard_emp_mean)/jaccard_emp_sd)
+```
+
+Plot a histogram of `z_emp`.
+
+```{r jaccard-emp-z-hist}
+jaccard_merged_df %>%
+  ggplot(.) +
+  aes(z_emp, fill = group) +
+  geom_histogram() +
+  facet_grid(group ~ .)
+```
+
+Curiously, P31M, P6, P6M and P3M1 have exemplar pairs whose observed Jaccard indices are substantially larger than the empirically derived reference (null) distribution even though the mean Jaccard indices for P1 are the largest.
+
+Just for fun, let's print the exemplar pairs whose `z_emp` exceed 4.
+
+```{r}
+jaccard_merged_df %>%
+  dplyr::filter(., z_emp > 4) %>%
+  dplyr::arrange(., group, desc(jaccard_emp_mean)) %>%
+  knitr::kable(.)
+```
+
