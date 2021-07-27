@@ -1,0 +1,91 @@
+---
+title: "ssim-hclust-analysis"
+author: "Rick Gilmore"
+date: "`r Sys.time()`"
+output: 
+  ioslides_presentation:
+    widescreen: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+require(ggplot2)
+require(dplyr)
+require(png)
+```
+
+## Computing SSIM
+
+- See [Structural similarity](https://en.wikipedia.org/wiki/Structural_similarity)
+- $SSIM(A,B)=\frac{(2\mu_A\mu_B + c_1)(2\sigma_{AB} + c_2)}{(\mu_A^2 +\mu_B^2 + c_1)(\sigma_X^2X + \sigma_Y^2 + c_2)}$, where $c_1=(0.01L)^2$, $c_2=(0.03L)^2$, and $L=bits^2-1$
+
+```{r ssim-P1, echo=FALSE}
+source('analysis/ssim.R')
+source('analysis/compute.image.metric.R')
+
+wp.groups <- c('P1', 'P3M1', 'P31M', 'P6', 'P6M')
+group <- wp.groups[1]
+```
+
+## Hierarchical Cluster of SSIM on `r group`
+
+<div class="centered">
+```{r}
+ssim.val <- compute.image.metric(group = group, duplicates = TRUE, frame=FALSE )
+d <- dist(1 - ssim.val)
+fit <- hclust(d)
+plot(fit)
+
+group <- wp.groups[2]
+```
+</div>
+
+## Hierarchical Cluster of SSIM on `r group`
+
+<div class="centered">
+```{r}
+ssim.val <- compute.image.metric(group = group, duplicates = TRUE, frame=FALSE )
+d <- dist(1 - ssim.val)
+fit <- hclust(d)
+plot(fit)
+
+group <- wp.groups[3]
+```
+</div>
+
+## Hierarchical Cluster of SSIM on `r group`
+
+<div class="centered">
+```{r}
+ssim.val <- compute.image.metric(group = group, duplicates = TRUE, frame=FALSE )
+d <- dist(1 - ssim.val)
+fit <- hclust(d)
+plot(fit)
+
+group <- wp.groups[4]
+```
+</div>
+
+## Hierarchical Cluster of SSIM on `r group`
+
+<div class="centered">
+```{r}
+ssim.val <- compute.image.metric(group = group, duplicates = TRUE, frame=FALSE )
+d <- dist(1 - ssim.val)
+fit <- hclust(d)
+plot(fit)
+
+group <- wp.groups[5]
+```
+</div>
+
+## Hierarchical Cluster of SSIM on `r group`
+
+<div class="centered">
+```{r}
+ssim.val <- compute.image.metric(group = group, duplicates = TRUE, frame=FALSE )
+d <- dist(1 - ssim.val)
+fit <- hclust(d)
+plot(fit)
+```
+</div>

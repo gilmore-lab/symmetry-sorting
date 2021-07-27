@@ -1,0 +1,578 @@
+---
+title: "exemplar-jaccard-plots"
+author: "Rick Gilmore"
+date: "`r Sys.time()`"
+output: 
+  html_document:
+    code_folding: hide
+    toc: yes
+    toc_depth: 3
+    toc_float: no
+params:
+  data_dir: 'data'
+  img_dir: '../img/'
+---
+
+# Purpose
+
+This document creates plots of the network of Jaccard similarity indices for some of the exemplars rated as most self-similar. It builds on the exploratory work contained in `graph-network-visualizations.Rmd`.
+
+# Set-up
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      fig.path = params$img_dir,
+                      dev = c("png"),
+                      dpi = 300,
+                      fig.align = "center",
+                      fig.width = 7,  # in
+                      fig.height = 7
+                      )
+
+library(tidyverse)
+library(tidygraph)
+library(ggraph)
+library(ggpubr)
+```
+
+# Import data
+
+## Jaccard indices
+
+The Jaccard index data are found in `r file.path(params$data_dir, 'jaccard.csv')`.
+
+```{r}
+jaccard_raw <- readr::read_csv(file.path(params$data_dir, 'jaccard.csv'))
+```
+
+```{r}
+str(jaccard_raw)
+```
+
+It's probably wise to reorder the data frame by wallpaper group, Jaccard index, and exemplar index.
+
+```{r}
+jaccard <- jaccard_raw %>%
+  dplyr::arrange(., Group, Exemplar.Row, desc(Jaccard))
+```
+
+Let's add a Jaccard mean and median by `Exemplar.Row`.
+
+```{r}
+jaccard_aug <- jaccard %>%
+  dplyr::group_by(., Group, Exemplar.Row) %>%
+  dplyr::mutate(.,
+    j_mean = mean(Jaccard),
+    j_med = median(Jaccard),
+    j_max = max(Jaccard),
+    j_min = min(Jaccard)
+  )
+```
+
+# Plots
+
+## Outliers and their connections
+
+For each wallpaper group, pick the exemplar pair with the most extreme (highest) Jaccard value. Then plot the set of Jaccard indices for both members of the pair.
+
+Create helper function to pick most extreme pair.
+
+```{r}
+pick_n_pairs_max_jaccard <- function(wp_group = "P1", df = jaccard, n_pairs = 1) {
+  this_df <- df %>%
+    dplyr::filter(., Group == wp_group) %>%
+    dplyr::arrange(., desc(Jaccard))
+  
+  this_df[1:n_pairs,]
+}
+```
+
+Now, do this for all of the wallpaper groups.
+
+```{r}
+wp_groups <- c("P1", "P31M", "P3M1", "P6", "P6M")
+
+exemplars_max_jaccard <- purrr::map_df(wp_groups, pick_n_pairs_max_jaccard)
+
+exemplars_max_jaccard
+```
+
+## Heatmaps
+
+Let's create a simplified color scale.
+
+```{r}
+value_breaks <- c(0, .2, .4, .6, .8)
+value_colors <-
+    colorRampPalette(RColorBrewer::brewer.pal(4, "Oranges"))(4)
+legend_text <- c("<.2", ".2-.4", ".4-.6", ">.6")
+```
+
+
+Create helper function to generate heatmaps.
+
+Modify `heatmap()` to allow custom positioning of axis labels.
+
+```{r}
+my_heatmap <- function (x, Rowv = NULL, Colv = if (symm) "Rowv" else NULL, 
+    distfun = dist, hclustfun = hclust, reorderfun = function(d, 
+        w) reorder(d, w), add.expr, symm = FALSE, revC = identical(Colv, 
+        "Rowv"), scale = c("row", "column", "none"), na.rm = TRUE, 
+    margins = c(5, 5), ColSideColors, RowSideColors, cexRow = 0.2 + 
+        1/log10(nr), cexCol = 0.2 + 1/log10(nc), labRow = NULL, 
+    labCol = NULL, main = NULL, xlab = NULL, ylab = NULL, 
+    xside = 2, yside = 3, # 1=bottom, 2=left, 3=top, 4=right
+    keep.dendro = FALSE, 
+    verbose = getOption("verbose"), ...) 
+{
+    scale <- if (symm && missing(scale)) 
+        "none"
+    else match.arg(scale)
+    if (length(di <- dim(x)) != 2 || !is.numeric(x)) 
+        stop("'x' must be a numeric matrix")
+    nr <- di[1L]
+    nc <- di[2L]
+    if (nr <= 1 || nc <= 1) 
+        stop("'x' must have at least 2 rows and 2 columns")
+    if (!is.numeric(margins) || length(margins) != 2L) 
+        stop("'margins' must be a numeric vector of length 2")
+    doRdend <- !identical(Rowv, NA)
+    doCdend <- !identical(Colv, NA)
+    if (!doRdend && identical(Colv, "Rowv")) 
+        doCdend <- FALSE
+    if (is.null(Rowv)) 
+        Rowv <- rowMeans(x, na.rm = na.rm)
+    if (is.null(Colv)) 
+        Colv <- colMeans(x, na.rm = na.rm)
+    if (doRdend) {
+        if (inherits(Rowv, "dendrogram")) 
+            ddr <- Rowv
+        else {
+            hcr <- hclustfun(distfun(x))
+            ddr <- as.dendrogram(hcr)
+            if (!is.logical(Rowv) || Rowv) 
+                ddr <- reorderfun(ddr, Rowv)
+        }
+        if (nr != length(rowInd <- order.dendrogram(ddr))) 
+            stop("row dendrogram ordering gave index of wrong length")
+    }
+    else rowInd <- 1L:nr
+    if (doCdend) {
+        if (inherits(Colv, "dendrogram")) 
+            ddc <- Colv
+        else if (identical(Colv, "Rowv")) {
+            if (nr != nc) 
+                stop("Colv = \"Rowv\" but nrow(x) != ncol(x)")
+            ddc <- ddr
+        }
+        else {
+            hcc <- hclustfun(distfun(if (symm) 
+                x
+            else t(x)))
+            ddc <- as.dendrogram(hcc)
+            if (!is.logical(Colv) || Colv) 
+                ddc <- reorderfun(ddc, Colv)
+        }
+        if (nc != length(colInd <- order.dendrogram(ddc))) 
+            stop("column dendrogram ordering gave index of wrong length")
+    }
+    else colInd <- 1L:nc
+    x <- x[rowInd, colInd]
+    labRow <- labRow[rowInd] %||% rownames(x) %||% (1L:nr)[rowInd]
+    labCol <- labCol[colInd] %||% colnames(x) %||% (1L:nc)[colInd]
+    if (scale == "row") {
+        x <- sweep(x, 1L, rowMeans(x, na.rm = na.rm), check.margin = FALSE)
+        sx <- apply(x, 1L, sd, na.rm = na.rm)
+        x <- sweep(x, 1L, sx, "/", check.margin = FALSE)
+    }
+    else if (scale == "column") {
+        x <- sweep(x, 2L, colMeans(x, na.rm = na.rm), check.margin = FALSE)
+        sx <- apply(x, 2L, sd, na.rm = na.rm)
+        x <- sweep(x, 2L, sx, "/", check.margin = FALSE)
+    }
+    lmat <- rbind(c(NA, 3), 2:1)
+    lwid <- c(if (doRdend) 1 else 0.05, 4)
+    lhei <- c((if (doCdend) 1 else 0.05) + if (!is.null(main)) 0.2 else 0, 
+        4)
+    if (!missing(ColSideColors)) {
+        if (!is.character(ColSideColors) || length(ColSideColors) != 
+            nc) 
+            stop("'ColSideColors' must be a character vector of length ncol(x)")
+        lmat <- rbind(lmat[1, ] + 1, c(NA, 1), lmat[2, ] + 1)
+        lhei <- c(lhei[1L], 0.2, lhei[2L])
+    }
+    if (!missing(RowSideColors)) {
+        if (!is.character(RowSideColors) || length(RowSideColors) != 
+            nr) 
+            stop("'RowSideColors' must be a character vector of length nrow(x)")
+        lmat <- cbind(lmat[, 1] + 1, c(rep(NA, nrow(lmat) - 1), 
+            1), lmat[, 2] + 1)
+        lwid <- c(lwid[1L], 0.2, lwid[2L])
+    }
+    lmat[is.na(lmat)] <- 0
+    if (verbose) {
+        cat("layout: widths = ", lwid, ", heights = ", lhei, 
+            "; lmat=\n")
+        print(lmat)
+    }
+    dev.hold()
+    on.exit(dev.flush())
+    op <- par(no.readonly = TRUE)
+    on.exit(par(op), add = TRUE)
+    layout(lmat, widths = lwid, heights = lhei, respect = TRUE)
+    if (!missing(RowSideColors)) {
+        par(mar = c(margins[1L], 0, 0, 0.5))
+        image(rbind(if (revC) 
+            nr:1L
+        else 1L:nr), col = RowSideColors[rowInd], axes = FALSE)
+    }
+    if (!missing(ColSideColors)) {
+        par(mar = c(0.5, 0, 0, margins[2L]))
+        image(cbind(1L:nc), col = ColSideColors[colInd], axes = FALSE)
+    }
+    par(mar = c(margins[1L], 0, 0, margins[2L]))
+    if (!symm || scale != "none") 
+        x <- t(x)
+    if (revC) {
+        iy <- nr:1
+        if (doRdend) 
+            ddr <- rev(ddr)
+        x <- x[, iy]
+    }
+    else iy <- 1L:nr
+    image(1L:nc, 1L:nr, x, xlim = 0.5 + c(0, nc), ylim = 0.5 + 
+        c(0, nr), axes = FALSE, xlab = "", ylab = "", ...)
+    axis(xside, 1L:nc, labels = labCol, las = 2, line = -0.5, tick = 0, 
+        cex.axis = cexCol)
+    if (!is.null(xlab)) 
+        mtext(xlab, side = xside, line = margins[1L] - 1.25)
+    axis(yside, iy, labels = labRow, las = 2, line = -0.5, tick = 0, 
+        cex.axis = cexRow)
+    if (!is.null(ylab)) 
+        mtext(ylab, side = yside, line = margins[2L] - 1.25)
+    if (!missing(add.expr)) 
+        eval.parent(substitute(add.expr))
+    par(mar = c(margins[1L], 0, 0, 0))
+    if (doRdend) 
+        plot(ddr, horiz = TRUE, axes = FALSE, yaxs = "i", leaflab = "none")
+    else frame()
+    par(mar = c(0, 0, if (!is.null(main)) 1 else 0, margins[2L]))
+    if (doCdend) 
+        plot(ddc, axes = FALSE, xaxs = "i", leaflab = "none")
+    else if (!is.null(main)) 
+        frame()
+    if (!is.null(main)) {
+        par(xpd = NA)
+        title(main, cex.main = 1.5 * op[["cex.main"]])
+    }
+    invisible(list(rowInd = rowInd, colInd = colInd, Rowv = if (keep.dendro && 
+        doRdend) ddr, Colv = if (keep.dendro && doCdend) ddc))
+}
+```
+
+
+```{r}
+plot_heatmap <- function(wp_group = "P1",
+                         df = jaccard,
+                         show_legend = FALSE,
+                         show_title = FALSE) {
+  # Select wp_group
+  this_df <- df %>%
+    dplyr::filter(., Group == wp_group)
+  
+  # Turn Jaccard data into matrix
+  j_matrix <- matrix(nrow = 20, ncol = 20)
+  for (r in 1:190) {
+    j_matrix[this_df$Exemplar.Row[r], this_df$Exemplar.Col[r]] <-
+      this_df$Jaccard[r]
+  }
+  
+  if (show_title) {
+    title_txt <- paste0(
+      wp_group,
+      ": max= ",
+      format(
+        max(this_df$Jaccard),
+        digits = 2,
+        nsmall = 2
+      ),
+      " | mean= ",
+      format(
+        mean(this_df$Jaccard),
+        digits = 2,
+        nsmall = 2
+      )
+    )
+  } else {
+    title_txt = NA
+  }
+  
+  
+  # value_breaks <- c(0, .2, .4, .6, .8)
+  # value_colors <-
+  #   colorRampPalette(RColorBrewer::brewer.pal(4, "Oranges"))(4)
+  
+  # heatmap(
+  #   j_matrix,
+  #   Rowv = NA,
+  #   Colv = NA,
+  #   main = title_txt,
+  #   symm = TRUE,
+  #   col = value_colors,
+  #   breaks = value_breaks,
+  #   cexRow = 2,
+  #   cexCol = 2
+  # )
+  my_heatmap(
+    j_matrix,
+    Rowv = NA,
+    Colv = NA,
+    main = title_txt,
+    symm = TRUE,
+    margins = c(15,15),
+    col = value_colors,
+    breaks = value_breaks,
+    cexRow = 1.25,
+    cexCol = 1.25
+    )
+  
+  if (show_legend) {
+    legend(x = "bottomright",
+           legend = legend_text,
+           fill = value_colors)
+  }
+  
+  # if (save_to_file) {
+  #   png(paste0("img/", wp_group, "-", "jaccard-heatmap.png"))
+  #   heatmap(
+  #     j_matrix,
+  #     Rowv = NA,
+  #     Colv = NA,
+  #     main = title_txt,
+  #     symm = TRUE,
+  #     col = value_colors,
+  #     breaks = value_breaks
+  #   )
+  #
+  #   if (show_legend) {
+  #     legend(
+  #       x = "bottomright",
+  #       legend = c("<.2", ".2-.4", ".4-.6", ">.6"),
+  #       fill = colorRampPalette(RColorBrewer::brewer.pal(4, "Oranges"))(4)
+  #     )
+  #   }
+  #   dev.off()
+  #}
+}
+```
+
+Test the function with default values.
+
+```{r, p1-heatmap, fig.align='center'}
+plot_heatmap("P1")
+```
+
+Now, let's plot the same for all wallpaper groups.
+
+```{r, p31m-heatmap}
+plot_heatmap("P31M")
+```
+
+```{r, p3m1-heatmap}
+plot_heatmap("P3M1")
+```
+
+```{r, p6-heatmap}
+plot_heatmap("P6")
+```
+
+```{r, p6m-heatmap}
+plot_heatmap("P6M")
+```
+
+These are saved in `img/`.
+
+## Connectivity networks
+
+Now, for each member of the most similar exemplar pair, we show the connectivity network.
+
+Create helper function.
+
+```{r}
+make_jaccard_network <- function(wp_group = "P1", df = jaccard) {
+  this_df <- df %>%
+    dplyr::filter(., Group == wp_group) %>%
+    dplyr::arrange(., Exemplar.Row, Exemplar.Col)
+  
+  this_edges <- tibble(
+    from = this_df$Exemplar.Row,
+    to = this_df$Exemplar.Col,
+    weight = this_df$Jaccard
+  )
+  
+  this_nodes <- tibble::tibble(id = 1:20)
+  
+  tidygraph::tbl_graph(nodes = this_nodes,
+                       edges = this_edges,
+                       directed = FALSE)
+  
+}
+```
+
+Test with default parameters.
+
+```{r}
+(p1_df <- make_jaccard_network())
+```
+
+Select a specific exemplar and categorize the Jaccard index values.
+
+```{r}
+select_exemplar <- function(network_df =  make_jaccard_network(), exemplar_id = 8) {
+  df <- network_df %>%
+    activate(edges) %>%
+    dplyr::filter(., from == exemplar_id | to == exemplar_id) %>%
+    dplyr::mutate(weight = cut(weight, c(0, .2, .4, .6, .8), 
+                               labels = c("<.2", ".2-.4", ".4-.6", ">.6")))
+  df
+}
+
+select_exemplar()
+```
+
+Now, plot the edge values.
+
+```{r, test-ggraph}
+ggraph(select_exemplar(), layout = "linear", circular = TRUE) +
+  geom_edge_arc(aes(color = weight)) +
+  geom_node_text(aes(label = id), size = 6) +
+  theme_graph() +
+  coord_fixed() +
+  # NOTE: the drop = FALSE ensures that the full range of scales is used!
+  scale_edge_color_manual(name = "Jaccard",
+                          values = value_colors,
+                          drop = FALSE) +
+  theme(legend.text = element_text(size = 14)) +
+  theme(legend.title = element_text(size = 16))
+```
+
+
+```{r}
+plot_jaccard_vals <-
+  function(network_df = make_jaccard_network(),
+           exemplar_id = 8,
+           wp_group = "P1") {
+
+    df <- select_exemplar(network_df, exemplar_id)
+    
+    ggraph(df, layout = "linear", circular = TRUE) +
+      geom_edge_arc(aes(color = weight)) +
+      geom_node_text(aes(label = id), size = 6) +
+      theme_graph() +
+      coord_fixed() +
+      # NOTE: the drop = FALSE ensures that the full range of scales is used!
+      scale_edge_color_manual(name = "Jaccard",
+                              values = value_colors,
+                              drop = FALSE) +
+      theme(legend.text = element_text(size = 14)) +
+      theme(legend.title = element_text(size = 16))
+  }
+```
+
+Test with default parameters.
+
+### P1 #8
+
+```{r, p1-exemplar-8-network}
+plot_jaccard_vals()
+```
+
+### P1 #9
+
+And its companion.
+
+```{r, p1-exemplar-9-network}
+plot_jaccard_vals(exemplar_id = 9)
+```
+
+### P31M #2
+
+```{r, p31m-exemplar-2-network}
+plot_jaccard_vals(make_jaccard_network(wp_group = "P31M", df = jaccard), exemplar_id = 2, wp_group = "P31M")
+```
+
+### P31M #7
+
+```{r, p31m-exemplar-7-network}
+plot_jaccard_vals(make_jaccard_network(wp_group = "P31M", df = jaccard), exemplar_id = 7, wp_group = "P31M")
+```
+
+### P3M1 #19
+
+```{r, p3m1-exemplar-19-network}
+plot_jaccard_vals(make_jaccard_network(wp_group = "P3M1", df = jaccard), exemplar_id = 19, wp_group = "P3M1")
+```
+
+### P3M1 #20
+
+```{r, p3m1-exemplar-20-network}
+plot_jaccard_vals(make_jaccard_network(wp_group = "P3M1", df = jaccard), exemplar_id = 20, wp_group = "P3M1")
+```
+
+### P6 #6
+
+```{r, p6-exemplar-6-network}
+plot_jaccard_vals(make_jaccard_network(wp_group = "P6", df = jaccard), exemplar_id = 6, wp_group = "P6")
+```
+
+### P6 #13
+
+```{r, p6-exemplar-13-network}
+plot_jaccard_vals(make_jaccard_network(wp_group = "P6", df = jaccard), exemplar_id = 13, wp_group = "P6")
+```
+
+### P6M #10
+
+```{r, p6m-exemplar-10-network}
+plot_jaccard_vals(make_jaccard_network(wp_group = "P6M", df = jaccard), exemplar_id = 10, wp_group = "P6M")
+```
+
+### P6M #20
+
+```{r, p6m-exemplar-20-network}
+plot_jaccard_vals(make_jaccard_network(wp_group = "P6M", df = jaccard), exemplar_id = 20, wp_group = "P6M")
+```
+
+Now, let's put the pieces together. *Not used at this time*
+
+```{r, graph-network-for-max-pairs-function, eval=FALSE}
+graph_network_for_max_pairs <- function(wp_group = "P1", df = jaccard,
+                                        save_to_file = FALSE) {
+  
+  this_network <- make_jaccard_network(wp_group, df)
+  
+  this_pair <- pick_n_pairs_max_jaccard(wp_group, df)
+  
+  p1 <- plot_jaccard_vals(this_network,
+                    this_pair$Exemplar.Row,
+                    wp_group
+                    )
+  
+  p2 <- plot_jaccard_vals(this_network,
+                    this_pair$Exemplar.Col,
+                    wp_group
+                    ) 
+
+  ggpubr::ggarrange(p1, p2, ncol = 2, nrow = 1,
+                    labels = c(paste0(wp_group, " #", this_pair$Exemplar.Row), paste0(wp_group, " #", this_pair$Exemplar.Col)),
+                    common.legend = TRUE,
+                    legend = "bottom")
+}
+```
+
+Test with default values
+
+```{r, eval= FALSE}
+graph_network_for_max_pairs()
+```
+
