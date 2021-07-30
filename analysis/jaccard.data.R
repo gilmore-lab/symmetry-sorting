@@ -1,7 +1,7 @@
 jaccard.data <- function(df, duplicates=FALSE, frame=TRUE){
   # Calculates Jaccard index for sorting exemplars
   # Returns tidy data frame if frame=TRUE, else square matrix
-  # Returns tidy data frame without duplicate entires if duplicates=FALSE
+  # Returns tidy data frame without duplicate entries if duplicates=FALSE
   
   source('analysis/jaccard.R')
   

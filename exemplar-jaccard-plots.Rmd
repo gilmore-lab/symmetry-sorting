@@ -17,14 +17,15 @@ This document creates plots of the network of Jaccard similarity indices for som
 # Set-up
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE,
-                      fig.path = "img/",
-                      dev = c("png"),
-                      dpi = 300,
-                      fig.align = "center",
-                      fig.width = 7,  # in
-                      fig.height = 7
-                      )
+knitr::opts_chunk$set(
+  echo = TRUE,
+  fig.path = "img/",
+  dev = c("png"),
+  dpi = 300,
+  fig.align = "center",
+  fig.width = 7,
+  fig.height = 7
+)
 
 library(tidyverse)
 library(tidygraph)
@@ -103,7 +104,6 @@ value_colors <-
     colorRampPalette(RColorBrewer::brewer.pal(4, "Oranges"))(4)
 legend_text <- c("<.2", ".2-.4", ".4-.6", ">.6")
 ```
-
 
 Create helper function to generate heatmaps.
 
@@ -303,22 +303,6 @@ plot_heatmap <- function(wp_group = "P1",
     title_txt = NA
   }
   
-  
-  # value_breaks <- c(0, .2, .4, .6, .8)
-  # value_colors <-
-  #   colorRampPalette(RColorBrewer::brewer.pal(4, "Oranges"))(4)
-  
-  # heatmap(
-  #   j_matrix,
-  #   Rowv = NA,
-  #   Colv = NA,
-  #   main = title_txt,
-  #   symm = TRUE,
-  #   col = value_colors,
-  #   breaks = value_breaks,
-  #   cexRow = 2,
-  #   cexCol = 2
-  # )
   my_heatmap(
     j_matrix,
     Rowv = NA,
@@ -328,8 +312,8 @@ plot_heatmap <- function(wp_group = "P1",
     margins = c(15,15),
     col = value_colors,
     breaks = value_breaks,
-    cexRow = 1.25,
-    cexCol = 1.25
+    cexRow = 3.0,
+    cexCol = 3.0
     )
   
   if (show_legend) {
@@ -337,34 +321,12 @@ plot_heatmap <- function(wp_group = "P1",
            legend = legend_text,
            fill = value_colors)
   }
-  
-  # if (save_to_file) {
-  #   png(paste0("img/", wp_group, "-", "jaccard-heatmap.png"))
-  #   heatmap(
-  #     j_matrix,
-  #     Rowv = NA,
-  #     Colv = NA,
-  #     main = title_txt,
-  #     symm = TRUE,
-  #     col = value_colors,
-  #     breaks = value_breaks
-  #   )
-  #
-  #   if (show_legend) {
-  #     legend(
-  #       x = "bottomright",
-  #       legend = c("<.2", ".2-.4", ".4-.6", ">.6"),
-  #       fill = colorRampPalette(RColorBrewer::brewer.pal(4, "Oranges"))(4)
-  #     )
-  #   }
-  #   dev.off()
-  #}
 }
 ```
 
 Test the function with default values.
 
-```{r, p1-heatmap, fig.align='center'}
+```{r, p1-heatmap}
 plot_heatmap("P1")
 ```
 

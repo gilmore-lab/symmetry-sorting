@@ -28,6 +28,7 @@ next.group.i <- 1
 ```
 
 ## Hierarchical Cluster of Jaccard indices on `r levels(jaccard.all.df$Group)[next.group.i]`
+
 <div class="centered">
 ```{r, echo=FALSE, echo=FALSE, warning=FALSE, message=FALSE}
 d <- make.distance.matrix(levels(jaccard.all.df$Group)[next.group.i])
@@ -38,6 +39,7 @@ next.group.i <- next.group.i + 1
 </div>
 
 ## Hierarchical Cluster of Jaccard indices on `r levels(jaccard.all.df$Group)[next.group.i]`
+
 <div class="centered">
 ```{r, echo=FALSE, echo=FALSE, warning=FALSE, message=FALSE}
 d <- make.distance.matrix(levels(jaccard.all.df$Group)[next.group.i])
@@ -48,6 +50,7 @@ next.group.i <- next.group.i + 1
 </div>
 
 ## Hierarchical Cluster of Jaccard indices on `r levels(jaccard.all.df$Group)[next.group.i]`
+
 <div class="centered">
 ```{r, echo=FALSE, echo=FALSE, warning=FALSE, message=FALSE}
 d <- make.distance.matrix(levels(jaccard.all.df$Group)[next.group.i])
@@ -58,6 +61,7 @@ next.group.i <- next.group.i + 1
 </div>
 
 ## Hierarchical Cluster of Jaccard indices on `r levels(jaccard.all.df$Group)[next.group.i]`
+
 <div class="centered">
 ```{r, echo=FALSE, echo=FALSE, warning=FALSE, message=FALSE}
 d <- make.distance.matrix(levels(jaccard.all.df$Group)[next.group.i])
@@ -68,6 +72,7 @@ next.group.i <- next.group.i + 1
 </div>
 
 ## Hierarchical Cluster of Jaccard indices on `r levels(jaccard.all.df$Group)[next.group.i]`
+
 <div class="centered">
 ```{r, echo=FALSE, echo=FALSE, warning=FALSE, message=FALSE}
 d <- make.distance.matrix(levels(jaccard.all.df$Group)[next.group.i])

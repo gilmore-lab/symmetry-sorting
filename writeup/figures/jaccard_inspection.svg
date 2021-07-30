@@ -20,24 +20,29 @@
   <sodipodi:namedview
      inkscape:window-maximized="1"
      inkscape:window-y="23"
-     inkscape:window-x="1680"
+     inkscape:window-x="0"
      inkscape:window-height="1035"
      inkscape:window-width="1920"
-     showguides="false"
+     showguides="true"
      units="in"
      showgrid="false"
      inkscape:document-rotation="0"
      inkscape:current-layer="layer1"
      inkscape:document-units="mm"
-     inkscape:cy="878.71825"
-     inkscape:cx="540.94035"
+     inkscape:cy="354.60531"
+     inkscape:cx="558.70099"
      inkscape:zoom="1"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
      borderopacity="1.0"
      bordercolor="#666666"
      pagecolor="#ffffff"
-     id="base" />
+     id="base">
+    <sodipodi:guide
+       position="73.289583,325.4375"
+       orientation="0,-1"
+       id="guide984" />
+  </sodipodi:namedview>
   <metadata
      id="metadata857">
     <rdf:RDF>
@@ -46,7 +51,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -54,64 +59,84 @@
      id="layer1"
      inkscape:groupmode="layer"
      inkscape:label="Layer 1">
-    <rect
-       y="0.0088167312"
-       x="2.3955362"
-       height="295.79535"
-       width="196.57112"
-       id="rect2208"
-       style="fill:#ffffff;fill-opacity:1;stroke-width:1;stroke-linecap:square" />
     <image
-       sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/p6-exemplar-6-network-1.png"
-       xlink:href="../../img/p6-exemplar-6-network-1.png"
-       y="55.117813"
-       x="-0.25687438"
-       width="70"
-       height="70"
+       sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/p31M-exemplar-2-network-crop.png"
+       xlink:href="../../img/p31M-exemplar-2-network-crop.png"
+       y="170.07951"
+       x="5"
+       width="60"
+       height="49.293556"
        preserveAspectRatio="none"
-       style="stroke-width:15.875;image-rendering:optimizeQuality"
+       style="stroke-width:18.5208;image-rendering:optimizeQuality"
+       id="image1522-2-8-9" />
+    <image
+       sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/p6M-exemplar-10-network-crop.png"
+       xlink:href="../../img/p6M-exemplar-10-network-crop.png"
+       id="image1522-2-8-9-4"
+       style="stroke-width:18.5208;image-rendering:optimizeQuality"
+       preserveAspectRatio="none"
+       height="49.293556"
+       width="60"
+       x="5"
+       y="225.106" />
+    <image
+       sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/p3M1-exemplar-19-network-CROP.png"
+       xlink:href="../../img/p3M1-exemplar-19-network-CROP.png"
+       id="image1522-2-8"
+       style="stroke-width:18.5208;image-rendering:optimizeQuality"
+       preserveAspectRatio="none"
+       height="49.293556"
+       width="60"
+       x="5"
+       y="115.05299" />
+    <image
+       sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/p6-exemplar-6-network-crop.png"
+       xlink:href="../../img/p6-exemplar-6-network-crop.png"
+       y="60.026505"
+       x="5"
+       width="60"
+       height="49.293556"
+       preserveAspectRatio="none"
+       style="stroke-width:18.5208;image-rendering:optimizeQuality"
        id="image1522-2" />
     <image
-       sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/p3M1-exemplar-19-network-1.png"
-       xlink:href="../../img/p3M1-exemplar-19-network-1.png"
-       id="image1522-2-8"
-       style="stroke-width:15.875;image-rendering:optimizeQuality"
+       sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/p1-exemplar-8-network-crop.png"
+       xlink:href="../../img/p1-exemplar-8-network-crop.png"
+       id="image1522"
+       style="stroke-width:18.5208;image-rendering:optimizeQuality"
        preserveAspectRatio="none"
-       height="70"
-       width="70"
-       x="-0.25687423"
-       y="114.65268" />
+       height="49.293556"
+       width="60"
+       x="5"
+       y="5" />
+    <rect
+       style="fill:#ffffff;stroke-width:1;stroke-linecap:square"
+       id="rect885"
+       width="12.435416"
+       height="275.69583"
+       x="54.239582"
+       y="-0.79374999" />
     <text
        id="text3333-5-6"
-       y="125.28123"
-       x="5.1242347"
+       y="116.57597"
+       x="1.4573975"
        style="font-size:6.35px;line-height:1.25;font-family:Helvetica;-inkscape-font-specification:Helvetica;stroke-width:0.264583"
        xml:space="preserve"><tspan
          style="font-style:italic;stroke-width:0.264583"
-         y="125.28123"
-         x="5.1242347"
+         y="116.57597"
+         x="1.4573975"
          id="tspan3331-9-2"
          sodipodi:role="line">P3M1</tspan></text>
     <image
-       sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/p1-exemplar-8-network-1.png"
-       xlink:href="../../img/p1-exemplar-8-network-1.png"
-       id="image1522"
-       style="stroke-width:15.875;image-rendering:optimizeQuality"
-       preserveAspectRatio="none"
-       height="70"
-       width="70"
-       x="-0.25687441"
-       y="-5.2916665" />
-    <image
-       sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/p1-exemplar-9-network-1.png"
-       xlink:href="../../img/p1-exemplar-9-network-1.png"
+       sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/p1-exemplar-9-network-crop.png"
+       xlink:href="../../img/p1-exemplar-9-network-crop.png"
        id="image2719"
-       style="stroke-width:15.875;image-rendering:optimizeQuality"
+       style="stroke-width:18.5208;image-rendering:optimizeQuality"
        preserveAspectRatio="none"
-       height="70"
-       width="70"
-       x="56.513958"
-       y="-5.2916665" />
+       height="49.293552"
+       width="60"
+       x="61.80563"
+       y="5" />
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none"
        id="rect1467"
@@ -122,145 +147,95 @@
     <image
        sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/p1-heatmap-1.png"
        xlink:href="../../img/p1-heatmap-1.png"
-       y="2.224921"
+       y="5"
        x="115.45947"
-       width="70"
-       height="70"
+       width="80"
+       height="80"
        preserveAspectRatio="none"
-       style="stroke-width:15.875;image-rendering:optimizeQuality"
+       style="stroke-width:13.8906;image-rendering:optimizeQuality"
        id="image2122-7" />
-    <image
-       sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/blank_P1-20.png"
-       xlink:href="../../img/blank_P1-20.png"
-       id="image843-5-1"
-       style="stroke-width:8.46672;image-rendering:optimizeQuality"
-       preserveAspectRatio="none"
-       height="25"
-       width="25"
-       x="156.88097"
-       y="4.5944619" />
-    <image
-       sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/blank_P1-9.png"
-       xlink:href="../../img/blank_P1-9.png"
-       y="29.594461"
-       x="171.17023"
-       width="24.999998"
-       height="24.999998"
-       preserveAspectRatio="none"
-       style="stroke-width:8.46672;image-rendering:optimizeQuality"
-       id="image843-0" />
-    <image
-       sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/blank_P1-8.png"
-       xlink:href="../../img/blank_P1-8.png"
-       id="image843"
-       style="stroke-width:8.46672;image-rendering:optimizeQuality"
-       preserveAspectRatio="none"
-       height="24.999998"
-       width="24.999998"
-       x="142.59169"
-       y="29.594461" />
     <text
        id="text3333"
-       y="6.7796817"
-       x="5.1986489"
+       y="6.5547605"
+       x="1.4573975"
        style="font-size:6.35px;line-height:1.25;font-family:Helvetica;-inkscape-font-specification:Helvetica;stroke-width:0.264583"
        xml:space="preserve"><tspan
          style="font-style:italic;stroke-width:0.264583"
-         y="6.7796817"
-         x="5.1986489"
+         y="6.5547605"
+         x="1.4573975"
          id="tspan3331"
          sodipodi:role="line">P1</tspan></text>
     <image
-       sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/p3M1-exemplar-20-network-1.png"
-       xlink:href="../../img/p3M1-exemplar-20-network-1.png"
+       sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/p3M1-exemplar-20-network-CROP.png"
+       xlink:href="../../img/p3M1-exemplar-20-network-CROP.png"
        id="image2719-9-5"
-       style="stroke-width:15.875;image-rendering:optimizeQuality"
+       style="stroke-width:18.5208;image-rendering:optimizeQuality"
        preserveAspectRatio="none"
-       height="70"
-       width="70"
-       x="56.513962"
-       y="114.65268" />
+       height="49.293556"
+       width="60"
+       x="61.80563"
+       y="115.05299" />
     <image
-       sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/p6-exemplar-13-network-1.png"
-       xlink:href="../../img/p6-exemplar-13-network-1.png"
-       y="55.117813"
-       x="56.513962"
-       width="70"
-       height="70"
+       sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/p6-exemplar-13-network-crop.png"
+       xlink:href="../../img/p6-exemplar-13-network-crop.png"
+       y="60.026505"
+       x="61.80563"
+       width="60"
+       height="49.293556"
        preserveAspectRatio="none"
-       style="stroke-width:15.875;image-rendering:optimizeQuality"
+       style="stroke-width:18.5208;image-rendering:optimizeQuality"
        id="image2719-9" />
     <image
-       sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/p31M-exemplar-2-network-1.png"
-       xlink:href="../../img/p31M-exemplar-2-network-1.png"
-       y="174.0136"
-       x="-0.25687373"
-       width="70"
-       height="70"
+       sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/p31M-exemplar-7-network-crop.png"
+       xlink:href="../../img/p31M-exemplar-7-network-crop.png"
+       y="170.07951"
+       x="61.80563"
+       width="60"
+       height="49.293556"
        preserveAspectRatio="none"
-       style="stroke-width:15.875;image-rendering:optimizeQuality"
-       id="image1522-2-8-9" />
-    <image
-       sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/p31M-exemplar-7-network-1.png"
-       xlink:href="../../img/p31M-exemplar-7-network-1.png"
-       y="174.0136"
-       x="56.513962"
-       width="70"
-       height="70"
-       preserveAspectRatio="none"
-       style="stroke-width:15.875;image-rendering:optimizeQuality"
+       style="stroke-width:18.5208;image-rendering:optimizeQuality"
        id="image2719-9-5-3" />
     <text
        xml:space="preserve"
        style="font-size:6.35px;line-height:1.25;font-family:Helvetica;-inkscape-font-specification:Helvetica;stroke-width:0.264583"
-       x="5.3567777"
-       y="184.76616"
+       x="1.4573975"
+       y="171.61682"
        id="text3333-5-6-8"><tspan
          sodipodi:role="line"
          id="tspan3331-9-2-6"
-         x="5.3567777"
-         y="184.76616"
+         x="1.4573975"
+         y="171.61682"
          style="font-style:italic;stroke-width:0.264583">P31M</tspan></text>
     <image
-       sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/p6M-exemplar-10-network-1.png"
-       xlink:href="../../img/p6M-exemplar-10-network-1.png"
-       id="image1522-2-8-9-4"
-       style="stroke-width:15.875;image-rendering:optimizeQuality"
-       preserveAspectRatio="none"
-       height="70"
-       width="70"
-       x="-0.25687349"
-       y="233.76593" />
-    <image
-       sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/p6M-exemplar-20-network-1.png"
-       xlink:href="../../img/p6M-exemplar-20-network-1.png"
+       sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/p6M-exemplar-20-network-crop.png"
+       xlink:href="../../img/p6M-exemplar-20-network-crop.png"
        id="image2719-9-5-3-2"
-       style="stroke-width:15.875;image-rendering:optimizeQuality"
+       style="stroke-width:18.5208;image-rendering:optimizeQuality"
        preserveAspectRatio="none"
-       height="70"
-       width="70"
-       x="56.513962"
-       y="233.76593" />
+       height="49.293556"
+       width="60"
+       x="61.80563"
+       y="225.106" />
     <text
        xml:space="preserve"
        style="font-size:6.35px;line-height:1.25;font-family:Helvetica;-inkscape-font-specification:Helvetica;stroke-width:0.264583"
-       x="5.1986489"
-       y="66.480522"
+       x="1.4573975"
+       y="61.538239"
        id="text3333-5"><tspan
          sodipodi:role="line"
          id="tspan3331-9"
-         x="5.1986489"
-         y="66.480522"
+         x="1.4573975"
+         y="61.538239"
          style="font-style:italic;stroke-width:0.264583">P6</tspan></text>
     <text
        id="text3333-5-6-8-9"
-       y="244.51849"
-       x="5.3877835"
+       y="226.66077"
+       x="1.4573975"
        style="font-size:6.35px;line-height:1.25;font-family:Helvetica;-inkscape-font-specification:Helvetica;stroke-width:0.264583"
        xml:space="preserve"><tspan
          style="font-style:italic;stroke-width:0.264583"
-         y="244.51849"
-         x="5.3877835"
+         y="226.66077"
+         x="1.4573975"
          id="tspan3331-9-2-6-9"
          sodipodi:role="line">P6M</tspan></text>
     <rect
@@ -273,12 +248,12 @@
     <image
        sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/p6-heatmap-1.png"
        xlink:href="../../img/p6-heatmap-1.png"
-       y="61.925758"
+       y="60.026501"
        x="115.45947"
-       width="70"
-       height="70"
+       width="80"
+       height="80"
        preserveAspectRatio="none"
-       style="stroke-width:15.875;image-rendering:optimizeQuality"
+       style="stroke-width:13.8906;image-rendering:optimizeQuality"
        id="image2122-7-4" />
     <rect
        y="120.72646"
@@ -290,30 +265,23 @@
     <image
        sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/p3M1-heatmap-1.png"
        xlink:href="../../img/p3M1-heatmap-1.png"
-       y="120.72646"
+       y="115.05299"
        x="115.45947"
-       width="70"
-       height="70"
+       width="80"
+       height="80"
        preserveAspectRatio="none"
-       style="stroke-width:15.875;image-rendering:optimizeQuality"
+       style="stroke-width:13.8906;image-rendering:optimizeQuality"
        id="image2122-7-4-6" />
-    <rect
-       y="180.2114"
-       x="113.35642"
-       height="43.777065"
-       width="11.320044"
-       id="rect1467-4"
-       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none" />
     <image
        sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/p31M-heatmap-1.png"
        xlink:href="../../img/p31M-heatmap-1.png"
        id="image2122-7-4-6-3"
-       style="stroke-width:15.875;image-rendering:optimizeQuality"
+       style="stroke-width:13.8906;image-rendering:optimizeQuality"
        preserveAspectRatio="none"
-       height="70"
-       width="70"
+       height="80"
+       width="80"
        x="115.45947"
-       y="180.2114" />
+       y="170.07951" />
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none"
        id="rect1825"
@@ -324,58 +292,33 @@
     <image
        sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/p6M-heatmap-1.png"
        xlink:href="../../img/p6M-heatmap-1.png"
-       y="239.96373"
+       y="225.10599"
        x="115.45947"
-       width="70"
-       height="70"
+       width="80"
+       height="80"
        preserveAspectRatio="none"
-       style="stroke-width:15.875;image-rendering:optimizeQuality"
+       style="stroke-width:13.8906;image-rendering:optimizeQuality"
        id="image1823" />
-    <image
-       sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/jaccard_legend.png"
-       xlink:href="../../img/jaccard_legend.png"
-       id="image2647"
-       style="stroke-width:13.97;image-rendering:optimizeQuality"
-       preserveAspectRatio="none"
-       height="18.282827"
-       width="10"
-       x="53.366043"
-       y="50.129677" />
-    <image
-       sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/blank_P6-14.png"
-       xlink:href="../../img/blank_P6-14.png"
-       id="image843-5-1-2"
-       style="stroke-width:8.46672;image-rendering:optimizeQuality"
-       preserveAspectRatio="none"
-       height="25"
-       width="25"
-       x="156.88098"
-       y="64.27359" />
-    <image
-       sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/blank_P6-13.png"
-       xlink:href="../../img/blank_P6-13.png"
-       y="89.27359"
-       x="171.17024"
-       width="24.999998"
-       height="24.999998"
-       preserveAspectRatio="none"
-       style="stroke-width:8.46672;image-rendering:optimizeQuality"
-       id="image843-0-5" />
-    <image
-       sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/blank_P6-6.png"
-       xlink:href="../../img/blank_P6-6.png"
-       id="image843-2"
-       style="stroke-width:8.46672;image-rendering:optimizeQuality"
-       preserveAspectRatio="none"
-       height="24.999998"
-       width="24.999998"
-       x="142.59171"
-       y="89.27359" />
+    <g
+       id="g1173">
+      <path
+         id="path1098"
+         d="m 162.40453,157.13823 h 35"
+         style="fill:#fa792f;fill-opacity:1;stroke:#fa792f;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         style="fill:#fde9d6;fill-opacity:1;stroke:#fde9d6;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 174.61284,126.83696 -17.5,30.31088"
+         id="path1098-2" />
+      <path
+         id="path1098-2-3"
+         d="m 202.69618,157.14784 -17.49999,-30.3109"
+         style="fill:none;stroke:#fde9d6;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    </g>
     <image
        sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/blank_P3M1-14.png"
        xlink:href="../../img/blank_P3M1-14.png"
-       y="123.01109"
-       x="156.881"
+       y="115.05299"
+       x="167.46428"
        width="25"
        height="25"
        preserveAspectRatio="none"
@@ -389,18 +332,114 @@
        preserveAspectRatio="none"
        height="24.999998"
        width="24.999998"
-       x="171.17026"
-       y="148.01109" />
+       x="181.75356"
+       y="139.34656" />
     <image
        sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/blank_P3M1-19.png"
        xlink:href="../../img/blank_P3M1-19.png"
-       y="148.01109"
-       x="142.59172"
+       y="139.34656"
+       x="153.17502"
        width="24.999998"
        height="24.999998"
        preserveAspectRatio="none"
        style="stroke-width:8.46672;image-rendering:optimizeQuality"
        id="image843-2-8" />
+    <path
+       id="path1098-0"
+       d="m 162.40452,102.11172 h 35"
+       style="fill:#fa792f;fill-opacity:1;stroke:#fa792f;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       style="fill:#fde9d6;fill-opacity:1;stroke:#fde9d6;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 174.61283,71.810453 -17.5,30.310877"
+       id="path1098-2-7" />
+    <path
+       id="path1098-2-3-6"
+       d="M 202.69617,102.12133 185.19618,71.810433"
+       style="fill:none;stroke:#fde9d6;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <image
+       sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/blank_P6-14.png"
+       xlink:href="../../img/blank_P6-14.png"
+       id="image843-5-1-2"
+       style="stroke-width:8.46672;image-rendering:optimizeQuality"
+       preserveAspectRatio="none"
+       height="25"
+       width="25"
+       x="167.46428"
+       y="60.026505" />
+    <image
+       sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/blank_P6-13.png"
+       xlink:href="../../img/blank_P6-13.png"
+       y="84.320061"
+       x="181.75356"
+       width="24.999998"
+       height="24.999998"
+       preserveAspectRatio="none"
+       style="stroke-width:8.46672;image-rendering:optimizeQuality"
+       id="image843-0-5" />
+    <image
+       sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/blank_P6-6.png"
+       xlink:href="../../img/blank_P6-6.png"
+       id="image843-2"
+       style="stroke-width:8.46672;image-rendering:optimizeQuality"
+       preserveAspectRatio="none"
+       height="24.999998"
+       width="24.999998"
+       x="153.17502"
+       y="84.320061" />
+    <path
+       id="path1098-04"
+       d="m 162.40452,46.73201 h 35"
+       style="fill:#fa792f;fill-opacity:1;stroke:#fa792f;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       style="fill:#fde9d6;fill-opacity:1;stroke:#fde9d6;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 174.61283,16.43074 -17.5,30.31088"
+       id="path1098-2-9" />
+    <path
+       id="path1098-2-3-63"
+       d="M 202.69617,46.74162 185.19618,16.43072"
+       style="fill:none;stroke:#fde9d6;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <image
+       sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/blank_P1-20.png"
+       xlink:href="../../img/blank_P1-20.png"
+       id="image843-5-1"
+       style="stroke-width:8.46672;image-rendering:optimizeQuality"
+       preserveAspectRatio="none"
+       height="25"
+       width="25"
+       x="167.46429"
+       y="4.6467772" />
+    <image
+       sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/blank_P1-9.png"
+       xlink:href="../../img/blank_P1-9.png"
+       y="29.646776"
+       x="181.75356"
+       width="24.999998"
+       height="24.999998"
+       preserveAspectRatio="none"
+       style="stroke-width:8.46672;image-rendering:optimizeQuality"
+       id="image843-0" />
+    <image
+       sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/blank_P1-8.png"
+       xlink:href="../../img/blank_P1-8.png"
+       id="image843"
+       style="stroke-width:8.46672;image-rendering:optimizeQuality"
+       preserveAspectRatio="none"
+       height="24.999998"
+       width="24.999998"
+       x="153.17502"
+       y="29.646776" />
+    <path
+       id="path1098-1"
+       d="m 162.4049,212.16479 h 35"
+       style="fill:#ce3206;fill-opacity:1;stroke:#ce3206;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       style="fill:#fde9d6;fill-opacity:1;stroke:#fde9d6;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 174.61321,181.86352 -17.5,30.31088"
+       id="path1098-2-4" />
+    <path
+       id="path1098-2-3-3"
+       d="M 202.69655,212.1744 185.19656,181.8635"
+       style="fill:none;stroke:#fde9d6;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <image
        sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/blank_P31M-11.png"
        xlink:href="../../img/blank_P31M-11.png"
@@ -409,13 +448,13 @@
        preserveAspectRatio="none"
        height="25"
        width="25"
-       x="156.881"
-       y="182.80693" />
+       x="167.46466"
+       y="170.07956" />
     <image
        sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/blank_P31M-7.png"
        xlink:href="../../img/blank_P31M-7.png"
-       y="207.80693"
-       x="171.17026"
+       y="194.46217"
+       x="181.68518"
        width="24.999998"
        height="24.999998"
        preserveAspectRatio="none"
@@ -429,13 +468,25 @@
        preserveAspectRatio="none"
        height="24.999998"
        width="24.999998"
-       x="142.59172"
-       y="207.80693" />
+       x="153.2368"
+       y="194.45381" />
+    <path
+       id="path1098-9"
+       d="m 162.40453,267.19123 h 35"
+       style="fill:#fbb072;fill-opacity:1;stroke:#fbb072;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       style="fill:#fde9d6;fill-opacity:1;stroke:#fde9d6;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 174.61284,236.88996 -17.5,30.31088"
+       id="path1098-2-8" />
+    <path
+       id="path1098-2-3-1"
+       d="m 202.69618,267.20084 -17.49999,-30.3109"
+       style="fill:none;stroke:#fde9d6;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <image
        sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/blank_P6M-12.png"
        xlink:href="../../img/blank_P6M-12.png"
-       y="242.22916"
-       x="156.881"
+       y="225.106"
+       x="167.46429"
        width="25"
        height="25"
        preserveAspectRatio="none"
@@ -449,17 +500,93 @@
        preserveAspectRatio="none"
        height="24.999998"
        width="24.999998"
-       x="171.17026"
-       y="267.22916" />
+       x="181.75356"
+       y="249.39957" />
     <image
        sodipodi:absref="/Users/kohler/code/git/project-wallpaper-sort/img/blank_P6M-10.png"
        xlink:href="../../img/blank_P6M-10.png"
-       y="267.22916"
-       x="142.59172"
+       y="249.39957"
+       x="153.17502"
        width="24.999998"
        height="24.999998"
        preserveAspectRatio="none"
        style="stroke-width:8.46672;image-rendering:optimizeQuality"
        id="image843-2-8-7-3" />
+    <g
+       transform="translate(-1.0583333,-0.52916663)"
+       id="g1035">
+      <rect
+         style="fill:#fde9d6;fill-opacity:1;stroke:#fde9d6;stroke-width:2;stroke-linecap:square;stroke-opacity:1"
+         id="rect902"
+         width="3.2375"
+         height="1"
+         x="50.799988"
+         y="49.741669" />
+      <rect
+         y="59.501389"
+         x="50.799988"
+         height="1"
+         width="3.2375"
+         id="rect902-0"
+         style="fill:#fa792f;fill-opacity:1;stroke:#fa792f;stroke-width:2;stroke-linecap:square;stroke-opacity:1" />
+      <rect
+         style="fill:#fbb072;stroke:#fbb072;stroke-width:2;stroke-linecap:square"
+         id="rect902-0-9"
+         width="3.2375"
+         height="1"
+         x="50.799988"
+         y="54.621529" />
+      <rect
+         y="64.381248"
+         x="50.799988"
+         height="1"
+         width="3.2375"
+         id="rect902-0-9-4"
+         style="fill:#ce3206;fill-opacity:1;stroke:#ce3206;stroke-width:2;stroke-linecap:square;stroke-opacity:1" />
+      <text
+         xml:space="preserve"
+         style="font-size:3.52778px;line-height:1.25;font-family:Helvetica;-inkscape-font-specification:Helvetica;stroke-width:0.264583"
+         x="56.567089"
+         y="51.445732"
+         id="text951"><tspan
+           sodipodi:role="line"
+           id="tspan949"
+           x="56.567089"
+           y="51.445732"
+           style="font-size:3.52778px;stroke-width:0.264583">&lt; 0.2</tspan></text>
+      <text
+         id="text951-2"
+         y="56.325592"
+         x="56.492672"
+         style="font-size:3.52778px;line-height:1.25;font-family:Helvetica;-inkscape-font-specification:Helvetica;stroke-width:0.264583"
+         xml:space="preserve"><tspan
+           style="font-size:3.52778px;stroke-width:0.264583"
+           y="56.325592"
+           x="56.492672"
+           id="tspan949-7"
+           sodipodi:role="line">0.2 - 0.4</tspan></text>
+      <text
+         id="text951-1"
+         y="61.20631"
+         x="56.492672"
+         style="font-size:3.52778px;line-height:1.25;font-family:Helvetica;-inkscape-font-specification:Helvetica;stroke-width:0.264583"
+         xml:space="preserve"><tspan
+           style="font-size:3.52778px;stroke-width:0.264583"
+           y="61.20631"
+           x="56.492672"
+           id="tspan949-5"
+           sodipodi:role="line">0.4 - 0.6</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:3.52778px;line-height:1.25;font-family:Helvetica;-inkscape-font-specification:Helvetica;stroke-width:0.264583"
+         x="56.567089"
+         y="66.086174"
+         id="text951-1-5"><tspan
+           sodipodi:role="line"
+           id="tspan949-5-8"
+           x="56.567089"
+           y="66.086174"
+           style="font-size:3.52778px;stroke-width:0.264583">&gt; 0.6</tspan></text>
+    </g>
   </g>
 </svg>
