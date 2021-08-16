@@ -523,319 +523,88 @@ jaccard_merged_df %>%
 
 Curiously, P31M, P6, P6M and P3M1 have exemplar pairs whose observed Jaccard indices are substantially larger than the empirically derived reference (null) distribution even though the mean Jaccard indices for P1 are the largest.
 
-Just for fun, let's print the exemplar pairs whose `z_emp` exceed `r qnorm(p = 1-.0001)`` ($p<.0001$).
+Just for fun, let's print the exemplar pairs whose `z_emp` exceeds some criterion $z$ values.
+
+We'll use a two-tailed criterion value.
+
+### $z_{obs}>$ `r (z_crit <- qnorm(p = 1-.5*(.0001)))`, $p<.0001$
 
 ```{r}
-jaccard_merged_df %>%
-  dplyr::filter(., z_emp > 4) %>%
-  dplyr::arrange(., group, desc(jaccard_emp_mean)) %>%
-  knitr::kable(.)
+p_crit <- .0001
+z_crit <- qnorm(p = 1-.5*(p_crit))
+    
+j_emp_p0001 <- jaccard_merged_df %>%
+  dplyr::filter(., z_emp > z_crit) %>%
+  dplyr::arrange(., group, desc(jaccard_emp_mean)) 
+
+knitr::kable(j_emp_p0001)
 ```
 
-Plot a histogram of `p_z_emp` or the probability associated with the empirical z.
-
-```{r jaccard-p-emp-z-hist}
-jaccard_merged_df %>%
-  ggplot(.) +
-  aes(p_z_emp, fill = group) +
-  geom_histogram() +
-  facet_grid(group ~ .)
-```
-
-## Heatmap visualizations
-
-Create function to extract data and convert to matrix.
 
 ```{r}
-extract_exemplar_index <- function(e) {
-  stringr::str_extract(e, '[0-9]{2}$')
-}
-
-extract_exemplar_emp_z_matrix <- function(wp_group = "P1", df = jaccard_merged_df) {
-  this_df <- df %>%
-    dplyr::filter(., group == wp_group)
-  
-  this_matrix <- matrix(nrow = 20, ncol = 20)
-  
-  for (r in 1:190) {
-    this_matrix[as.numeric(extract_exemplar_index(this_df$exemplar_row[r])), 
-                as.numeric(extract_exemplar_index(this_df$exemplar_col[r]))] <-
-      this_df$z_emp[r]
-  }
-  
-  this_matrix
-}
-
-wp_emp_mean <- function(wp_group = "P1", df = jaccard_merged_df) {
-  this_df <- df %>%
-    dplyr::filter(., group == wp_group)
-  
-  mean(this_df$jaccard_emp_mean)
-}
-
-wp_emp_sd <- function(wp_group = "P1", df = jaccard_merged_df) {
-  this_df <- df %>%
-    dplyr::filter(., group == wp_group)
-  
-  sd(this_df$jaccard_emp_mean)
-}
+xtabs(~ group, j_emp_p0001)
 ```
 
-Test the functions.
+### $z_{obs}>$ `r (z_crit <- qnorm(p = 1-.5*(.001)))`, $p<.001$
 
 ```{r}
-wp_emp_mean()
-wp_emp_sd()
-extract_exemplar_emp_z_matrix()
-```
-Now, let's turn to the heatmap.
+p_crit <- .001
+z_crit <- qnorm(p = 1-.5*(p_crit))
+                
+j_emp_p001 <- jaccard_merged_df %>%
+  dplyr::filter(., z_emp > z_crit) %>%
+  dplyr::arrange(., group, desc(jaccard_emp_mean))
 
-```{r def-myheatmap-function}
-# Based on stats::heatmap(), but with different defaults for axis labels
-my_heatmap <- function (x, Rowv = NULL, Colv = if (symm) "Rowv" else NULL, 
-    distfun = dist, hclustfun = hclust, reorderfun = function(d, 
-        w) reorder(d, w), add.expr, symm = FALSE, revC = identical(Colv, 
-        "Rowv"), scale = c("row", "column", "none"), na.rm = TRUE, 
-    margins = c(5, 5), ColSideColors, RowSideColors, cexRow = 0.2 + 
-        1/log10(nr), cexCol = 0.2 + 1/log10(nc), labRow = NULL, 
-    labCol = NULL, main = NULL, xlab = NULL, ylab = NULL, 
-    xside = 2, yside = 3, # 1=bottom, 2=left, 3=top, 4=right
-    keep.dendro = FALSE, 
-    verbose = getOption("verbose"), ...) 
-{
-    scale <- if (symm && missing(scale)) 
-        "none"
-    else match.arg(scale)
-    if (length(di <- dim(x)) != 2 || !is.numeric(x)) 
-        stop("'x' must be a numeric matrix")
-    nr <- di[1L]
-    nc <- di[2L]
-    if (nr <= 1 || nc <= 1) 
-        stop("'x' must have at least 2 rows and 2 columns")
-    if (!is.numeric(margins) || length(margins) != 2L) 
-        stop("'margins' must be a numeric vector of length 2")
-    doRdend <- !identical(Rowv, NA)
-    doCdend <- !identical(Colv, NA)
-    if (!doRdend && identical(Colv, "Rowv")) 
-        doCdend <- FALSE
-    if (is.null(Rowv)) 
-        Rowv <- rowMeans(x, na.rm = na.rm)
-    if (is.null(Colv)) 
-        Colv <- colMeans(x, na.rm = na.rm)
-    if (doRdend) {
-        if (inherits(Rowv, "dendrogram")) 
-            ddr <- Rowv
-        else {
-            hcr <- hclustfun(distfun(x))
-            ddr <- as.dendrogram(hcr)
-            if (!is.logical(Rowv) || Rowv) 
-                ddr <- reorderfun(ddr, Rowv)
-        }
-        if (nr != length(rowInd <- order.dendrogram(ddr))) 
-            stop("row dendrogram ordering gave index of wrong length")
-    }
-    else rowInd <- 1L:nr
-    if (doCdend) {
-        if (inherits(Colv, "dendrogram")) 
-            ddc <- Colv
-        else if (identical(Colv, "Rowv")) {
-            if (nr != nc) 
-                stop("Colv = \"Rowv\" but nrow(x) != ncol(x)")
-            ddc <- ddr
-        }
-        else {
-            hcc <- hclustfun(distfun(if (symm) 
-                x
-            else t(x)))
-            ddc <- as.dendrogram(hcc)
-            if (!is.logical(Colv) || Colv) 
-                ddc <- reorderfun(ddc, Colv)
-        }
-        if (nc != length(colInd <- order.dendrogram(ddc))) 
-            stop("column dendrogram ordering gave index of wrong length")
-    }
-    else colInd <- 1L:nc
-    x <- x[rowInd, colInd]
-    labRow <- labRow[rowInd] %||% rownames(x) %||% (1L:nr)[rowInd]
-    labCol <- labCol[colInd] %||% colnames(x) %||% (1L:nc)[colInd]
-    if (scale == "row") {
-        x <- sweep(x, 1L, rowMeans(x, na.rm = na.rm), check.margin = FALSE)
-        sx <- apply(x, 1L, sd, na.rm = na.rm)
-        x <- sweep(x, 1L, sx, "/", check.margin = FALSE)
-    }
-    else if (scale == "column") {
-        x <- sweep(x, 2L, colMeans(x, na.rm = na.rm), check.margin = FALSE)
-        sx <- apply(x, 2L, sd, na.rm = na.rm)
-        x <- sweep(x, 2L, sx, "/", check.margin = FALSE)
-    }
-    lmat <- rbind(c(NA, 3), 2:1)
-    lwid <- c(if (doRdend) 1 else 0.05, 4)
-    lhei <- c((if (doCdend) 1 else 0.05) + if (!is.null(main)) 0.2 else 0, 
-        4)
-    if (!missing(ColSideColors)) {
-        if (!is.character(ColSideColors) || length(ColSideColors) != 
-            nc) 
-            stop("'ColSideColors' must be a character vector of length ncol(x)")
-        lmat <- rbind(lmat[1, ] + 1, c(NA, 1), lmat[2, ] + 1)
-        lhei <- c(lhei[1L], 0.2, lhei[2L])
-    }
-    if (!missing(RowSideColors)) {
-        if (!is.character(RowSideColors) || length(RowSideColors) != 
-            nr) 
-            stop("'RowSideColors' must be a character vector of length nrow(x)")
-        lmat <- cbind(lmat[, 1] + 1, c(rep(NA, nrow(lmat) - 1), 
-            1), lmat[, 2] + 1)
-        lwid <- c(lwid[1L], 0.2, lwid[2L])
-    }
-    lmat[is.na(lmat)] <- 0
-    if (verbose) {
-        cat("layout: widths = ", lwid, ", heights = ", lhei, 
-            "; lmat=\n")
-        print(lmat)
-    }
-    dev.hold()
-    on.exit(dev.flush())
-    op <- par(no.readonly = TRUE)
-    on.exit(par(op), add = TRUE)
-    layout(lmat, widths = lwid, heights = lhei, respect = TRUE)
-    if (!missing(RowSideColors)) {
-        par(mar = c(margins[1L], 0, 0, 0.5))
-        image(rbind(if (revC) 
-            nr:1L
-        else 1L:nr), col = RowSideColors[rowInd], axes = FALSE)
-    }
-    if (!missing(ColSideColors)) {
-        par(mar = c(0.5, 0, 0, margins[2L]))
-        image(cbind(1L:nc), col = ColSideColors[colInd], axes = FALSE)
-    }
-    par(mar = c(margins[1L], 0, 0, margins[2L]))
-    if (!symm || scale != "none") 
-        x <- t(x)
-    if (revC) {
-        iy <- nr:1
-        if (doRdend) 
-            ddr <- rev(ddr)
-        x <- x[, iy]
-    }
-    else iy <- 1L:nr
-    image(1L:nc, 1L:nr, x, xlim = 0.5 + c(0, nc), ylim = 0.5 + 
-        c(0, nr), axes = FALSE, xlab = "", ylab = "", ...)
-    axis(xside, 1L:nc, labels = labCol, las = 2, line = -0.5, tick = 0, 
-        cex.axis = cexCol)
-    if (!is.null(xlab)) 
-        mtext(xlab, side = xside, line = margins[1L] - 1.25)
-    axis(yside, iy, labels = labRow, las = 2, line = -0.5, tick = 0, 
-        cex.axis = cexRow)
-    if (!is.null(ylab)) 
-        mtext(ylab, side = yside, line = margins[2L] - 1.25)
-    if (!missing(add.expr)) 
-        eval.parent(substitute(add.expr))
-    par(mar = c(margins[1L], 0, 0, 0))
-    if (doRdend) 
-        plot(ddr, horiz = TRUE, axes = FALSE, yaxs = "i", leaflab = "none")
-    else frame()
-    par(mar = c(0, 0, if (!is.null(main)) 1 else 0, margins[2L]))
-    if (doCdend) 
-        plot(ddc, axes = FALSE, xaxs = "i", leaflab = "none")
-    else if (!is.null(main)) 
-        frame()
-    if (!is.null(main)) {
-        par(xpd = NA)
-        title(main, cex.main = 1.5 * op[["cex.main"]])
-    }
-    invisible(list(rowInd = rowInd, colInd = colInd, Rowv = if (keep.dendro && 
-        doRdend) ddr, Colv = if (keep.dendro && doCdend) ddc))
-}
-```
-
-Combine the above into a new plotting function.
-
-```{r}
-value_breaks <- c(0, .0001, .001, .01, .1, 1)
-color_palate <- RColorBrewer::brewer.pal(length(value_breaks)-1, "Oranges")
-rev_color_palate <- color_palate[length(color_palate):1]
-value_colors <-
-    colorRampPalette(color_palate)(length(rev_color_palate))
-legend_text <- c("<.0001", "<.001", "<.01", ".1", ">.1")
+knitr::kable(j_emp_p001)
 ```
 
 ```{r}
-plot_heatmap_p <- function(wp_group = "P1",
-                         df = jaccard_merged_df,
-                         show_legend = TRUE) {
-  # Select wp_group
-
-  j_matrix <- extract_exemplar_emp_z_matrix(wp_group)
-  
-  my_heatmap(
-    j_matrix,
-    Rowv = NA,
-    Colv = NA,
-    symm = TRUE,
-    margins = c(30,30),
-    col = value_colors,
-    breaks = value_breaks,
-    cexRow = 3.0,
-    cexCol = 3.0
-    )
-  
-  if (show_legend) {
-    legend(x = "bottomright",
-           legend = legend_text,
-           fill = value_colors)
-  }
-}
+xtabs(~ group, j_emp_p001)
 ```
 
-Test the heatmap plotting function.
-
-```{r, P1-p-emp-jaccard}
-plot_heatmap_p("P1")
-```
-
-```{r, P31M-p-emp-jaccard}
-plot_heatmap_p("P31M")
-```
-
-```{r, P3M1-p-emp-jaccard}
-plot_heatmap_p("P3M1")
-```
-
-```{r, P6-p-emp-jaccard}
-plot_heatmap_p("P6")
-```
-
-```{r, P6M-p-emp-jaccard}
-plot_heatmap_p("P6M")
-```
-
-Why these graphs are so different from those in `exemplar-jaccard-plots.Rmd` has me stumped. I'm especially confused about why the top and side margins don't seem to behave as expeted.
-
-I'm going to try a different approach to summarizing these. Let's add a categorical variable to indicate $p$ value of the empirical z.
+### $z_{obs}>$ `r (z_crit <- qnorm(p = 1-.5*(.01)))`, $p<.01$
 
 ```{r}
-jaccard_merged_df <- jaccard_merged_df %>%
-  dplyr::mutate(.,
-                p_z_cuts =
-                  cut(
-                    p_z_emp,
-                    c(0, .0001, .001, .01, .1, 1),
-                    labels = c("<.0001", "<.001", "<.01", "<.1", ">.1"),
-                    include.lowest = TRUE
-                  ))
+p_crit <- .01
+z_crit <- qnorm(p = 1-.5*(p_crit))
+
+j_emp_p01 <- jaccard_merged_df %>%
+  dplyr::filter(., z_emp > z_crit) %>%
+  dplyr::arrange(., group, desc(jaccard_emp_mean))
+
+knitr::kable(j_emp_p01)
 ```
 
-```{r, p_emp_z_jaccard}
+```{r}
+xtabs(~ group, j_emp_p01)
+```
+
+### $z_{obs}>$ `r (z_crit <- qnorm(p = 1-.5*(.05)))`, $p<.05$
+
+```{r}
+p_crit <- .05
+z_crit <- qnorm(p = 1-.5*(p_crit))
+
+j_emp_p05 <- jaccard_merged_df %>%
+  dplyr::filter(., z_emp > z_crit) %>%
+  dplyr::arrange(., group, desc(jaccard_emp_mean))
+
+knitr::kable(j_emp_p05)
+```
+
+```{r}
+xtabs(~ group, j_emp_p05)
+```
+
+### Histogram with annotations
+
+```{r, emp-jaccard-hist-w-annotations}
 jaccard_merged_df %>%
   ggplot(.) +
-  aes(p_z_cuts, fill = group) +
-  geom_bar() +
+  aes(x = z_emp, fill = group) +
+  geom_histogram(bins = 20) +
+  geom_vline(xintercept = qnorm(1-.5*(.0001)), color = "black") +
+  geom_vline(xintercept = qnorm(1-.5*(.01)), color = "gray50") +
   facet_grid(group ~ .)
-```
-
-Or in tabular form:
-
-```{r}
-xtabs(~ p_z_cuts + group, jaccard_merged_df)
 ```
 
