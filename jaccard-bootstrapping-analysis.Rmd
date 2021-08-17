@@ -545,6 +545,10 @@ knitr::kable(j_emp_p0001)
 xtabs(~ group, j_emp_p0001)
 ```
 
+#### Observations
+
+For P31M, 014 (4 pairs), 020 (3 pairs), and 002 (3 pairs) are sorted together. For P3M1, 019 (2 pairs); for P6, 014 (2 pairs), 013 (2 pairs), 008 (2 pairs), 006 (2 pairs), 017 (2 pairs), 019 (2 pairs); For P6M, 008 (2 pairs), 010 (2 pairs), 020 (2 pairs).
+
 ### $z_{obs}>$ `r (z_crit <- qnorm(p = 1-.5*(.001)))`, $p<.001$
 
 ```{r}
@@ -598,13 +602,37 @@ xtabs(~ group, j_emp_p05)
 
 ### Histogram with annotations
 
-```{r, emp-jaccard-hist-w-annotations}
+```{r, emp-jaccard-dotplot-w-annotations}
+jaccard_merged_df %>%
+  ggplot(.) +
+  aes(x = z_emp, fill = group) +
+  #geom_histogram(bins = 20) +
+  geom_dotplot(dotsize = .33, binwidth = .25) +
+  geom_vline(xintercept = qnorm(1-.5*(.0001)), color = "black") +
+  #geom_vline(xintercept = qnorm(1-.5*(.001)), color = "black", alpha = 0.65) +
+  geom_vline(xintercept = qnorm(1-.5*(.01)), color = "black", alpha = 0.45) +
+  ylab(element_blank()) +
+  theme(axis.text.y = element_blank()) +
+  theme(axis.ticks.y = element_blank()) +
+  annotate("text", x = 4.6, y = 50, label = "p=.0001") +
+  annotate("text", x = 3.1, y = 50, label = "p=.01") +
+  facet_grid(group ~ .)
+```
+
+```{r, emp-jaccard-histogram-w-annotations}
 jaccard_merged_df %>%
   ggplot(.) +
   aes(x = z_emp, fill = group) +
   geom_histogram(bins = 20) +
+  #geom_dotplot(dotsize = .33, binwidth = .25) +
   geom_vline(xintercept = qnorm(1-.5*(.0001)), color = "black") +
-  geom_vline(xintercept = qnorm(1-.5*(.01)), color = "gray50") +
+  #geom_vline(xintercept = qnorm(1-.5*(.001)), color = "black", alpha = 0.65) +
+  geom_vline(xintercept = qnorm(1-.5*(.01)), color = "black", alpha = 0.45) +
+  ylab(element_blank()) +
+  theme(axis.text.y = element_blank()) +
+  theme(axis.ticks.y = element_blank()) +
+  annotate("text", x = 4.6, y = 50, label = "p=.0001", size = 3) +
+  annotate("text", x = 3.1, y = 50, label = "p=.01", size = 3) +
   facet_grid(group ~ .)
 ```
-
+Distribution of $z$ scores of observed Jaccard values for all exemplar pairs relative to simulated permuted values for each of the five wallpaper groups. Vertical bars indicate the two-tailed $z$ values that represent $p=.01$ or $z$= `r qnorm(1-.5*(.01))` and $p=.0001$ or $z$ = `r qnorm(1-.5*(.0001))`. All wallpaper groups show exemplar pairs with large $z$ scores, with P31M and P6 showing an especially large number of exemplar pairs with extreme values.
