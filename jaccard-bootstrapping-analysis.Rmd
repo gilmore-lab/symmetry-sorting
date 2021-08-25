@@ -612,10 +612,11 @@ jaccard_merged_df %>%
   #geom_vline(xintercept = qnorm(1-.5*(.001)), color = "black", alpha = 0.65) +
   geom_vline(xintercept = qnorm(1-.5*(.01)), color = "black", alpha = 0.45) +
   ylab(element_blank()) +
+  xlab("Z score") +
   theme(axis.text.y = element_blank()) +
   theme(axis.ticks.y = element_blank()) +
-  annotate("text", x = 4.6, y = 50, label = "p=.0001") +
-  annotate("text", x = 3.1, y = 50, label = "p=.01") +
+  annotate("text", x = 4.6, y = 50, label = "p=.0001", size = 3) +
+  annotate("text", x = 3.1, y = 50, label = "p=.01", size = 3) +
   facet_grid(group ~ .)
 ```
 
@@ -629,10 +630,11 @@ jaccard_merged_df %>%
   #geom_vline(xintercept = qnorm(1-.5*(.001)), color = "black", alpha = 0.65) +
   geom_vline(xintercept = qnorm(1-.5*(.01)), color = "black", alpha = 0.45) +
   ylab(element_blank()) +
+  xlab("Z score") +
   theme(axis.text.y = element_blank()) +
   theme(axis.ticks.y = element_blank()) +
-  annotate("text", x = 4.6, y = 50, label = "p=.0001", size = 3) +
-  annotate("text", x = 3.1, y = 50, label = "p=.01", size = 3) +
+  annotate("text", x = 4.6, y = 50, label = "p=0.0001", size = 2.5) +
+  annotate("text", x = 3.1, y = 50, label = "p=0.01", size = 2.5) +
   facet_grid(group ~ .)
 ```
-Distribution of $z$ scores of observed Jaccard values for all exemplar pairs relative to simulated permuted values for each of the five wallpaper groups. Vertical bars indicate the two-tailed $z$ values that represent $p=.01$ or $z$= `r qnorm(1-.5*(.01))` and $p=.0001$ or $z$ = `r qnorm(1-.5*(.0001))`. All wallpaper groups show exemplar pairs with large $z$ scores, with P31M and P6 showing an especially large number of exemplar pairs with extreme values.
+Distribution of $z$ scores of observed Jaccard values for all exemplar pairs relative to simulated permuted values for each of the five wallpaper groups. Vertical bars indicate the two-tailed $z$ values that represent $p=.01$ or $z=$ `r qnorm(1-.5*(.01))` and $p=.0001$ or $z=$ `r qnorm(1-.5*(.0001))`. All wallpaper groups show exemplar pairs with large $z$ scores, with P31M and P6 showing an especially large number of exemplar pairs with extreme values.
