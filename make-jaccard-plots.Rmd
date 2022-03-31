@@ -82,7 +82,27 @@ The mean Jaccard similarity indices across the exemplars was higher for P1; howe
 (em_jaccard <- emmeans::emmeans(jaccard_lm, "Group"))
 summary(pairs(em_jaccard, simple = "Group", adjust = "none"))
 ```
+
 So P1 > \{P31M, P3M1, P6, P6M\} and P31M > P6, but no other mean Jaccard indices differ.
+
+### Tabular summary with effect sizes
+
+```{r}
+jaccard_stats_df <- as_tibble(pairs(em_jaccard, simple = "Group", adjust = "tukey"))
+
+jaccard_stats_df <- jaccard_stats_df %>%
+  dplyr::select(., contrast, estimate, t.ratio, df, p.value) %>%
+  dplyr::rename(., mean_diff = estimate)
+
+jaccard_es_df <- as_tibble(emmeans::eff_size(em_jaccard, sigma = sigma(jaccard_lm), edf =df.residual(jaccard_lm)))
+
+jaccard_stats_merged_df <- dplyr::full_join(jaccard_stats_df, jaccard_es_df, by=c("contrast")) 
+
+jaccard_stats_merged_df %>%
+  dplyr::select(., contrast, t.ratio, p.value, df.x, effect.size) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material()
+```
 
 ## Try mixed model
 
