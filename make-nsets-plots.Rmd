@@ -99,7 +99,6 @@ afex::afex_plot(n_sets_afex, x = "Group", y = "nsets_per")
 
 Participants sorted P1 exemplars into a smaller number of categories than the other wallpaper groups.
 
-
 ### Using `lmer`
 
 ```{r}
@@ -117,26 +116,24 @@ Compare individual means.
 (em_n_sets <- emmeans::emmeans(n_sets_lme, "Group"))
 summary(pairs(em_n_sets, simple = "Group", adjust = "none"))
 ```
+
 The 95% CIs for all of the group means overlap; pairwise tests show that P1 < \{P31M, P3M1, P6, P6M\}, but no other means differ.
 
-### Fitting effect sizes
-
-We use the `esci` package to estimate differences in means among the wallpaper groups and to estimate effect sizes.
-
-First, we must convert `Group` to a factor.
+### Tabular summary with effect sizes
 
 ```{r}
-nsets_participant_df$Group.factor <- as.factor(nsets_participant_df$Group)
+n_sets_stats_df <- as_tibble(pairs(em_n_sets, simple = "Group", adjust = "tukey"))
+n_sets_stats_df <- n_sets_stats_df %>%
+  dplyr::select(., contrast, estimate, t.ratio, df, p.value) %>%
+  dplyr::rename(., mean_diff = estimate)
+
+n_sets_es_df <- as_tibble(emmeans::eff_size(em_n_sets, sigma = sigma(n_sets_lme), edf =df.residual(n_sets_lme)))
+
+n_sets_stats_merged_df <- dplyr::full_join(n_sets_stats_df, n_sets_es_df, by=c("contrast")) 
+
+n_sets_stats_merged_df %>%
+  dplyr::select(., contrast, t.ratio, p.value, df.x, effect.size) %>%
+  knitr::kable(., format = 'html') %>%
+  kableExtra::kable_material()
 ```
 
-
-```{r}
-es_nsets <- esci::estimateMeanDifference.default(nsets_participant_df,
-                                     Group.factor,
-                                     nsets_per,
-                                     paired = FALSE,
-                                     var.equal = TRUE,
-                                     conf.level = .95)
-
-es_nsets
-```
