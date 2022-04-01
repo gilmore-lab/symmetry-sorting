@@ -31,6 +31,8 @@ knitr::opts_chunk$set(
 
 library(tidyverse)
 library(lmerTest)
+library(tidygraph)
+library(ggraph)
 ```
 
 # Number of sets
@@ -178,7 +180,7 @@ gridExtra::grid.arrange(nsets_boxplot, jaccard_boxplot, nrow = 1)
 ```
 
 
-# Jaccard bootstrapping
+# Jaccard index bootstrapping
 
 The goal is to explore ways to generate an empirical "null" distribution of the Jaccard index data to compare it to the observed data.
 
@@ -770,3 +772,328 @@ jaccard_merged_df %>%
   theme_classic()
 ```
 Distribution of $z$ scores of observed Jaccard values for all exemplar pairs relative to simulated permuted values for each of the five wallpaper groups. Vertical bars indicate the two-tailed $z$ values that represent $p=.01$ or $z=$ `r qnorm(1-.5*(.01))` and $p=.0001$ or $z=$ `r qnorm(1-.5*(.0001))`. All wallpaper groups show exemplar pairs with large $z$ scores, with P31M and P6 showing an especially large number of exemplar pairs with extreme values.
+
+
+# Graph network analysis
+
+## Import data
+
+The Jaccard index data are found in `data/jaccard.csv`.
+
+```{r}
+jaccard_raw <- readr::read_csv("data/jaccard.csv")
+jaccard <- jaccard_raw %>%
+  dplyr::arrange(., Group, Exemplar.Row, desc(Jaccard))
+```
+
+## Helper functions to create graph
+
+```{r}
+wp_graph <- function(df, group) {
+  out_df <- df %>%
+    dplyr::filter(., Group == group)
+
+  df_edges <- tibble(from = out_df$Exemplar.Row,
+                     to = out_df$Exemplar.Col,
+                     weight = out_df$Jaccard)
+  
+  df_nodes <- tibble(id = 1:20)
+ 
+  tidygraph::tbl_graph(nodes = df_nodes, 
+                       edges = df_edges,
+                       directed = FALSE)
+}
+
+
+# Create network/graph plot of 
+plot_jaccard_vals <- function(df, 
+                              exemplar_id, 
+                              group, 
+                              j_stat_type = "mean", 
+                              j_stat_val = NA,
+                              show_title = FALSE,
+                              show_legend = FALSE
+                              ) {
+  df <- df %>%
+    activate(edges) %>%
+    dplyr::filter(., from == exemplar_id | to == exemplar_id) %>%
+    dplyr::mutate(weight = cut(weight, c(0, .2, .4, .6, .8), 
+                               labels = c("<.2", ".2-.4", ".4-.6", ">.6")))
+  
+  g <- ggraph(df, layout = "linear", circular = TRUE) +
+    geom_edge_arc(aes(color = factor(weight))) +
+    geom_node_text(aes(label = id)) +
+    scale_edge_color_brewer(palette = "Oranges") +
+    theme_graph() + 
+    coord_fixed()
+
+  if (show_title) {
+    f_stat <- format(j_stat_val, digits = 2, nsmall = 2)
+    g <- g + ggtitle(paste0(group, " | # ", exemplar_id, " | ", j_stat_type, " Jaccard ", f_stat))
+  }
+  if (!show_legend) {
+    g <- g + theme(legend.position="none") 
+  }
+  g
+}
+
+# Compute statistics on Jaccard indices by exemplar pair
+jaccard_stats <- function(jaccard) {
+  jaccard %>%
+    dplyr::mutate(., exemplar_pair = paste0(Exemplar.Row, "-", Exemplar.Col)) %>%
+    dplyr::group_by(., Group) %>%
+    dplyr::summarise(
+      .,
+      Jaccard_mean = mean(Jaccard),
+      Jaccard_med = median(Jaccard),
+      Jaccard_max = max(Jaccard),
+      Jaccard_min = min(Jaccard),
+      Exemplar.Row = Exemplar.Row,
+      Exemplar.Col = Exemplar.Col,
+      Jaccard = Jaccard,
+      exemplar_pair = exemplar_pair
+    ) %>%
+    dplyr::arrange(., desc(Jaccard_mean))
+}
+```
+
+Test the functions with P1.
+
+## Plot network graphs
+
+### P1
+
+```{r}
+j_stats <- jaccard_stats(jaccard)
+
+p1_g <- wp_graph(jaccard, "P1")
+
+exemplars_w_max_jaccard <- j_stats %>%
+  dplyr::filter(., Group == 'P1',
+                Jaccard_max == Jaccard)
+
+exemplars_w_min_jaccard <- j_stats %>%
+  dplyr::filter(., Group == 'P1',
+                Jaccard_min == Jaccard)
+
+```
+
+Plot the network for the exemplar with the maximum Jaccard value.
+
+```{r P1-Max-Jaccard-Exemplar-1}
+plot_jaccard_vals(p1_g, 
+                  as.character(exemplars_w_max_jaccard[1, 'Exemplar.Row']), 
+                  "P1", 
+                  "max", 
+                  as.numeric(exemplars_w_max_jaccard[1, 'Jaccard']))
+```
+
+Plot the network for the exemplar that is the other member of the maximally connected pair.
+
+```{r P1-Max-Jaccard-Exemplar-2}
+plot_jaccard_vals(p1_g, 
+                  as.character(exemplars_w_max_jaccard[1, 'Exemplar.Col']), 
+                  "P1", 
+                  "max", 
+                  as.numeric(exemplars_w_max_jaccard[1, 'Jaccard']))
+```
+
+
+### P6
+
+```{r}
+this_g <- "P6"
+wp_g <- wp_graph(jaccard, this_g)
+
+exemplars_w_max_jaccard <- j_stats %>%
+  dplyr::filter(., Group == this_g,
+                Jaccard_max == Jaccard)
+
+exemplars_w_min_jaccard <- j_stats %>%
+  dplyr::filter(., Group == this_g,
+                Jaccard_min == Jaccard)
+
+```
+
+Plot the network for the exemplar with the maximum Jaccard value.
+
+```{r P6-Max-Jaccard-Exemplar-1}
+plot_jaccard_vals(wp_g, 
+                  as.character(exemplars_w_max_jaccard[1, 'Exemplar.Row']), 
+                  this_g, 
+                  "max", 
+                  as.numeric(exemplars_w_max_jaccard[1, 'Jaccard']))
+```
+
+Plot the network for the exemplar that is the other member of the maximally connected pair.
+
+```{r P6-Max-Jaccard-Exemplar-2}
+plot_jaccard_vals(wp_g, 
+                  as.character(exemplars_w_max_jaccard[1, 'Exemplar.Col']), 
+                  this_g, 
+                  "max", 
+                  as.numeric(exemplars_w_max_jaccard[1, 'Jaccard']))
+```
+
+### P3M1
+
+```{r}
+this_g <- "P3M1"
+wp_g <- wp_graph(jaccard, this_g)
+
+exemplars_w_max_jaccard <- j_stats %>%
+  dplyr::filter(., Group == this_g,
+                Jaccard_max == Jaccard)
+
+exemplars_w_min_jaccard <- j_stats %>%
+  dplyr::filter(., Group == this_g,
+                Jaccard_min == Jaccard)
+
+```
+
+Plot the network for the exemplar with the maximum Jaccard value.
+
+```{r P3M1-Max-Jaccard-Exemplar-1}
+plot_jaccard_vals(wp_g, 
+                  as.character(exemplars_w_max_jaccard[1, 'Exemplar.Row']), 
+                  this_g, 
+                  "max", 
+                  as.numeric(exemplars_w_max_jaccard[1, 'Jaccard']))
+```
+
+Plot the network for the exemplar that is the other member of the maximally connected pair.
+
+```{r P3M1-Max-Jaccard-Exemplar-2}
+plot_jaccard_vals(wp_g, 
+                  as.character(exemplars_w_max_jaccard[1, 'Exemplar.Col']), 
+                  this_g, 
+                  "max", 
+                  as.numeric(exemplars_w_max_jaccard[1, 'Jaccard']))
+```
+
+### P31M
+
+```{r}
+this_g <- "P31M"
+wp_g <- wp_graph(jaccard, this_g)
+
+exemplars_w_max_jaccard <- j_stats %>%
+  dplyr::filter(., Group == this_g,
+                Jaccard_max == Jaccard)
+
+exemplars_w_min_jaccard <- j_stats %>%
+  dplyr::filter(., Group == this_g,
+                Jaccard_min == Jaccard)
+
+```
+
+Plot the network for the exemplar with the maximum Jaccard value.
+
+```{r P31M-Max-Jaccard-Exemplar-1}
+plot_jaccard_vals(wp_g, 
+                  as.character(exemplars_w_max_jaccard[1, 'Exemplar.Row']), 
+                  this_g, 
+                  "max", 
+                  as.numeric(exemplars_w_max_jaccard[1, 'Jaccard']))
+```
+
+Plot the network for the exemplar that is the other member of the maximally connected pair.
+
+```{r P31M-Max-Jaccard-Exemplar-2}
+plot_jaccard_vals(wp_g, 
+                  as.character(exemplars_w_max_jaccard[1, 'Exemplar.Col']), 
+                  this_g, 
+                  "max", 
+                  as.numeric(exemplars_w_max_jaccard[1, 'Jaccard']))
+```
+
+
+
+### P6M
+
+```{r}
+this_g <- "P6M"
+wp_g <- wp_graph(jaccard, this_g)
+
+exemplars_w_max_jaccard <- j_stats %>%
+  dplyr::filter(., Group == this_g,
+                Jaccard_max == Jaccard)
+
+exemplars_w_min_jaccard <- j_stats %>%
+  dplyr::filter(., Group == this_g,
+                Jaccard_min == Jaccard)
+
+```
+
+Plot the network for the exemplar with the maximum Jaccard value.
+
+```{r P6M-Max-Jaccard-Exemplar-1}
+plot_jaccard_vals(wp_g, 
+                  as.character(exemplars_w_max_jaccard[1, 'Exemplar.Row']), 
+                  this_g, 
+                  "max", 
+                  as.numeric(exemplars_w_max_jaccard[1, 'Jaccard']))
+```
+
+Plot the network for the exemplar that is the other member of the maximally connected pair.
+
+```{r P6M-Max-Jaccard-Exemplar-2}
+plot_jaccard_vals(wp_g, 
+                  as.character(exemplars_w_max_jaccard[1, 'Exemplar.Col']), 
+                  this_g, 
+                  "max", 
+                  as.numeric(exemplars_w_max_jaccard[1, 'Jaccard']))
+```
+
+
+
+## Plot heatmaps
+
+### Create helper function
+
+Note: Because we are using the `heatmap()` function, the row and column lables are not in the ideal position for our plots. So, we moved them manually in creating the figures in the manuscript.
+
+```{r}
+plot_wp_heatmap <- function(df, group) {
+  this_df <- df %>%
+    dplyr::filter(., Group %in% group)
+  
+  this_matrix <- matrix(nrow = 20*length(group), ncol = 20)
+  
+  for (r in 1:190) {
+    this_matrix[this_df$Exemplar.Row[r], this_df$Exemplar.Col[r]] <-
+      this_df$Jaccard[r]
+  }
+  
+  heatmap(this_matrix, 
+          Rowv = NA, 
+          Colv = NA, 
+          symm = TRUE, 
+          main = group,
+          col= colorRampPalette(RColorBrewer::brewer.pal(4, "Oranges"))(4))
+  
+  legend(x="bottomright",
+         legend=c("<.2", ".2-.4", ".4-.6", ">.6"),
+         fill=colorRampPalette(RColorBrewer::brewer.pal(4, "Oranges"))(4))
+}
+```
+
+```{r P1-jaccard-heatmap}
+plot_wp_heatmap(jaccard, "P1")
+```
+
+```{r P6-jaccard-heatmap}
+plot_wp_heatmap(jaccard, "P6")
+```
+
+```{r P3M1-jaccard-heatmap}
+plot_wp_heatmap(jaccard, "P3M1")
+```
+
+```{r P31M-jaccard-heatmap}
+plot_wp_heatmap(jaccard, "P31M")
+```
+
+```{r P6M-jaccard-heatmap}
+plot_wp_heatmap(jaccard, "P6M")
+```
