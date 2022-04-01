@@ -1,0 +1,528 @@
+---
+title: "graph-network-visualizations"
+author: "Rick Gilmore"
+date: "`r Sys.time()`"
+output: 
+  html_document:
+    toc: yes
+    toc_depth: 3
+    toc_float: no
+---
+
+# Purpose
+
+This document summarizes Rick Gilmore's analysis of participant sorting data using graph and network analysis tools.
+
+# Set-up
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(tidygraph)
+library(ggraph)
+```
+
+# Import data
+
+## Jaccard indices
+
+The Jaccard index data are found in `analysis/data/jaccard.csv`.
+
+```{r}
+jaccard_raw <- readr::read_csv("analysis/data/jaccard.csv")
+```
+
+```{r}
+str(jaccard_raw)
+```
+
+It's probably wise to reorder the data frame by wallpaper group, Jaccard index, and exemplar index.
+
+```{r}
+jaccard <- jaccard_raw %>%
+  dplyr::arrange(., Group, Exemplar.Row, desc(Jaccard))
+```
+
+Let's add a Jaccard mean and median by `Exemplar.Row`.
+
+```{r}
+jaccard_aug <- jaccard %>%
+  dplyr::group_by(., Group, Exemplar.Row) %>%
+  dplyr::mutate(.,
+    j_mean = mean(Jaccard),
+    j_med = median(Jaccard),
+    j_max = max(Jaccard),
+    j_min = min(Jaccard)
+  )
+```
+
+### Make edge, node tibbles
+
+```{r}
+p1 <- jaccard %>%
+  dplyr::filter(., Group == "P1")
+
+p1_edges <- tibble(from = p1$Exemplar.Row,
+                   to = p1$Exemplar.Col,
+                   weight = p1$Jaccard)
+p1_nodes <- tibble(id = 1:20)
+```
+
+### Make network
+
+```{r}
+p1_network <- network::network(p1_edges, vertex.attr = p1_nodes, 
+                      matrix.type = "edgelist", ignore.eval = FALSE,
+                      directed = FALSE)
+```
+
+# Plotting
+
+```{r}
+plot(p1_network, vertex.cex = 3, mode='circle')
+```
+
+Let's pick the top ten strongest connections.
+
+```{r}
+p1_tidy <- tidygraph::tbl_graph(nodes = p1_nodes, edges = p1_edges,
+                                directed = FALSE)
+
+ggraph::ggraph(p1_tidy) + geom_edge_link() + geom_node_point() + theme_graph()
+```
+
+```{r}
+ggraph(p1_tidy, layout = "graphopt") + 
+  geom_node_point() +
+  geom_edge_link(aes(width = weight), alpha = 0.8) + 
+  scale_edge_width(range = c(0.2, 2)) +
+  geom_node_text(aes(label = id), repel = TRUE) +
+  labs(edge_width = "Jaccard") +
+  theme_graph()
+```
+```{r}
+ggraph(p1_tidy, layout = "linear") + 
+  geom_edge_arc(aes(width = weight), alpha = 0.8) + 
+  scale_edge_width(range = c(0.2, 2)) +
+  geom_node_text(aes(label = id)) +
+  labs(edge_width = "Jaccard") +
+  theme_graph()
+```
+
+Let's pick the top two exemplars to plot.
+
+```{r}
+p1_e8 <- p1_tidy %>%
+  activate(edges) %>%
+  dplyr::filter(., from == 8)
+
+ggraph(p1_e8, layout = "linear") + 
+  geom_edge_arc(aes(width = weight), alpha = 0.8) + 
+  scale_edge_width(range = c(0.2, 2)) +
+  geom_node_text(aes(label = id)) +
+  labs(edge_width = "Jaccard") +
+  theme_graph()
+```
+
+```{r}
+p1_e10 <- p1_tidy %>%
+  activate(edges) %>%
+  dplyr::filter(., from == 10 | to == 10)
+
+ggraph(p1_e10, layout = "linear") + 
+  geom_edge_arc(aes(width = weight, color = weight), alpha = 0.8) + 
+  scale_edge_width(range = c(0.2, 2)) +
+  geom_node_text(aes(label = id)) +
+  labs(edge_width = "Jaccard") +
+  theme_graph()
+```
+
+```{r}
+p1_e10 <- p1_tidy %>%
+  activate(edges) %>%
+  dplyr::filter(., from == 10 | to == 10)
+
+ggraph(p1_e10, layout = "graphopt") + 
+  geom_edge_link(aes(width = weight, color = weight), alpha = 0.8) + 
+  scale_edge_width(range = c(0.2, 2)) +
+  geom_node_text(aes(label = id)) +
+  labs(edge_width = "Jaccard") +
+  theme_graph()
+```
+
+```{r}
+p1_selected <- p1_tidy %>%
+  activate(edges) %>%
+  dplyr::filter(., from == 8 | to == 8)
+
+ggraph(p1_selected, layout = "graphopt") + 
+  geom_edge_link(aes(width = weight, color = weight), alpha = 0.8) + 
+  scale_edge_width(range = c(0.2, 2)) +
+  geom_node_text(aes(label = id)) +
+  labs(edge_width = "Jaccard") +
+  theme_graph()
+```
+```{r}
+p1_selected <- p1_tidy %>%
+  activate(edges) %>%
+  dplyr::filter(., from == 8 | to == 8)
+
+ggraph(p1_selected, layout = "linear") + 
+  geom_edge_arc(aes(width = weight, color = weight), alpha = 0.8) + 
+  scale_edge_width(range = c(0.2, 2)) +
+  geom_node_text(aes(label = id)) +
+  labs(edge_width = "Jaccard") +
+  theme_graph()
+```
+
+```{r}
+p1_selected <- p1_tidy %>%
+  activate(edges) %>%
+  dplyr::filter(., from == 10 | to == 10)
+
+ggraph(p1_selected, layout = "linear") + 
+  geom_edge_arc(aes(width = weight, color = weight), alpha = 0.8) + 
+  scale_edge_width(range = c(0.2, 2)) +
+  geom_node_text(aes(label = id)) +
+  labs(edge_width = "Jaccard") +
+  theme_graph()
+```
+
+```{r}
+jaccard_aug %>% 
+  dplyr::filter(., Group == "P1") %>%
+  dplyr::arrange(., desc(j_mean))
+```
+
+It looks like exemplars 19 and 16 are are among the highest.
+
+```{r}
+jaccard_aug %>% 
+  dplyr::filter(., Group == "P1") %>%
+  dplyr::arrange(., j_mean)
+```
+
+18 and 11 among the lowest
+
+```{r}
+p1_selected <- p1_tidy %>%
+  activate(edges) %>%
+  dplyr::filter(., from == 18 | to == 18)
+
+ggraph(p1_selected, layout = "linear") + 
+  geom_edge_arc(aes(width = weight, color = weight), alpha = 0.8) + 
+  scale_edge_width(range = c(0.2, 2)) +
+  geom_node_text(aes(label = id)) +
+  labs(edge_width = "Jaccard") +
+  theme_graph()
+```
+
+```{r}
+p1_selected <- p1_tidy %>%
+  activate(edges) %>%
+  dplyr::filter(., from == 19 | to == 19)
+
+g <- ggraph(p1_selected, layout = "linear") + 
+  geom_edge_arc(aes(width = weight, color = weight), alpha = 0.8) + 
+  scale_edge_width(range = c(0.1, 4), limits = c(0, .6)) +
+  geom_node_text(aes(label = id)) +
+  labs(edge_width = "Jaccard") +
+  theme_graph()
+
+g
+```
+
+
+```{r}
+p1_selected <- p1_tidy %>%
+  activate(edges) %>%
+  dplyr::filter(., from == 19 | to == 19)
+
+p1_selected <- p1_selected %>%
+  dplyr::mutate(weight = cut(weight, c(0, .1, .2, .3, .4, .5, .6)))
+
+g <- ggraph(p1_selected, layout = "linear", circular = TRUE) + 
+  geom_edge_arc(aes(color = factor(weight))) + 
+  geom_node_text(aes(label = id)) +
+  labs(edge_width = "Jaccard") +
+  theme_graph()
+
+g
+```
+
+```{r}
+plot_jaccard_vals <- function(df, exemplar_id, group, 
+                              j_stat_type = "mean", 
+                              j_stat_val = NA) {
+  df <- df %>%
+    activate(edges) %>%
+    dplyr::filter(., from == exemplar_id | to == exemplar_id) %>%
+    dplyr::mutate(weight = cut(weight, c(0, .2, .4, .6, .8), 
+                               labels = c("<.2", ".2-.4", ".4-.6", ">.6")))
+  
+  f_stat <- format(j_stat_val, digits = 2, nsmall = 2)
+  
+  ggraph(df, layout = "linear", circular = TRUE) +
+    geom_edge_arc(aes(color = weight)) +
+    geom_node_text(aes(label = id)) +
+    ggtitle(paste0(group, " | # ", exemplar_id, " | ", j_stat_type, " Jaccard ", f_stat)) +
+    theme_graph() + 
+    coord_fixed()
+}
+
+plot_jaccard_vals(p1_tidy, 11, "P1")
+```
+
+```{r}
+plot_jaccard_vals_2 <- function(df, exemplar_id, group, 
+                              j_stat_type = "mean", 
+                              j_stat_val = NA) {
+  df <- df %>%
+    activate(edges) %>%
+    dplyr::filter(., from == exemplar_id | to == exemplar_id)
+  
+  f_stat <- format(j_stat_val, digits = 2, nsmall = 2)
+  
+  ggraph(df, layout = "linear", circular = TRUE) +
+    geom_edge_arc(aes(color = weight)) +
+    geom_node_text(aes(label = id)) +
+    ggtitle(paste0(group, " | # ", exemplar_id, " | ", j_stat_type, " Jaccard ", f_stat)) +
+    theme_graph() + 
+    coord_fixed()
+}
+
+plot_jaccard_vals_2(p1_tidy, 11, "P1")
+```
+
+```{r}
+plot_jaccard_vals_3 <- function(df, exemplar_id, group, 
+                              j_stat_type = "mean", 
+                              j_stat_val = NA) {
+  df <- df %>%
+    activate(edges) %>%
+    dplyr::filter(., from == exemplar_id | to == exemplar_id) %>%
+    dplyr::mutate(weight = cut(weight, c(0, .2, .4, .6, .8), 
+                               labels = c("<.2", ".2-.4", ".4-.6", ">.6")))
+  
+  f_stat <- format(j_stat_val, digits = 2, nsmall = 2)
+  
+  ggraph(df, layout = "linear", circular = TRUE) +
+    geom_edge_arc(aes(linetype = factor(weight),
+                      color = factor(weight))) +
+    geom_node_text(aes(label = id)) +
+    ggtitle(paste0(group, " | # ", exemplar_id, " | ", j_stat_type, " Jaccard ", f_stat)) +
+    theme_graph() + 
+    coord_fixed()
+}
+
+plot_jaccard_vals_3(p1_tidy, 11, "P1")
+```
+
+## Define functions to select wallpaper group
+
+```{r}
+wp_graph <- function(df, group) {
+  out_df <- df %>%
+    dplyr::filter(., Group == group)
+
+  df_edges <- tibble(from = out_df$Exemplar.Row,
+                     to = out_df$Exemplar.Col,
+                     weight = out_df$Jaccard)
+  
+  df_nodes <- tibble(id = 1:20)
+ 
+  tidygraph::tbl_graph(nodes = df_nodes, 
+                       edges = df_edges,
+                       directed = FALSE)
+}
+```
+
+```{r}
+jaccard_stats <- function(jaccard) {
+  jaccard %>%
+    dplyr::mutate(., exemplar_pair = paste0(Exemplar.Row, "-", Exemplar.Col)) %>%
+    dplyr::group_by(., Group) %>%
+    dplyr::summarise(
+      .,
+      Jaccard_mean = mean(Jaccard),
+      Jaccard_med = median(Jaccard),
+      Jaccard_max = max(Jaccard),
+      Jaccard_min = min(Jaccard),
+      Exemplar.Row = Exemplar.Row,
+      Jaccard = Jaccard,
+      exemplar_pair = exemplar_pair
+    )
+}
+```
+
+Test `jaccard_stats()`.
+
+```{r}
+graph <- wp_graph(jaccard, "P31M")
+j_stats <- jaccard_stats(jaccard_raw)
+```
+
+Define some helper functions to pick extremes of mean(Jaccard), max(Jaccard), and min(Jaccard).
+
+These no longer seem quite right, so I am setting `eval=FALSE` on this section of code.
+
+```{r, eval=FALSE}
+pick_extreme_mean_exemplars <- function(j_stats, group, hi_lo = "hi", n_exemplars = 1) {
+  this_group <- j_stats %>%
+    dplyr::filter(., Group == group)
+  
+  if (hi_lo == "hi") {
+    this_group <- this_group %>%
+      dplyr::arrange(., desc(Jaccard_mean))
+  } else {
+    this_group <- this_group %>%
+      dplyr::arrange(., Jaccard_mean)
+  }
+  
+  this_group$Exemplar.Row[1:n_exemplars]
+}
+
+pick_extreme_max_exemplars <- function(j_stats, group, hi_lo = "hi", n_exemplars = 1) {
+  this_group <- j_stats %>%
+    dplyr::filter(., Group == group)
+  
+  if (hi_lo == "hi") {
+    this_group <- this_group %>%
+      dplyr::arrange(., desc(Jaccard_max))
+  } else {
+    this_group <- this_group %>%
+      dplyr::arrange(., Jaccard_max)
+  }
+  
+  this_group$Exemplar.Row[1:n_exemplars]
+}
+
+pick_extreme_min_exemplars <- function(j_stats, group, hi_lo = "hi", n_exemplars = 1) {
+  this_group <- j_stats %>%
+    dplyr::filter(., Group == group)
+  
+  if (hi_lo == "hi") {
+    this_group <- this_group %>%
+      dplyr::arrange(., desc(Jaccard_min))
+  } else {
+    this_group <- this_group %>%
+      dplyr::arrange(., Jaccard_min)
+  }
+  
+  this_group$Exemplar.Row[1:n_exemplars]
+}
+```
+
+## Test functions
+
+```{r}
+jaccard <- jaccard_raw %>%
+  dplyr::arrange(., Group, Exemplar.Row, desc(Jaccard))
+
+j_stats <- jaccard_stats(jaccard_raw)
+
+this_group = "P31M"
+this_graph <- wp_graph(jaccard, this_group)
+
+exemplars_w_max_jaccard <- j_stats %>%
+  dplyr::filter(., Group == this_group,
+                Jaccard_max == Jaccard)
+
+exemplars_w_min_jaccard <- j_stats %>%
+  dplyr::filter(., Group == this_group,
+                Jaccard_min == Jaccard)
+
+plot_jaccard_vals_3(this_graph, 
+                  as.character(exemplars_w_max_jaccard[1, 'Exemplar.Row']), 
+                  "P31M", 
+                  "max", 
+                  as.numeric(exemplars_w_max_jaccard[1, 'Jaccard']))
+
+plot_jaccard_vals_3(this_graph, 
+                  as.character(exemplars_w_min_jaccard[1, 'Exemplar.Row']), 
+                  "P31M", 
+                  "min", 
+                  as.numeric(exemplars_w_min_jaccard[1, 'Jaccard']))
+```
+# Jaccard heatmaps
+
+Let's try to visualize the Jaccard indices as a heatmap.
+
+`heatmap()` requires a matrix, so we have to convert `jaccard` to a matrix.
+
+Let's pick one of the wp groups to make our lives easier.
+
+```{r}
+p31m <- jaccard %>%
+  dplyr::filter(., Group == "P31M")
+```
+
+Let's see if we can assign values using `Exemplar.Row` and `Exemplar.Col`.
+
+```{r}
+p31m_matrix <- matrix(nrow = 20, ncol = 20)
+
+for (r in 1:190) {
+  p31m_matrix[p31m$Exemplar.Row[r], p31m$Exemplar.Col[r]] <- p31m$Jaccard[r]
+}
+
+# # Add identity values
+# for (r in 1:20) {
+#   p31m_matrix[r, r] <- 1
+# }
+
+p31m_matrix
+```
+
+Ok, lets' try heatmap.
+
+```{r}
+heatmap(p31m_matrix, Rowv = NA, Colv = NA, symm = TRUE, col = cm.colors(256))
+```
+Create a function to do this for each WP group.
+
+```{r}
+plot_wp_heatmap <- function(df, group) {
+  this_df <- df %>%
+    dplyr::filter(., Group %in% group)
+  
+  this_matrix <- matrix(nrow = 20*length(group), ncol = 20)
+  
+  for (r in 1:190) {
+    this_matrix[this_df$Exemplar.Row[r], this_df$Exemplar.Col[r]] <-
+      this_df$Jaccard[r]
+  }
+  
+  heatmap(this_matrix, 
+          Rowv = NA, 
+          Colv = NA, 
+          symm = TRUE, 
+          main = group,
+          col= colorRampPalette(RColorBrewer::brewer.pal(3, "Oranges"))(3))
+  
+  legend(x="bottomright", 
+         legend=c("low", "mid", "high"), 
+         fill=colorRampPalette(RColorBrewer::brewer.pal(3, "Oranges"))(3))
+}
+```
+
+Let's try it.
+
+```{r}
+plot_wp_heatmap(jaccard, "P1")
+plot_wp_heatmap(jaccard, "P31M")
+plot_wp_heatmap(jaccard, "P3M1")
+plot_wp_heatmap(jaccard, "P6")
+plot_wp_heatmap(jaccard, "P6M")
+```
+Or, there's a `tidyHeatmap` package.
+
+```{r}
+p31_heatmap <- 
+    p31m %>% 
+      tidyHeatmap::heatmap(Exemplar.Row, Exemplar.Col, Jaccard )
+
+p31_heatmap
+```
+
