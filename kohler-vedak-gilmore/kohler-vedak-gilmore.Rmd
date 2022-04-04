@@ -91,17 +91,17 @@ summary(n_sets_lme)
 (aov_vals <- anova(n_sets_lme))
 ```
 
-Compare individual means.
+Compare individual means. Since the `emmeans` package does a non-conventional adjustment for multiple comparisons--adjusting the shape of the underlying *t* distribution--we opt to report uncorrected *p* values but adjust our criterion.
 
 ```{r}
 (em_n_sets <- emmeans::emmeans(n_sets_lme, "Group"))
-summary(pairs(em_n_sets, simple = "Group", adjust = "bonferroni"))
+summary(pairs(em_n_sets, simple = "Group", adjust = "none"))
 ```
 
 ### Tabular summary with effect sizes
 
 ```{r}
-n_sets_stats_df <- as_tibble(pairs(em_n_sets, simple = "Group", adjust = "bonferroni"))
+n_sets_stats_df <- as_tibble(pairs(em_n_sets, simple = "Group", adjust = "none"))
 n_sets_stats_df <- n_sets_stats_df %>%
   dplyr::select(., contrast, estimate, t.ratio, df, p.value) %>%
   dplyr::rename(., mean_diff = estimate)
@@ -156,13 +156,13 @@ anova(jaccard_lm)
 
 ```{r}
 (em_jaccard <- emmeans::emmeans(jaccard_lm, "Group"))
-summary(pairs(em_jaccard, simple = "Group", adjust = "bonferroni"))
+summary(pairs(em_jaccard, simple = "Group", adjust = "none"))
 ```
 
 ### Tabular summary with effect sizes
 
 ```{r}
-jaccard_stats_df <- as_tibble(pairs(em_jaccard, simple = "Group", adjust = "bonferroni"))
+jaccard_stats_df <- as_tibble(pairs(em_jaccard, simple = "Group", adjust = "none"))
 
 jaccard_stats_df <- jaccard_stats_df %>%
   dplyr::select(., contrast, estimate, t.ratio, df, p.value) %>%
@@ -171,7 +171,6 @@ jaccard_stats_df <- jaccard_stats_df %>%
 jaccard_es_df <- as_tibble(emmeans::eff_size(em_jaccard, sigma = sigma(jaccard_lm), edf =df.residual(jaccard_lm)))
 
 jaccard_stats_merged_df <- dplyr::full_join(jaccard_stats_df, jaccard_es_df, by=c("contrast")) 
-
 jaccard_stats_merged_df %>%
   dplyr::select(., contrast, t.ratio, p.value, df.x, effect.size) %>%
   knitr::kable(., format = 'html') %>%
@@ -585,13 +584,6 @@ jaccard_perm_df %>%
   aes(Jaccard, color = Group) +
   facet_grid(Group ~ .) +
   geom_boxplot(bins = 50)
-```
-
-```{r agg-perm-jaccard-violin}
-jaccard_perm_df %>%
-  ggplot(.) +
-  aes(x = Group, y = Jaccard) +
-  geom_violin()
 ```
 
 These plots show that the mean differences in Jaccard indices are reflected in the participants' data are shown in the permuted data, too. This makes sense since the participants detected regularities and sorted the exemplars into different numbers of sets. In permuting the exemplar identifiers within participants, we keep some of this structure.
