@@ -89,7 +89,7 @@ Participants were given 20 exemplars, all belonging to same group (see Figure \r
 \end{figure}
 
 \section*{Results}
-Wallpaper group \textit{P1} was more self-similar than the other four groups. This was evident in the number of sets generated for this group across participants, which was lower for \textit{P1} (median = 3) than for the four other groups (median = 4-5, see Figure \ref{fig:n_sets_jaccard_summary}). We confirmed this observation statistically by running a repeated measures analysis of variance (ANOVA), which revealed a significant effect of group ($F(4, 124) = 7.330, p < 0.0001)$). Post-hoc pairwise \textit{t}-tests showed that the mean number of sets was lower for \textit{P1} than all other groups ($ps < 0.0001$), but no other means differed (see Table \ref{table:t-stats}).
+Wallpaper group \textit{P1} was more self-similar than the other four groups. This was evident in the number of sets generated for this group across participants, which was lower for \textit{P1} (median = 3) than for the four other groups (median = 4-5, see Figure \ref{fig:n_sets_jaccard_summary}). We confirmed this observation statistically by running a repeated measures analysis of variance (ANOVA), which revealed a significant effect of group ($F(4, 124) = 7.330, p < 0.0001)$). Post-hoc pairwise \textit{t}-tests showed that the mean number of sets was lower for \textit{P1} than all other groups ($ps < 0.005$), but no other means differed (see Table \ref{table:t-stats}).
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=\linewidth]{./figures/nsets-jaccard-plot-combined-1.pdf}
@@ -100,22 +100,22 @@ Next, we computed the Jaccard index (see \nameref{methods}) across participants 
 
 \begin{table}[H]
 	\centering
-	\begin{tabular}{ |p{3cm}||p{1cm}|p{1cm}|p{1cm}||p{1cm}|p{1cm}|p{1cm}| }
+	\begin{tabular}{ |p{3cm}||p{1.5cm}|p{1.5cm}|p{1.5cm}||p{1.5cm}|p{1.5cm}|p{1.5cm}| }
 	\hline
 	\textit{} & \multicolumn{3}{|c||}{number of sets} & \multicolumn{3}{|c|}{Jaccard Index} \\ \hline 
 	pairs & \textit{t} & \textit{p} & \textit{D} & \textit{t} & \textit{p} & \textit{D} \\ \hline \hline
-	\textit{P1 vs P31M} & 1 & 2 & 3 & 1 & 2 & 3 \\ \hline 
-	\textit{P1 vs P3M1} & 1 & 2 & 3 & 1 & 2 & 3 \\ \hline
-	\textit{P1 vs P6} & 1 & 2 & 3 & 1 & 2 & 3 \\ \hline
-	\textit{P1 vs P6M} & 1 & 2 & 3 & 1 & 2 & 3 \\ \hline
-	\textit{P31M vs P3M1} & 1 & 2 & 3 & 1 & 2 & 3 \\ \hline
-	\textit{P31M vs P6} & 1 & 2 & 3 & 1 & 2 & 3 \\ \hline
-	\textit{P31M vs P6M} & 1 & 2 & 3 & 1 & 2 & 3 \\ \hline
-	\textit{P3M1 vs P6} & 1 & 2 & 3 & 1 & 2 & 3 \\ \hline
-	\textit{P3M1 vs P6M} & 1 & 2 & 3 & 1 & 2 & 3 \\ \hline
-	\textit{P6 vs P6M} & 1 & 2 & 3 & 1 & 2 & 3 \\ \hline
+	\textit{P1 vs P31M} & -2.981 & 0.0034 & -0.734 & 5.641 & \textless0.0001 & 0.579 \\ \hline 
+	\textit{P1 vs P3M1} & -3.423 & 0.0008 & -0.843  & 7.233 & \textless0.0001 & 0.742 \\ \hline
+	\textit{P1 vs P6} & -4.748 & \textless0.0001 & -1.169 & 7.734 & \textless0.0001 & 0.794 \\ \hline
+	\textit{P1 vs P6M} & -4.553 & \textless0.0001 & -1.132  & 6.946 & \textless0.0001 & 0.713 \\ \hline
+	\textit{P31M vs P3M1} & -0.442 & 0.6595 & -0.109 & 1.592 & 0.1117 & 0.163 \\ \hline
+	\textit{P31M vs P6} & -1.767 & 0.0797 & -0.435 & 2.094 & 0.0366 & 0.215 \\ \hline
+	\textit{P31M vs P6M} & -1.600 & 0.1120 & -0.398 & 1.305 & 0.1921 & 0.134 \\ \hline
+	\textit{P3M1 vs P6} & -1.325 & 0.1875 & -0.326 & 0.502 & 0.6160 & 0.051 \\ \hline
+	\textit{P3M1 vs P6M} & -1.163 & 0.2470 & 0.289 & -0.287 & 0.7745 & -0.029 \\ \hline
+	\textit{P6 vs P6M} & 0.150 & 0.8814 & 0.037 & -0.788 & 0.4307 & -0.081 \\ \hline
 	\end{tabular}
-	\caption{Results of post-hoc pairwise \textit{t}-tests on number of sets and Jaccard Indices. Degrees-of-freedom for all tests was xx.}
+	\caption{Results of post-hoc pairwise \textit{t}-tests on number of sets and Jaccard Indices. Degrees-of-freedom was 945 for the Jaccard Index test. For the number of sets test, degrees-of-freedom had to be adjusted to account for the fact that one participant did not report number of sets for P6M (see \nameref{methods}), and ranged between 127.0 and 127.1.}
 	\label{table:t-stats}
 \end{table}
 
@@ -177,7 +177,7 @@ In conclusion, our results suggest that human observers show sensitivity to the 
 \label{methods}
 
 \subsection*{Participants}
-33 participants (9 Male, 24 Female), ranging in age between 18 and 35 completed this study. All participants had self- reported 20/20 or corrected to 20/20 vision. We obtained written consent to participate from all participants under procedures approved by the Institutional Review Board of The Pennsylvania State University (\#38536). The research was conducted according to the principles expressed in the Declaration of Helsinki. Participants include \textit{n}=11 collected and described in \citep{vedak_thesis}, plus an additional group collected at a later date using the same protocol.
+33 participants (9 Male, 24 Female), ranging in age between 18 and 35 completed this study. Participants were recruited from the undergraduate participant pool in the Department of Psychology at the The Pennsylvania State University. All participants had self- reported 20/20 or corrected to 20/20 vision. We obtained written consent to participate from all participants under procedures approved by the Institutional Review Board of The Pennsylvania State University (\#38536). The research was conducted according to the principles expressed in the Declaration of Helsinki. Participants include \textit{n}=11 collected and described in \citep{vedak_thesis}, plus an additional group collected at a later date using the same protocol.
 
 \subsection*{Stimulus Generation}
 Five wallpaper groups (\textit{P1}, \textit{P6}, \textit{P3M1}, \textit{P31M}, and \textit{P6M}) were selected for use in the study. The selection was motivated partially by the fact that all five groups has previously been shown to be high in self-similarity \citep{RN172}, and partially by the fact that \textit{P3M1}, \textit{P31M}, \textit{P6} and \textit{P6M} all share the same lattice shape. We also found it interesting that while \textit{P6}, \textit{P3M1} and \textit{P31M} differ in their symmetry content, all are subgroups of \textit{P6M} with index 2, which means that \textit{P6M} can be generated by adding one additional transformation to \textit{P6}, \textit{P3M1} or \textit{P31M} \citep{kohler_clarke_2021}. 20 exemplars from each of these five wallpaper groups were generated using a modified version of the methodology developed by Clarke and colleagues \citep{RN172} that we have described in detail elsewhere \citep{RN1725}. Briefly, exemplars belonging to each group were generated by starting with a random-noise patch, which was then repeated and transformed to tile the image plane, in accordance with the symmetry axes and geometric lattice specific to each group. The use of noise patches as the starting point for stimulus generation makes it possible to create an almost unlimited number of distinct exemplars from each wallpaper group. To make individual exemplars as similar as possible we replaced the power spectrum of each exemplar with the median across exemplars within a group. These images were printed onto white cardstock and cut into squares, allowing participants to manipulate the orientation of the images during the sorting tasks. Five exemplars from each group are shown (in reduced size) in Figure \ref{fig:wpg_exemplars}. 
