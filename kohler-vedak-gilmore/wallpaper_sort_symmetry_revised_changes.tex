@@ -1,0 +1,352 @@
+\documentclass[11pt, twoside]{article}
+%DIF LATEXDIFF DIFFERENCE FILE
+%DIF DEL wallpaper_sort_symmetry.tex           Wed Mar 30 13:26:48 2022
+%DIF ADD wallpaper_sort_symmetry_revised.tex   Wed Apr  6 10:59:11 2022
+\usepackage{boisik}
+\usepackage[OT1]{fontenc}
+\usepackage[affil-it]{authblk}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{multicol}
+\usepackage{natbib}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{lineno}
+\usepackage{multirow}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage[belowskip=-10pt,aboveskip=0pt]{caption}
+\captionsetup[figure]{font=small,labelfont=normalsize}
+
+\linenumbers
+ \geometry{a4paper, total={170mm,257mm}, left=20mm, top=20mm}
+
+\renewcommand{\baselinestretch}{1.3}
+
+%DIF 32a32-38
+% Keywords command %DIF > 
+\providecommand{\keywords}[1] %DIF > 
+{ %DIF > 
+  \small	 %DIF > 
+  \textbf{keywords: }#1 %DIF > 
+} %DIF > 
+ %DIF > 
+%DIF -------
+\title{\huge Perceptual Similarities Among Wallpaper Group Exemplars}
+\author[1,2]{Peter J. Kohler}
+\author[3]{Shivam Vedak}
+\author[3]{Rick O. Gilmore}
+
+\affil[1]{\small York University, Department of Psychology, Toronto, ON M3J 1P3, Canada}
+\affil[2]{\small Centre for Vision Research, York University, Toronto, ON, M3J 1P3, Canada}
+\affil[3]{\small Department of Psychology, The Pennsylvania State University, Pennsylvania, USA}
+
+\date{}
+
+%DIF PREAMBLE EXTENSION ADDED BY LATEXDIFF
+%DIF UNDERLINE PREAMBLE %DIF PREAMBLE
+\RequirePackage[normalem]{ulem} %DIF PREAMBLE
+\RequirePackage{color}\definecolor{RED}{rgb}{1,0,0}\definecolor{BLUE}{rgb}{0,0,1} %DIF PREAMBLE
+\providecommand{\DIFaddtex}[1]{{\protect\color{blue}\uwave{#1}}} %DIF PREAMBLE
+\providecommand{\DIFdeltex}[1]{{\protect\color{red}\sout{#1}}}                      %DIF PREAMBLE
+%DIF SAFE PREAMBLE %DIF PREAMBLE
+\providecommand{\DIFaddbegin}{} %DIF PREAMBLE
+\providecommand{\DIFaddend}{} %DIF PREAMBLE
+\providecommand{\DIFdelbegin}{} %DIF PREAMBLE
+\providecommand{\DIFdelend}{} %DIF PREAMBLE
+\providecommand{\DIFmodbegin}{} %DIF PREAMBLE
+\providecommand{\DIFmodend}{} %DIF PREAMBLE
+%DIF FLOATSAFE PREAMBLE %DIF PREAMBLE
+\providecommand{\DIFaddFL}[1]{\DIFadd{#1}} %DIF PREAMBLE
+\providecommand{\DIFdelFL}[1]{\DIFdel{#1}} %DIF PREAMBLE
+\providecommand{\DIFaddbeginFL}{} %DIF PREAMBLE
+\providecommand{\DIFaddendFL}{} %DIF PREAMBLE
+\providecommand{\DIFdelbeginFL}{} %DIF PREAMBLE
+\providecommand{\DIFdelendFL}{} %DIF PREAMBLE
+%DIF HYPERREF PREAMBLE %DIF PREAMBLE
+\providecommand{\DIFadd}[1]{\texorpdfstring{\DIFaddtex{#1}}{#1}} %DIF PREAMBLE
+\providecommand{\DIFdel}[1]{\texorpdfstring{\DIFdeltex{#1}}{}} %DIF PREAMBLE
+\newcommand{\DIFscaledelfig}{0.5}
+%DIF HIGHLIGHTGRAPHICS PREAMBLE %DIF PREAMBLE
+\RequirePackage{settobox} %DIF PREAMBLE
+\RequirePackage{letltxmacro} %DIF PREAMBLE
+\newsavebox{\DIFdelgraphicsbox} %DIF PREAMBLE
+\newlength{\DIFdelgraphicswidth} %DIF PREAMBLE
+\newlength{\DIFdelgraphicsheight} %DIF PREAMBLE
+% store original definition of \includegraphics %DIF PREAMBLE
+\LetLtxMacro{\DIFOincludegraphics}{\includegraphics} %DIF PREAMBLE
+\newcommand{\DIFaddincludegraphics}[2][]{{\color{blue}\fbox{\DIFOincludegraphics[#1]{#2}}}} %DIF PREAMBLE
+\newcommand{\DIFdelincludegraphics}[2][]{% %DIF PREAMBLE
+\sbox{\DIFdelgraphicsbox}{\DIFOincludegraphics[#1]{#2}}% %DIF PREAMBLE
+\settoboxwidth{\DIFdelgraphicswidth}{\DIFdelgraphicsbox} %DIF PREAMBLE
+\settoboxtotalheight{\DIFdelgraphicsheight}{\DIFdelgraphicsbox} %DIF PREAMBLE
+\scalebox{\DIFscaledelfig}{% %DIF PREAMBLE
+\parbox[b]{\DIFdelgraphicswidth}{\usebox{\DIFdelgraphicsbox}\\[-\baselineskip] \rule{\DIFdelgraphicswidth}{0em}}\llap{\resizebox{\DIFdelgraphicswidth}{\DIFdelgraphicsheight}{% %DIF PREAMBLE
+\setlength{\unitlength}{\DIFdelgraphicswidth}% %DIF PREAMBLE
+\begin{picture}(1,1)% %DIF PREAMBLE
+\thicklines\linethickness{2pt} %DIF PREAMBLE
+{\color[rgb]{1,0,0}\put(0,0){\framebox(1,1){}}}% %DIF PREAMBLE
+{\color[rgb]{1,0,0}\put(0,0){\line( 1,1){1}}}% %DIF PREAMBLE
+{\color[rgb]{1,0,0}\put(0,1){\line(1,-1){1}}}% %DIF PREAMBLE
+\end{picture}% %DIF PREAMBLE
+}\hspace*{3pt}}} %DIF PREAMBLE
+} %DIF PREAMBLE
+\LetLtxMacro{\DIFOaddbegin}{\DIFaddbegin} %DIF PREAMBLE
+\LetLtxMacro{\DIFOaddend}{\DIFaddend} %DIF PREAMBLE
+\LetLtxMacro{\DIFOdelbegin}{\DIFdelbegin} %DIF PREAMBLE
+\LetLtxMacro{\DIFOdelend}{\DIFdelend} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFaddbegin}{\DIFOaddbegin \let\includegraphics\DIFaddincludegraphics} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFaddend}{\DIFOaddend \let\includegraphics\DIFOincludegraphics} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFdelbegin}{\DIFOdelbegin \let\includegraphics\DIFdelincludegraphics} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFdelend}{\DIFOaddend \let\includegraphics\DIFOincludegraphics} %DIF PREAMBLE
+\LetLtxMacro{\DIFOaddbeginFL}{\DIFaddbeginFL} %DIF PREAMBLE
+\LetLtxMacro{\DIFOaddendFL}{\DIFaddendFL} %DIF PREAMBLE
+\LetLtxMacro{\DIFOdelbeginFL}{\DIFdelbeginFL} %DIF PREAMBLE
+\LetLtxMacro{\DIFOdelendFL}{\DIFdelendFL} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFaddbeginFL}{\DIFOaddbeginFL \let\includegraphics\DIFaddincludegraphics} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFaddendFL}{\DIFOaddendFL \let\includegraphics\DIFOincludegraphics} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFdelbeginFL}{\DIFOdelbeginFL \let\includegraphics\DIFdelincludegraphics} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFdelendFL}{\DIFOaddendFL \let\includegraphics\DIFOincludegraphics} %DIF PREAMBLE
+%DIF LISTINGS PREAMBLE %DIF PREAMBLE
+\RequirePackage{listings} %DIF PREAMBLE
+\RequirePackage{color} %DIF PREAMBLE
+\lstdefinelanguage{DIFcode}{ %DIF PREAMBLE
+%DIF DIFCODE_UNDERLINE %DIF PREAMBLE
+  moredelim=[il][\color{red}\sout]{\%DIF\ <\ }, %DIF PREAMBLE
+  moredelim=[il][\color{blue}\uwave]{\%DIF\ >\ } %DIF PREAMBLE
+} %DIF PREAMBLE
+\lstdefinestyle{DIFverbatimstyle}{ %DIF PREAMBLE
+	language=DIFcode, %DIF PREAMBLE
+	basicstyle=\ttfamily, %DIF PREAMBLE
+	columns=fullflexible, %DIF PREAMBLE
+	keepspaces=true %DIF PREAMBLE
+} %DIF PREAMBLE
+\lstnewenvironment{DIFverbatim}{\lstset{style=DIFverbatimstyle}}{} %DIF PREAMBLE
+\lstnewenvironment{DIFverbatim*}{\lstset{style=DIFverbatimstyle,showspaces=true}}{} %DIF PREAMBLE
+%DIF END PREAMBLE EXTENSION ADDED BY LATEXDIFF
+
+\begin{document}
+
+\maketitle
+
+% about 200 words
+\begin{abstract}Symmetries are abundant within the visual environment, and many animals species are sensitive to visual symmetries. Wallpaper groups constitute a class of 17 regular textures that each contain a distinct combination of the four fundamental symmetries, translation, reflection, rotation and glide reflection, and together represent the complete set of possible symmetries in two-dimensional images. Wallpapers are visually compelling and elicit responses in visual brain areas that precisely capture the symmetry content of each group in humans and other primates. Here we ask to what extent \textit{different} exemplars from the \textit{same} wallpaper group are perceptually similar. We used an algorithm to produce a set of well-matched exemplars from 5 of the 17 wallpaper groups and instructed participants to freely sort the exemplars from each group into as many subsets as they wished based on any criteria they saw appropriate. \textit{P1}, the simplest of the 17 groups, was consistently rated more self-similar than any other group, while the other four groups, although varying in symmetry content, were comparable in self-similarity. Our results suggest that except for the most extreme case (\textit{P1}), perceived self-similarity of wallpaper groups is not directly tied to categories of symmetry based on group theory.\end{abstract}
+
+\DIFaddbegin \keywords{wallpaper groups, visual perception, behavioral sorting, self-similarity}
+
+
+\DIFaddend \section*{Introduction}
+Symmetry \DIFdelbegin \DIFdel{has }\DIFdelend \DIFaddbegin \DIFadd{exists in an object or pattern if a transformation can be applied that maps the object/pattern onto itself. In the two-dimensional plane, the set of isometries - distance-preserving transformations, see \mbox{%DIFAUXCMD
+\citep{RN1425} }\hspace{0pt}%DIFAUXCMD
+- that can give rise to symmetries are translation, reflection, rotation and glide reflection and their combinations. The }\textit{\DIFadd{wallpaper groups}} \DIFadd{are a set of 17 regular textures, where each has a unique combination of isometries that leave the texture unchanged \mbox{%DIFAUXCMD
+\citep{RN1562,RN1563,RN1425}}\hspace{0pt}%DIFAUXCMD
+. Each wallpaper group therefore contains a distinct combination of four symmetry types (see Figure \ref{fig:symmetry_types}). Symmetries have }\DIFaddend been recognized as important for human visual perception since the late 19th century \citep{mach_1959}.  \DIFdelbegin \DIFdel{In the two spatial dimensions relevant for images, symmetries can be combined in 17 distinct ways, }\textit{\DIFdel{the wallpaper groups}} %DIFAUXCMD
+\DIFdel{\mbox{%DIFAUXCMD
+\citep{RN1562,RN1563,RN1425}}\hspace{0pt}%DIFAUXCMD
+. }\DIFdelend Wallpaper groups are different from stimuli typically used to probe the role of symmetry in visual perception in two ways: First, they contain combinations of \DIFdelbegin \DIFdel{the four fundamental symmetry typestranslation, reflection, rotation and glide reflection, }\DIFdelend \DIFaddbegin \DIFadd{four symmetry types, }\DIFaddend rather than just reflection \DIFdelbegin \DIFdel{or mirror symmetry}\DIFdelend \DIFaddbegin \DIFadd{(also called mirror symmetry)}\DIFaddend , which have been the focus of most vision research. Second, \DIFdelbegin \DIFdel{the symmetries }\DIFdelend in wallpaper groups \DIFaddbegin \DIFadd{symmetries }\DIFaddend are repeated to tile the plane \DIFdelbegin \DIFdel{, rather than }\DIFdelend \DIFaddbegin \DIFadd{and form textures, instead of being }\DIFaddend positioned at a single image location as is usually the case \DIFaddbegin \DIFadd{with standard stimuli}\DIFaddend . These differences, and the \DIFaddbegin \DIFadd{important }\DIFaddend fact that wallpaper groups together form the complete set of symmetries possible in the two-dimensional image plane, make wallpapers an interesting stimulus set for studying perception of visual symmetries.
+\DIFdelbegin %DIFDELCMD < \begin{wrapfigure}{r}{0.4\textwidth}
+%DIFDELCMD < 	%%%
+\DIFdelend \DIFaddbegin 
+
+\begin{figure}[H]
+	\DIFaddendFL \centering
+	\DIFdelbeginFL %DIFDELCMD < \includegraphics[width=0.38\textwidth]{./figures/wpg_structure.pdf}
+%DIFDELCMD < 	%%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics[width=\linewidth]{./figures/symmetry_types.png}
+	\DIFaddendFL \caption{The \DIFaddbeginFL \DIFaddFL{four }\DIFaddendFL fundamental \DIFdelbeginFL \DIFdelFL{region and lattice structure of the five wallpaper groups used in the study. The complete wallpaper is shown in the left-hand column with }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{symmetry types: (}\DIFaddendFL a\DIFdelbeginFL \DIFdelFL{shaded region that is repeated and enlarged in the right-hand column. The colored outline in the enlarged region indicates the repeating lattice for each group}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{) translation}\DIFaddendFL , \DIFdelbeginFL \DIFdelFL{while the shaded area indicates the fundamental region }\DIFdelendFL (\DIFdelbeginFL \DIFdelFL{see text}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{b}\DIFaddendFL ) \DIFdelbeginFL \DIFdelFL{. For }\textit{\DIFdelFL{P1}} %DIFAUXCMD
+\DIFdelFL{the fundamental region covers the entire lattice. Note that even though }\textit{\DIFdelFL{P6}} %DIFAUXCMD
+\DIFdelFL{and }\textit{\DIFdelFL{P31M}} %DIFAUXCMD
+\DIFdelFL{have the same fundamental region and lattice shapes}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{reflection}\DIFaddendFL , \DIFdelbeginFL \DIFdelFL{they differ in terms of the symmetries present within the lattice - most notably}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{(c) rotation (order 2}\DIFaddendFL , \DIFdelbeginFL \textit{\DIFdelFL{P31M}} %DIFAUXCMD
+\DIFdelFL{contains }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{180º), (d) glide }\DIFaddendFL reflection \DIFdelbeginFL \DIFdelFL{symmetry while }\textit{\DIFdelFL{P6}} %DIFAUXCMD
+\DIFdelFL{does not. The symmetry content of each group is detailed on }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{- translation followed by reflection over a line parallel to }\DIFaddendFL the \DIFdelbeginFL \DIFdelFL{wallpaper group }\href{https://en.wikipedia.org/wiki/Wallpaper_group}{\DIFdelFL{wikipedia page}}%DIFAUXCMD
+\DIFdelendFL \DIFaddbeginFL \DIFaddFL{direction of translation}\DIFaddendFL . }
+	\DIFdelbeginFL %DIFDELCMD < \label{fig:wpg_structure}
+%DIFDELCMD < \end{wrapfigure}
+%DIFDELCMD < %%%
+\DIFdelendFL \DIFaddbeginFL \label{fig:symmetry_types}
+\end{figure}
+
+\DIFaddend Brain imaging studies using functional MRI \citep{RN1725} and EEG \citep{RN1959,kohler_clarke_2021} have shown that the human visual system carries detailed and precise representations of the symmetries within the individual wallpaper groups. \DIFaddbegin \DIFadd{Specifically, response amplitudes scale approximately linearly with the symmetry content within the wallpaper groups, across all of the possible combinations of reflection, rotation and glide reflection symmetries. }\DIFaddend Functional MRI evidence from macaque monkeys reveal similar representations in \DIFdelbegin \DIFdel{analogous areas of }\DIFdelend the macaque visual system\DIFaddbegin \DIFadd{, and the brain regions responding to symmetry are largely analogous between humans and monkeys, namely functionally defined regions V3, V4, VO1 and LOC }\DIFaddend \citep{audurier_symmetry_2021}.
+
+
+\DIFdelbegin \DIFdel{These representations , complex as they are , }\DIFdelend \DIFaddbegin \DIFadd{The wallpaper group representations that have been identified using brain imaging are highly complex, but }\DIFaddend do not appear to be readily available for driving conscious behaviour: Humans have limited intuitive sense of group membership for wallpaper group exemplars, as evidenced by behavioral experiments showing that although naïve observers can distinguish many of the wallpaper groups \citep{RN1253}, they tend to sort exemplars into fewer (4-12) sets than the number of wallpaper groups, often placing exemplars from different \DIFdelbegin \DIFdel{wallpaper groups in }\DIFdelend \DIFaddbegin \DIFadd{groups into }\DIFaddend the same set \citep{RN172}. Wallpaper groups are nonetheless visually compelling, and anecdotally we have observed that exemplars from a given group can be quite perceptually diverse. This observation inspired the current study. Here, we use behavioral sorting, a common technique to study perceptual categorization \citep{Milton2008-ez,Pothos2011-vi}, to probe the perceptual self-similarity of different exemplars from the same wallpaper group\DIFdelbegin \DIFdel{, and assess the }\DIFdelend \DIFaddbegin \DIFadd{. In previous sorting experiments with wallpaper groups (e.g. \mbox{%DIFAUXCMD
+\citep{RN172}}\hspace{0pt}%DIFAUXCMD
+) observers were shown exemplars from different wallpaper groups and their ability to correctly sort exemplars from the same group into the same subset was assessed. Our approach was different: We wanted to know the }\DIFaddend extent to which \DIFaddbegin \DIFadd{exemplars from the }\textit{\DIFadd{same group}} \DIFadd{would be spontaneously organized into subsets, i.e. the }\DIFaddend self-similarity \DIFdelbegin \DIFdel{varies across five groups.}%DIFDELCMD < 
+
+%DIFDELCMD < %%%
+\DIFdel{We algorithmically generated 20 exemplars from each groupthat were well-matched in terms of low-level visual properties (see Figures \ref{fig:wpg_structure}}\DIFdelend \DIFaddbegin \DIFadd{of exemplars from a given group. We selected five distinct wallpaper groups: }\textit{\DIFadd{P1}}\DIFadd{, }\textit{\DIFadd{P3M1}}\DIFadd{, }\textit{\DIFadd{P31M}}\DIFadd{, }\textit{\DIFadd{P6}} \DIFaddend and \DIFaddbegin \textit{\DIFadd{P6M}} \DIFadd{(see Figure \ref{fig:wpg_structure}). All wallpaper groups consists of a lattice that is repeated to tile the plane. }\textit{\DIFadd{P1}} \DIFadd{is the simpleste group, and contains no symmetries other than the translation generated by the repeating lattice. }\textit{\DIFadd{P6}} \DIFadd{has rotation symmetries of order 6, 3 and 2, but no other symmetries besides translation. }\textit{\DIFadd{P3M1}} \DIFadd{and }\textit{\DIFadd{P31M}} \DIFadd{both have rotations of order 3, reflections in 3 distinct directions, and glide reflections in 3 distinct directions, but differ in terms of how these symmetries are organized in the lattice. }\textit{\DIFadd{P6M}} \DIFadd{is the most complex of the groups, it has rotation symmetries of order 6, 3 and 2, reflections in 6 distinct directions, and glide reflections in 6 distinct directions. The lattice structure of the five groups is described in detail on the wallpaper group }\href{https://en.wikipedia.org/wiki/Wallpaper_group}{\DIFadd{wikipedia page}}\DIFadd{. The five groups selected have all been found to have high self-similarity \mbox{%DIFAUXCMD
+\citep{RN172}}\hspace{0pt}%DIFAUXCMD
+, and four of them (}\textit{\DIFadd{P3M1}}\DIFadd{, }\textit{\DIFadd{P31M}}\DIFadd{, }\textit{\DIFadd{P6}} \DIFadd{and }\textit{\DIFadd{P6M}}\DIFadd{) share the same lattice shape (see Figure \ref{fig:wpg_structure}). 
+}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.38\textwidth]{./figures/wpg_structure.pdf}
+	\caption{\DIFaddFL{The fundamental region and lattice structure of the five wallpaper groups used in the study. The complete wallpaper is shown in the left-hand column with a shaded region that is repeated and enlarged in the right-hand column. The colored outline in the enlarged region indicates the repeating lattice for each group, while the shaded area indicates the fundamental region (see text). For }\textit{\DIFaddFL{P1}} \DIFaddFL{the fundamental region covers the entire lattice. Note that even though }\textit{\DIFaddFL{P6}} \DIFaddFL{and }\textit{\DIFaddFL{P31M}} \DIFaddFL{have the same fundamental region and lattice shapes, they differ in terms of the symmetries present within the lattice - most notably, }\textit{\DIFaddFL{P31M}} \DIFaddFL{contains reflection symmetry while }\textit{\DIFaddFL{P6}} \DIFaddFL{does not. The symmetry content of each group is detailed on the wallpaper group }\href{https://en.wikipedia.org/wiki/Wallpaper_group}{\DIFaddFL{wikipedia page}}\DIFaddFL{.}}
+	\label{fig:wpg_structure}
+\end{figure}
+
+\DIFadd{Participants were given 20 exemplars, all belonging to same group (see Figure }\DIFaddend \ref{fig:wpg_exemplars} for a selection of the exemplars, and the \nameref{methods} section for details on how they were \DIFdelbegin \DIFdel{generated) . We then printed exemplars on white cardstock and gave participants the 20 cards with exemplars from each wallpaper group, and asked them }\DIFdelend \DIFaddbegin \DIFadd{created) and asked }\DIFaddend to freely sort them into as many subsets as they wished\DIFdelbegin \DIFdel{based on any criteria they saw appropriate. }\DIFdelend \DIFaddbegin \DIFadd{. Participants sorted exemplars belonging to five different wallpaper groups, one group at a time. }\DIFaddend This approach allowed us to compare the five wallpaper groups, both in terms of how many subsets participants generated, and also in terms of the \textit{Jaccard index}, a summary statistic capturing the similarity across exemplar pairs for each group. Within each group, we were also able to identify exemplar pairs that were rated as highly similar and highly dissimilar. Our main conclusion is that \textit{P1} was systematically more self-similar than the any other groups, while the other four other groups could not be distinguished on these measures. We also show that for all five groups, participants consistently group certain pairs of exemplars together, although the number of consistent pairs varies among groups. Our results open the door to further investigations into the psychological and neural mechanisms that drive perceptual similarity among wallpaper group exemplars, and indeed among exemplars from different classes of structured patterns. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{./figures//wpg_exemplars.pdf}
+	\caption{5 of the 20 exemplars used for each group are shown to highlight the diversity among exemplars.}
+	\label{fig:wpg_exemplars}
+\end{figure}
+
+\section*{Results}
+Wallpaper group \textit{P1} was more self-similar than the other four groups. This was evident in the number of sets generated for this group across participants, which was lower for \textit{P1} (median = 3) than for the \DIFaddbegin \DIFadd{four }\DIFaddend other groups (median = 4-5, see Figure \DIFdelbegin \DIFdel{\ref{fig:n_sets_summary}}\DIFdelend \DIFaddbegin \DIFadd{\ref{fig:n_sets_jaccard_summary}}\DIFaddend ). We confirmed this observation statistically by running a repeated measures analysis of variance (ANOVA)\DIFdelbegin \DIFdel{with group as a fixed factor and participant as a random factor}\DIFdelend , which revealed a significant effect of group ($F(4, 124) = 7.330, p < 0.0001)$). Post-hoc pairwise \textit{t}-tests showed that the mean number of sets was lower for \textit{P1} than all other groups \DIFaddbegin \DIFadd{($ps < 0.005$)}\DIFaddend , but no other means differed \DIFaddbegin \DIFadd{(see Table \ref{table:t-stats})}\DIFaddend .
+\begin{figure}[t]
+	\centering
+	\DIFdelbeginFL %DIFDELCMD < \includegraphics[width=\linewidth]{./figures/nsets_summary.pdf}
+%DIFDELCMD < 	%%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics[width=\linewidth]{./figures/nsets_jaccard_summary.pdf}
+	\DIFaddendFL \caption{\DIFaddbeginFL \DIFaddFL{Left panel: }\DIFaddendFL Boxplots showing the number of subsets generated by participants for each of the wallpaper groups. \DIFaddbeginFL \DIFaddFL{Right panel: Boxplots showing Jaccard indices for every pairwise combination of exemplars in each of the wallpaper groups. Note that each data point here is the Jaccard index for a particular exemplar pair calculated across participants unlike the left panel where each data point is a participant. }\DIFaddendFL The \DIFaddbeginFL \DIFaddFL{exemplar pairs with the highest Jaccard indices have been highlighted with stars. Those outlier pairs are explored further in Figure \ref{fig:jaccard_inspection}. For both panels, the }\DIFaddendFL lower box boundary is the 25th percentile. The dark line in the box is the median. The upper box boundary is the 75th percentile. The “whiskers” show -/+ the interquartile range * 1.5. }
+	\DIFdelbeginFL %DIFDELCMD < \label{fig:n_sets_summary}
+%DIFDELCMD < %%%
+\DIFdelendFL \DIFaddbeginFL \label{fig:n_sets_jaccard_summary}
+\DIFaddendFL \end{figure}
+Next, we computed the Jaccard index (see \nameref{methods}) across participants for every pairwise combination of exemplars in each group. This provides a measure of the similarity between exemplars within each group. \textit{P1} had sysmetically higher Jaccard indices than the four other groups (see Figure \DIFdelbegin \DIFdel{\ref{fig:jaccard_summary}}\DIFdelend \DIFaddbegin \DIFadd{\ref{fig:n_sets_jaccard_summary}}\DIFaddend ), as confirmed by \DIFdelbegin \DIFdel{an ANOVA with wallpaper group as a factor. The analysis }\DIFdelend \DIFaddbegin \DIFadd{a repeated measures ANOVA which }\DIFaddend revealed a statistically signficant effect of group ($F(4, 495)=20.178, p < 0.0001$). Post-hoc \DIFdelbegin \DIFdel{pairwise }\DIFdelend \textit{t}-tests showed that \textit{P1} had higher Jaccard indices than all other groups ($ps < 0.0001$\DIFaddbegin \DIFadd{; see Table \ref{table:t-stats}}\DIFaddend ). The fact that the group (\textit{P1}) for which fewer subsets were generated also had higher Jaccard indices than the other groups illustrates the inherent link between the two measures. For wallpaper groups where the 20 exemplars are sorted into fewer subsets, each individual exemplar pair is more likely to be a member of the same subset, and less likely to be a member of distinct subsets. This in turn leads to higher Jaccard indices. Our pairwise \textit{t}-tests also showed that \textit{P31M} had lower Jaccard indices than \textit{P6} ($p = 0.037$). This effect \DIFdelbegin \DIFdel{is relatively weak}\DIFdelend \DIFaddbegin \DIFadd{does not pass our Bonferroni-corrected threshold for significance ($\alpha < 0.005$}\DIFaddend , but may \DIFaddbegin \DIFadd{nonetheless possibly }\DIFaddend reflect real differences in how consistently exemplars were grouped together across participants. We will explore this idea more in depth shortly\DIFdelbegin \DIFdel{, but for now we can conclude that out }\DIFdelend \DIFaddbegin \DIFadd{. Out }\DIFaddend of the five groups tested, \textit{P1} is the only one that can be reliably differentiated based on our measures, being higher on self-similarity among the exemplars, and thus lower on diversity among exemplars. 
+
+\DIFdelbegin %DIFDELCMD < \begin{figure}[t]
+%DIFDELCMD < 	%%%
+\DIFdelendFL \DIFaddbeginFL \begin{table}[H]
+	\DIFaddendFL \centering
+	\DIFdelbeginFL %DIFDELCMD < \includegraphics[width=\linewidth]{./figures/jaccard_summary.pdf}
+%DIFDELCMD < 	%%%
+\DIFdelendFL \DIFaddbeginFL \begin{tabular}{ |p{3cm}||p{1.5cm}|p{1.5cm}|p{1.5cm}||p{1.5cm}|p{1.5cm}|p{1.5cm}| }
+	\hline
+	\textit{} & \multicolumn{3}{|c||}{number of sets} & \multicolumn{3}{|c|}{Jaccard Index} \\ \hline 
+	\DIFaddFL{pairs }& \textit{\DIFaddFL{t}} & \textit{\DIFaddFL{p}} & \textit{\DIFaddFL{D}} & \textit{\DIFaddFL{t}} & \textit{\DIFaddFL{p}} & \textit{\DIFaddFL{D}} \\ \hline \hline
+	\textit{\DIFaddFL{P1 vs P31M}} & \DIFaddFL{-2.981 }& \DIFaddFL{0.0034 }& \DIFaddFL{-0.734 }& \DIFaddFL{5.641 }& \DIFaddFL{$<$0.0001 }& \DIFaddFL{0.579 }\\ \hline 
+	\textit{\DIFaddFL{P1 vs P3M1}} & \DIFaddFL{-3.423 }& \DIFaddFL{0.0008 }& \DIFaddFL{-0.843  }& \DIFaddFL{7.233 }& \DIFaddFL{$<$0.0001 }& \DIFaddFL{0.742 }\\ \hline
+	\textit{\DIFaddFL{P1 vs P6}} & \DIFaddFL{-4.748 }& \DIFaddFL{$<$0.0001 }& \DIFaddFL{-1.169 }& \DIFaddFL{7.734 }& \DIFaddFL{$<$0.0001 }& \DIFaddFL{0.794 }\\ \hline
+	\textit{\DIFaddFL{P1 vs P6M}} & \DIFaddFL{-4.553 }& \DIFaddFL{$<$0.0001 }& \DIFaddFL{-1.132  }& \DIFaddFL{6.946 }& \DIFaddFL{$<$0.0001 }& \DIFaddFL{0.713 }\\ \hline
+	\textit{\DIFaddFL{P31M vs P3M1}} & \DIFaddFL{-0.442 }& \DIFaddFL{0.6595 }& \DIFaddFL{-0.109 }& \DIFaddFL{1.592 }& \DIFaddFL{0.1117 }& \DIFaddFL{0.163 }\\ \hline
+	\textit{\DIFaddFL{P31M vs P6}} & \DIFaddFL{-1.767 }& \DIFaddFL{0.0797 }& \DIFaddFL{-0.435 }& \DIFaddFL{2.094 }& \DIFaddFL{0.0366 }& \DIFaddFL{0.215 }\\ \hline
+	\textit{\DIFaddFL{P31M vs P6M}} & \DIFaddFL{-1.600 }& \DIFaddFL{0.1120 }& \DIFaddFL{-0.398 }& \DIFaddFL{1.305 }& \DIFaddFL{0.1921 }& \DIFaddFL{0.134 }\\ \hline
+	\textit{\DIFaddFL{P3M1 vs P6}} & \DIFaddFL{-1.325 }& \DIFaddFL{0.1875 }& \DIFaddFL{-0.326 }& \DIFaddFL{0.502 }& \DIFaddFL{0.6160 }& \DIFaddFL{0.051 }\\ \hline
+	\textit{\DIFaddFL{P3M1 vs P6M}} & \DIFaddFL{-1.163 }& \DIFaddFL{0.2470 }& \DIFaddFL{0.289 }& \DIFaddFL{-0.287 }& \DIFaddFL{0.7745 }& \DIFaddFL{-0.029 }\\ \hline
+	\textit{\DIFaddFL{P6 vs P6M}} & \DIFaddFL{0.150 }& \DIFaddFL{0.8814 }& \DIFaddFL{0.037 }& \DIFaddFL{-0.788 }& \DIFaddFL{0.4307 }& \DIFaddFL{-0.081 }\\ \hline
+	\end{tabular}
+	\DIFaddendFL \caption{\DIFdelbeginFL \DIFdelFL{Boxplots showing Jaccard indices for every }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{Results of post-hoc }\DIFaddendFL pairwise \DIFdelbeginFL \DIFdelFL{combination }\DIFdelendFL \DIFaddbeginFL \textit{\DIFaddFL{t}}\DIFaddFL{-tests on number }\DIFaddendFL of \DIFdelbeginFL \DIFdelFL{exemplars in each of the wallpaper groups}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{sets and Jaccard Indices}\DIFaddendFL . \DIFdelbeginFL \DIFdelFL{Note that each data point here is }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{Degrees-of-freedom was 945 for }\DIFaddendFL the Jaccard \DIFdelbeginFL \DIFdelFL{index for a particular exemplar pair calculated across participants}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{Index test. For the number of sets test}\DIFaddendFL , \DIFdelbeginFL \DIFdelFL{unlike Figure \ref{fig:n_sets_summary} were each data point is a }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{degrees-of-freedom had to be adjusted to account for the fact that one }\DIFaddendFL participant \DIFdelbeginFL \DIFdelFL{. The box boundary }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{did not report number of sets for P6M (see }\nameref{methods}\DIFaddFL{), }\DIFaddendFL and \DIFdelbeginFL \DIFdelFL{whiskers follow the same logic as in Figure \ref{fig:n_sets_summary}}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{ranged between 127.0 and 127.1}\DIFaddendFL .\DIFdelbeginFL \DIFdelFL{The exemplar pairs with the highest Jaccard indices have been highlighted with stars. Those outlier pairs are explored further in Figure \ref{fig:jaccard_inspection}.}\DIFdelendFL }
+	\DIFdelbeginFL %DIFDELCMD < \label{fig:jaccard_summary}
+%DIFDELCMD < \end{figure}
+%DIFDELCMD < %%%
+\DIFdelend \DIFaddbegin \label{table:t-stats}
+\end{table}
+\DIFaddend 
+
+\DIFdelbegin %DIFDELCMD < \begin{wraptable}{r}{0.5\textwidth}
+%DIFDELCMD < 	%%%
+\DIFdelend \DIFaddbegin \begin{table}[H]
+	\DIFaddendFL \centering
+	\begin{tabular}[t]{ |p{2cm}||p{2cm}|p{2cm}| }
+		\hline
+		\multicolumn{3}{|c|}{consistent pairings} \\
+		\hline
+		group & $p<0.01$ & $p<0.0001$ \\
+		\hline
+		\textit{P1}   & 6  & 1  \\
+		\textit{P31M} & 17 & 10 \\
+		\textit{P3M1} & 12 & 3  \\
+		\textit{P6}   & 17 & 11 \\
+		\textit{P6M}  & 15 & 4  \\
+		\hline
+	\end{tabular}
+	\caption{Number of consistent pairings at two different $\alpha$-levels for the five groups.  }
+	\label{table:pairings}
+\DIFdelbeginFL %DIFDELCMD < \end{wraptable}
+%DIFDELCMD < %%%
+\DIFdelendFL \DIFaddbeginFL \end{table}
+\DIFaddend 
+
+In order to quantify the extent to which exemplars were consistently grouped together, we ran a permutation analysis in which exemplar labels were shuffled among the sets generated for each participant (see \nameref{methods}). This provides, for each group, the expected distribution of Jaccard indices for every pairwise combination of exemplars, if exemplars were assigned randomly to subsets. And the analysis allows us to compute an empirical \textit{z}-score that expressed the extent to which a given pair of exemplars deviates from random assignment. 
+
+Because the random distribution is generated by shuffling exemplars across the specific sets generated by each participant for each group, this \textit{z}-score is independent of the number of sets. If for a given group, none of the pairs deviate significantly from the random distribution, it would indicate that no exemplar pairs were consistently grouped together across participants. To estimate the extent to which this is the case, we look at the distribution of \textit{z}-scores across the pairs for each group, as plotted in Figure \ref{fig:jaccard_permutation}, and count the number of pairs for each group for which the \textit{p}-value associated with the threshold exceeds a given $\alpha$ value. At a threshold of $\alpha = 0.01$, several pairs survive for all groups, and even at a much more conservative criterion of $\alpha = 0.0001$ most groups have more than one pairing that survives (see Table \ref{table:pairings}). It is worth noting that the latter threshold ($\alpha = 0.0001$) is lower than the $\alpha$ associated with a Bonferroni correction within group, given that there are 190 pairs per group: \[ \alpha = \frac{0.05}{190} = 0.0003 \] So we conclude that for several exemplar pairs, participants are consistent in how they tend to pair the exemplars. It is interesting to consider that this measure of consistency might provide another way of differentiating wallpaper groups in terms of perceptual self-similarity. While groups \textit{P31M}, \textit{P3M1}, \textit{P6} and \textit{P6M} have comparable Jaccard scores (see Figure \DIFdelbegin \DIFdel{\ref{fig:jaccard_summary}}\DIFdelend \DIFaddbegin \DIFadd{\ref{fig:n_sets_jaccard_summary}}\DIFaddend ), they differ in the number of consistent pairings, with \textit{P31M} and \textit{P6} producing more consistent pairs than the other two (see Figure \ref{fig:jaccard_permutation}). 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.85\linewidth]{./figures/jaccard_permutation.png}
+	\caption{Distribution of \textit{z}-scores across the 190 pairs in each of the five wallpaper groups. The two lines indicate the \textit{z}-scores associated with $\alpha$ of 0.01 and 0.0001, respectively.}
+	\label{fig:jaccard_permutation}
+\end{figure}
+
+The Jaccard indices also allow us to focus on exemplar pairs that have a high level of similarity relative to the rest of the pairs in the set. We do this by identifying outliers pairs from each group in term of Jaccard indices, as identified with stars in Figure \DIFdelbegin \DIFdel{\ref{fig:jaccard_summary}}\DIFdelend \DIFaddbegin \DIFadd{\ref{fig:n_sets_jaccard_summary}}\DIFaddend . Because the Jaccard indices are computed across participants, these outliers are also among the pairs most consistently sorted together, as identified in Figure \ref{fig:jaccard_permutation}. For each exemplar in each outlier pair, we can visualize the pairwise similarity (as measured by the Jaccard index) to every other exemplar in the set (see Figure \ref{fig:jaccard_inspection}). That is, we can visualize portions of the network of perceived similarity within a set of exemplars. Future work could probe the extent to which networks of perceived similarity have similar structure across wallpaper groups and examine what perceptual features best account for participants' perceptions of exemplar similarity.
+
+\begin{figure}[hbt!]
+	\centering
+	\includegraphics[width=.9\linewidth]{./figures/jaccard_inspection.pdf}
+	\caption{For each wallpaper group, we identified the two most self-similar exemplars, the same pair that is indicated by the right-most datapoint for each group in Figure \ref{fig:jaccard_permutation}. The two circular network plots are showing the pairwise similarities between those two exemplars and every other exemplar in the set. The pairwise similarities across all exemplars are plotted as a similarity matrix and on the rightmost side of the plot, the two most self-similar exemplars (bottom) are plotted with the exemplar that was least similar to both (top). The connecting lines between the exemplars indicate the similarity.}
+	\label{fig:jaccard_inspection}
+\end{figure}
+
+\section*{Discussion}
+Previous work has demonstrated that visual cortex of both humans and macaque monkeys carries highly detailed representations of the symmetries within wallpaper groups, as evidenced by systematic differences in the magnitude of the response elicited by different groups \citep{RN1725,kohler_clarke_2021,audurier_symmetry_2021}. This distinction between groups can also be observed in psychophysical threshold measurements \citep{kohler_clarke_2021}, although observers may not have a strong awareness of the wallpaper group membership of individual exemplars \citep{RN172}. In the current study, we explored a new piece of the story about how wallpaper groups are processed by the visual system, namely the issue of how self-similar different exemplars from the \textit{same} wallpaper group appear to untrained observers. We tested this by asking participants to spontaneously sort 20 exemplars from each of five wallpaper groups into different subsets. 
+
+Our first finding concerns the number of subsets generated for each group. We find that \textit{P1} is divided into fewer subsets than the other four groups. This indicates that the limited complexity of this group, which contains only translation symmetry, has a direct effect of the number of distinct subsets. The relationship between complexity / symmetry content and number of subsets produced is not straightforward, however, as indicated by the fact that \textit{P6M} is not consistently grouped into more subsets than \textit{P6}, \textit{P3M1} and \textit{P31M}, despite the fact that these other groups all contain fewer symmetries than \textit{P6M}\DIFdelbegin \DIFdel{- and generate weaker brain activity \mbox{%DIFAUXCMD
+\citep{kohler_clarke_2021}}\hspace{0pt}%DIFAUXCMD
+}\DIFdelend . We speculate that this lack of further differentiation is a result of an upper limit on how additional complexity can influence perceptual self-similarity. \DIFaddbegin \DIFadd{However, future work with additional wallpaper groups, including groups that are relatively low on complexity by high on self-similarity (e.g., }\textit{\DIFadd{P2}} \DIFadd{and }\textit{\DIFadd{PMM}}\DIFadd{, see \mbox{%DIFAUXCMD
+\citep{RN172}}\hspace{0pt}%DIFAUXCMD
+), is needed to draw firm conclusions about this hypothesis.
+}\DIFaddend 
+
+\DIFaddbegin \DIFadd{It is important to note that }\textit{\DIFadd{P6}}\DIFadd{, }\textit{\DIFadd{P3M1}} \DIFadd{and }\textit{\DIFadd{P31M}} \DIFadd{all consistently generate weaker brain activity than }\textit{\DIFadd{P6M}}\DIFadd{, and produce higher thresholds in a symmetry detection task \mbox{%DIFAUXCMD
+\citep{kohler_clarke_2021}}\hspace{0pt}%DIFAUXCMD
+. Our results would therefore suggest that there is no clear relationship between the strength of the visual system's response to symmetries in wallpaper group, and the perceptual self-similarity of each individual group. Future work should explore this more closely, and look for neural correlates of similarity among exemplars from the same group.
+}
+
+\DIFaddend We also computed Jaccard indices that, for every possible exemplar pair, expresses the frequency of those two exemplars being grouped together. As described above, the average Jaccard index for a group is inherently linked to the number of subsets produced for that group, because fewer subsets mean that exemplars are more likely to be made members of the same pair, and less likely to be made members of the same pair. It is therefore not surprising that we find the same general pattern for Jaccard indices and number of subsets, namely that \textit{P1} has higher indices than the other groups. The advantage of the Jaccard indices, however, is that they allow us to conduct a permutation analysis that quantifies the extent to which pairs of exemplars are consistently grouped together across participants, independent of the number of sets produced for a given group. It is important to note that consistency in the choice of which exemplars to group into subsets is not an unavoidable consequence of our experimental design, and it does not follow naturally from the results described so far. It would be perfectly possible for participants to group the sets together, producing fewer subsets for \textit{P1} as observed, but exhibit no consistency across participants at all. That is not what we see, however. Even when setting a conservative threshold, all five groups produce one or more pairs that are consistently grouped together, demonstrating that the sorting of exemplars into subsets is not done randomly or arbitrarily across the participants. Rather, different individuals agree to some extent on which exemplars belong together. Because our measure of consistency is independent of the number of subsets produced for a given group, it allows us to show that although \textit{P1} has the highest overall Jaccard indices (as a result of the fewer sets produced for this group), it in fact produces fewer consistent pairs than other groups (see Table \ref{table:pairings}). \DIFaddbegin \DIFadd{Indeed, participants made few comments about their own sorting strategies, but most observed that P1 exemplars were the most difficult to sort because of the lack of readily apparent features that were consistent across exemplars.
+}\DIFaddend 
+
+In sum, we find consistencies in the way that untrained human observers sort wallpaper images. Observers sort exemplars with translational symmmetry alone (\textit{P1}) into smaller numbers of sets than exemplars with \DIFdelbegin \DIFdel{rotational }\DIFdelend \DIFaddbegin \DIFadd{rotation }\DIFaddend or reflection symmetry. On average, pairs of \textit{P1} exemplars are sorted together more often than exemplars from other wallpaper groups. At the same time, some specific exemplar pairs from wallpaper groups with 3- or 6- fold rotational or reflection symmetry are sorted together substantially more often than predicted by chance.
+
+We note that that the spontaneous sorting task our observers engaged in has less intrinsic structure than some other tasks used to study similar questions like oddball detection \citep{RN1253,Hebart2020-so,Landwehr2011-kg}, and thus may involve somewhat different perceptual and cognitive processes. In particular, wallpaper group exemplars have a reduced dimensionality relative to natural objects. Even so, large scale evaluations of how human observers perceive similarity in natural objects yield dimensions that appear to relate to the strict regularities observed in wallpapers: round shape, patterning, and repetition \citep{Hebart2020-so}. In future work, it would be interesting to explore whether different behavioral tasks yield comparable similarity spaces, or more generally, how task demands shape similarity judgments.
+
+In conclusion, our results suggest that human observers show sensitivity to the dimensions of 2D symmetry (translation, rotation, and reflection) embedded in wallpaper exemplars. However, their sorting behavior shows only weak evidence that group-theoretic measures of symmetry influence the perception of self-similarity. These results contribute to a small, but growing literature on the perception of visual aesthetics \citep{Carneiro2012-ph,Graham2010-yf,Friedenberg2012-gf,Laine-Hernandez2008-sg,Richards1972-gl} where symmetry is one of many contributing factors.
+
+\section*{Materials and Methods}
+\label{methods}
+
+\subsection*{Participants}
+33 participants (9 Male, 24 Female), ranging in age between 18 and 35 completed this study. \DIFaddbegin \DIFadd{Participants were recruited from the undergraduate participant pool in the Department of Psychology at the The Pennsylvania State University. }\DIFaddend All participants had self- reported 20/20 or corrected to 20/20 vision. We obtained written consent to participate from all participants under procedures approved by the Institutional Review Board of The Pennsylvania State University (\#38536). The research was conducted according to the principles expressed in the Declaration of Helsinki. Participants include \textit{n}=11 collected and described in \citep{vedak_thesis}, plus an additional group collected at a later date using the same protocol.
+
+\subsection*{Stimulus Generation}
+Five wallpaper groups (\textit{P1}, \DIFaddbegin \textit{\DIFadd{P6}}\DIFadd{, }\DIFaddend \textit{P3M1}, \textit{P31M}, \DIFdelbegin \textit{\DIFdel{P6}} %DIFAUXCMD
+\DIFdelend and \textit{P6M}) \DIFdelbegin \DIFdel{that }\DIFdelend \DIFaddbegin \DIFadd{were selected for use in the study. The selection was motivated partially by the fact that all five groups }\DIFaddend has previously been shown to be high in self-similarity \citep{RN172}, \DIFdelbegin \DIFdel{were selected. }\DIFdelend \DIFaddbegin \DIFadd{and partially by the fact that }\textit{\DIFadd{P3M1}}\DIFadd{, }\textit{\DIFadd{P31M}}\DIFadd{, }\textit{\DIFadd{P6}} \DIFadd{and }\textit{\DIFadd{P6M}} \DIFadd{all share the same lattice shape. We also found it interesting that while }\textit{\DIFadd{P6}}\DIFadd{, }\textit{\DIFadd{P3M1}} \DIFadd{and }\textit{\DIFadd{P31M}} \DIFadd{differ in their symmetry content, all are subgroups of }\textit{\DIFadd{P6M}} \DIFadd{with index 2, which means that }\textit{\DIFadd{P6M}} \DIFadd{can be generated by adding one additional transformation to }\textit{\DIFadd{P6}}\DIFadd{, }\textit{\DIFadd{P3M1}} \DIFadd{or }\textit{\DIFadd{P31M}} \DIFadd{\mbox{%DIFAUXCMD
+\citep{kohler_clarke_2021}}\hspace{0pt}%DIFAUXCMD
+. }\DIFaddend 20 exemplars from each of these five wallpaper groups were generated using a modified version of the methodology developed by Clarke and colleagues \citep{RN172} that we have described in detail elsewhere \citep{RN1725}. Briefly, \DIFdelbegin \DIFdel{exemplar patterns for }\DIFdelend \DIFaddbegin \DIFadd{exemplars belonging to }\DIFaddend each group were generated \DIFdelbegin \DIFdel{from }\DIFdelend \DIFaddbegin \DIFadd{by starting with a }\DIFaddend random-noise \DIFdelbegin \DIFdel{textures, which were }\DIFdelend \DIFaddbegin \DIFadd{patch, which was }\DIFaddend then repeated and transformed to \DIFdelbegin \DIFdel{cover the plane, according to }\DIFdelend \DIFaddbegin \DIFadd{tile the image plane, in accordance with }\DIFaddend the symmetry axes and geometric lattice specific to each group. The use of noise \DIFdelbegin \DIFdel{textures }\DIFdelend \DIFaddbegin \DIFadd{patches }\DIFaddend as the starting point for stimulus generation \DIFdelbegin \DIFdel{allowed the creation of an almost infinite }\DIFdelend \DIFaddbegin \DIFadd{makes it possible to create an almost unlimited }\DIFaddend number of distinct exemplars \DIFdelbegin \DIFdel{of }\DIFdelend \DIFaddbegin \DIFadd{from }\DIFaddend each wallpaper group. To make individual exemplars as similar as possible we replaced the power spectrum of each exemplar with the median across exemplars within a group. These images were printed onto white cardstock and cut into squares, allowing participants to manipulate the orientation of the images during the sorting tasks. Five exemplars from each group are shown (in reduced size) in Figure \ref{fig:wpg_exemplars}. 
+
+\subsection*{Procedure}
+Participants were presented with the 20 exemplars of a single wallpaper group (i.e. P1, P3M1, P31M, P6, P6M) and instructed to sort them into subsets by placing them into piles. Participants were advised to sort the exemplars into as many piles as they deemed necessary based on whatever criteria they desired. There were no time constraints placed on this sorting task, and the participants were allowed to move exemplars between piles until they were satisfied with their classification. This method was then repeated for the remaining four wallpaper groups for each participant, with group presentation order randomized between participants. These tasks were carried out on a large table with sufficient space to randomly lay out all twenty exemplars of each set, illuminated by normal overhead room lighting. Upon completion of each sorting task, participants were asked to verbalize which features they used to sort the exemplars. After completion of all five sorting tasks, participants were asked which if they had a distinct method for sorting the images, and if any wallpaper group was particular easy or difficult to sort.
+
+\subsection*{Generating the Jaccard Index}
+The data was prepared for analysis by creating one binary variable for each subset created by each participant within a sorting task. Then, each exemplar was assigned a value of one (1) if it was included in a subset, or a value zero (0) if it was not. Next, the similarity of each pair of exemplars within a sorting task was calculated using the Jaccard index, a measure of similarity and diversity for binary data. This index is calculated by the equation  \[ J = \frac{x}{x + y + z} \] with x representing the number of subsets that contained both exemplars, and y and z the number of subsets that contain only one exemplar of the pair \citep{capra_factor_2005}, across participants. Thus, the Jaccard index is the ratio of the number of subsets containing both exemplars of a pair to the number of subsets containing at least one of the exemplars of a pair, thereby excluding subsets with joint absences.
+
+\subsection*{\DIFdelbegin \DIFdel{Permutation }\DIFdelend \DIFaddbegin \DIFadd{Statistical }\DIFaddend Analysis}
+\DIFdelbegin \DIFdel{The permutation analysis }\DIFdelend \DIFaddbegin \DIFadd{We tested for differences between the five wallpaper groups tested in terms of number of sets produced and Jaccard indices, by running repeated measures analyses of variance (rmANOVA) with group as a fixed factor and participant as a random factor. We then tested the extent to which differences between specific pairs of wallpaper groups contributed to any rmANOVA effects found, by running post-hoc paired }\textit{\DIFadd{t}}\DIFadd{-tests comparing every possible pairing of the wallpaper groups, for both number of sets and Jaccard Indices. Because there were 10 possible pairings of the groups, we applied Bonferroni-correction and adjusted our $\alpha$-level so that each }\textit{\DIFadd{t}}\DIFadd{-test was only considered significant if $p < 0.005$. Number of sets data was missng for one participant for wallpaper group }\textit{\DIFadd{P6M}}\DIFadd{, so the degrees of freedom used in the paired }\textit{\DIFadd{t}}\DIFadd{-tests was adjusted using the Kenward-Roger technique--the default in the }\textit{\DIFadd{emmeans}} \DIFadd{package in R.
+}
+
+\DIFadd{We ran a permutation analysis in order to quantify the extent to which pairs of exemplars were consistently grouped together, across participants. This }\DIFaddend involved generating a randomized dataset, as follows. For each participant and wallpaper group, we randomized which specific exemplars were sorted together. This retained the basic structure of each participants' sorting data--the number of subsets created--but randomized the relationship between specific wallpaper exemplars that were sorted together across the participants. We then created 1,000 such permuted datasets, and calculated the Jaccard index for each exemplar pair within each group for each of the permuted datasets. This permitted the calculation of an \emph{empirical} Jaccard index based on the permuted data from which distributional statistics like \textit{z} could be calculated. The \emph{observed} Jaccard indices for each exemplar pair were then compared to the empirically-derived reference distribution to determine which exemplar pairs were sorted together more frequently than chance would predict.
+
+% Bibliography
+\begin{multicols}{2}
+\small
+\bibliographystyle{apalike} 
+\bibliography{literature}
+\end{multicols}
+
+% Funding
+% This work was supported by the Vision Science to Applications (VISTA) program funded by the Canada First Research Excellence Fund (CFREF, 2016–2023) and by a Discovery Grant from the Natural Sciences and Engineering Research Council of Canada awarded to P.J.K. The work was also partially supported by a National Science Foundation INSPIRE grant 1248076 awarded to Yanxi Liu, Anthony M. Norcia and Rick O. Gilmore.
+
+\end{document}
